@@ -6,12 +6,19 @@ IF OBJECT_ID('[dbo].[CarDescription]', 'U') IS NULL
 	SET QUOTED_IDENTIFIER ON
 	BEGIN
 		CREATE TABLE [dbo].[CarDescription](
-		[Id] [uniqueidentifier] NOT NULL,
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[Description] [nvarchar](100)  NOT NULL,
 		[Manufucaturer] [nvarchar](100)  NOT NULL,
 		[Model] [nvarchar](100)  NOT NULL,
 		[HorsePower] [int] NOT NULL,
+		[EngineSize] [int] NOT NULL,
+		[PetrolType] [nvarchar](100)  NOT NULL,
 		[FuelTankSize] [int] NOT NULL,
 		[Weight] [int] NOT NULL,
+		[TopSpeed] [float] NOT NULL,
+		[Acceleration] [float] NOT NULL,
+		[AvgFuelConsumption] [float] NOT NULL,		
+		[ProductionYear] [int] NOT NULL,
 		CONSTRAINT [PK_CarDescription] PRIMARY KEY CLUSTERED
 		([Id] ASC)
 		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF,
@@ -25,16 +32,17 @@ IF OBJECT_ID('[dbo].[FuelConsumption]', 'U') IS NULL
 	SET QUOTED_IDENTIFIER ON
 	BEGIN
 		CREATE TABLE [dbo].[FuelConsumption](
-		[Id] [uniqueidentifier] NOT NULL,
-		[CarId] [uniqueidentifier] NOT NULL,
-		[FuelingDate] [datetime] NOT NULL,
+		[Id] [int] IDENTITY(1,1) NOT NULL,
+		[CarId] [int] NOT NULL,
+		[PetrolStationDesc] [nvarchar](100) NOT NULL,
 		[PetrolType] [nvarchar](50) NOT NULL,
-		[LiterAmount] [nvarchar](50) NOT NULL,
-		[PricePerLiter] [nvarchar](50) NOT NULL,
-		[FullPrice] [nvarchar](50) NOT NULL,
-		[DistanceMade] [nvarchar](50) NOT NULL,
-		[FuelConsumption] [nvarchar](50) NOT NULL,
-		[Terrain] [int] NOT NULL,
+		[FuelingDate] [datetime] NOT NULL,
+		[LiterAmount] [float] NOT NULL,
+		[PricePerLiter] [float] NOT NULL,
+		[FullPrice] [float] NOT NULL,
+		[DistanceMade] [float] NOT NULL,
+		[FuelConsumption] [float] NOT NULL,
+		[Terrain] [nvarchar](100) NOT NULL,
 		CONSTRAINT [PK_FuelConsumption] PRIMARY KEY CLUSTERED
 		([Id] ASC)
 		WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF,
