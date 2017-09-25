@@ -16,7 +16,7 @@ INSERT INTO [dbo].[CarDescription]
 		   ,[AvgFuelConsumption]
 		   ,[ProductionYear])
      VALUES
-           ('TestVehicle'
+           ('TestCar'
            ,'Dodge'
            ,'Charger'
            ,431

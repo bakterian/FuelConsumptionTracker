@@ -1,8 +1,0 @@
-InsertData.sql (some test data is needed)
-
-Add common stoed procedures
-1) Add Vehicle entrie
-2) Add FuelConsumption entrie
-3) Get All Vehicle entries
-4) Get All FuelConsumption entries
-5) Get All Entries for the selected Vehicle
