@@ -1,0 +1,8 @@
+USE [master]
+GO
+
+IF DB_ID('CarData') IS NOT NULL
+BEGIN
+	DROP DATABASE [CarData]
+END
+GO
