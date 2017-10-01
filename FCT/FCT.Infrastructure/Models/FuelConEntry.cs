@@ -2,7 +2,7 @@
 
 namespace FCT.Infrastructure.Models
 {
-    public class FuelConEntry
+    public class FuelConEntry : BaseDbModel
     {
         public int Id { get; set; }
         public int CarId { get; set; }
@@ -15,7 +15,7 @@ namespace FCT.Infrastructure.Models
         public float DistanceMade { get; set; }
         public float FuelConsumption { get; set; }
         public string Terrain { get; set; }
-        public string Summary =>
+        public override string Summary =>
             $"Id: {Id}\nCarId: {CarId}\nPetrolStationDesc: {PetrolStationDesc}\nPetrolType: {PetrolType}\nLiterAmount: {LiterAmount}";
     }
 }

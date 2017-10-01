@@ -4,7 +4,7 @@ GO
 if (not exists (select top 1 * from [dbo].[CarDescription] where Description = 'TestVehicle1'))
 INSERT INTO [dbo].[CarDescription]
            ([Description]
-		   ,[Manufucaturer]
+		   ,[Manufacturer]
            ,[Model]
            ,[HorsePower]
 		   ,[EngineSize]
@@ -32,7 +32,7 @@ INSERT INTO [dbo].[CarDescription]
 if (not exists (select top 1 * from [dbo].[CarDescription] where Description = 'TestVehicle2'))
 INSERT INTO [dbo].[CarDescription]
            ([Description]
-		   ,[Manufucaturer]
+		   ,[Manufacturer]
            ,[Model]
            ,[HorsePower]
 		   ,[EngineSize]

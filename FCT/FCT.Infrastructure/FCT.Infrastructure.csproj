@@ -44,11 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\ConsoleUserOption.cs" />
+    <Compile Include="Models\BaseDbModel.cs" />
     <Compile Include="Models\CarDescription.cs" />
     <Compile Include="Models\FuelConEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IConsoleRunner.cs" />
-    <Compile Include="Services\IDbDataReader.cs" />
+    <Compile Include="Services\IDbReader.cs" />
+    <Compile Include="Services\IDbWriter.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

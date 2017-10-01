@@ -49,8 +49,9 @@
   <ItemGroup>
     <Compile Include="KernelModules\DataAccessModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DbWriter.cs" />
     <Compile Include="Utilities\ConnectionHepler.cs" />
-    <Compile Include="Services\DbDataReader.cs" />
+    <Compile Include="Services\DbReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -8,7 +8,8 @@ namespace FCT.DataAccess.KernelModules
     {
         public override void Load()
         {
-            Bind<IDbDataReader>().To<DbDataReader>().InSingletonScope();
+            Bind<IDbReader>().To<DbReader>().InSingletonScope();
+            Bind<IDbWriter>().To<DbWriter>().InSingletonScope();
         }
     }
 }

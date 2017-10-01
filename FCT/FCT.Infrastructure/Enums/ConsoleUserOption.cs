@@ -7,6 +7,7 @@ namespace FCT.Infrastructure.Enums
         GetAllFuelConsumptionEntries,
         GetAllFuelConEntriesByCarId,
         InsertCarDescription,
+        UpdateCarDescription,
         InsertFuelConsumption,
         UpdateFuelConsumption,
         Exit,

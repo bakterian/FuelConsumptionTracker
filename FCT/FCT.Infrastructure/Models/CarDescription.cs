@@ -1,11 +1,13 @@
 ﻿
+using System;
+
 namespace FCT.Infrastructure.Models
 {
-    public class CarDescription
+    public class CarDescription : BaseDbModel
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public string Manufucaturer { get; set; }
+        public string Manufacturer { get; set; }
         public string Model { get; set; }
         public int HorsePower { get; set; }
         public int EngineSize { get; set; }
@@ -16,7 +18,7 @@ namespace FCT.Infrastructure.Models
         public float Acceleration { get; set; }
         public float AvgFuelConsumption { get; set; }
         public int ProductionYear { get; set; }
-        public string Summary =>
-            $"Id: {Id}\nDescription: {Description}\nManufucaturer: {Manufucaturer}\nModel: {Model}\nHorsePower: {HorsePower}";
+        public override string Summary =>
+            $"Id: {Id}\nDescription: {Description}\nManufucaturer: {Manufacturer}\nModel: {Model}\nHorsePower: {HorsePower}";
     }
 }
