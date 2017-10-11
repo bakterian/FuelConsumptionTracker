@@ -321,28 +321,3 @@ BEGIN
 	WHERE Id = @Id
 END
 GO
-
-
-
-IF OBJECT_ID('spUpdateFuelConsumptionDistanceOnly', 'P') IS NOT NULL
-    DROP PROCEDURE [dbo].[spUpdateFuelConsumptionDistanceOnly]
-GO
-
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-Create PROCEDURE [dbo].[spUpdateFuelConsumptionDistanceOnly]
-(
-	@Id [int],
-	@DistanceMade [float]
-)
-AS
-BEGIN
-	IF EXISTS (Select 1 from  [dbo].[FuelConsumption] where Id = @Id )
-	
-	UPDATE  [FuelConsumption]  SET
-	DistanceMade = @DistanceMade
-	WHERE Id = @Id
-END
-GO

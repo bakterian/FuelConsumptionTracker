@@ -56,7 +56,7 @@ namespace FCT.Control.Services
                     break;
                 case ConsoleUserOption.InsertCarDescription:
                     var carDescription = GetCarDescriptionText();
-                    if (IsValidCarDescription(carDescription))
+                    if (IsValidText(carDescription))
                     {
                         InsertCarDescription(carDescription);
                     }
@@ -76,7 +76,7 @@ namespace FCT.Control.Services
                         }
                         else
                         { var newCarDesText = GetCarDescriptionText();
-                            if (IsValidCarDescription(newCarDesText))
+                            if (IsValidText(newCarDesText))
                             {
                                 UpdateCarDescription(newCarDesText, carDesToUpdate);
                             }
@@ -91,6 +91,61 @@ namespace FCT.Control.Services
                         Console.WriteLine("Invalid car id was entered, aborting...\n");
                     }
                     break;
+                case ConsoleUserOption.InsertFuelConsumption:
+                    var userCarId = GetCarIdUserInput();
+                    if (userCarId.HasValue)
+                    {
+                        var carDesToUpdate = _dbReader.GetCarDescriptions().Where(_ => _.Id == userCarId).FirstOrDefault();
+                        if (carDesToUpdate == null)
+                        {
+                            Console.WriteLine($"There is no car with given Id={userCarId}, aborting...\n");
+                        }
+                        else
+                        {
+                            var petrolStationDesc = GetPetrolStationDescriptionText();
+                            if (IsValidText(petrolStationDesc))
+                            {
+                                InsertFuelConsumption(petrolStationDesc, userCarId.Value);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid petrol station description was entered, aborting...\n");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid car id was entered, aborting...\n");
+                    }
+                    break;
+                case ConsoleUserOption.UpdateFuelConsumption:
+                    var fuelEntryId = GetFuelEntryIdUserInput();
+                    if (fuelEntryId.HasValue)
+                    {
+                        var fuelConEntryToUpdate = _dbReader.GetFuelConEntries().Where(_ => _.Id == fuelEntryId).FirstOrDefault();
+                        if (fuelConEntryToUpdate == null)
+                        {
+                            Console.WriteLine($"There is no fuel consumption entry with given Id={fuelEntryId}, aborting...\n");
+                        }
+                        else
+                        {
+                            var petrolStationDesc = GetPetrolStationDescriptionText();
+                            if (IsValidText(petrolStationDesc))
+                            {
+                                UpdateFuelConEntry(petrolStationDesc, fuelConEntryToUpdate);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid petrol station description was entered, aborting...\n");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid fuel consumption entry id was entered, aborting...\n");
+                    }
+                    break;
+
                 case ConsoleUserOption.Invalid:
                     Console.WriteLine("Inavlid option selection.\n");
                     DisplayInitialInfo();
@@ -133,7 +188,17 @@ namespace FCT.Control.Services
 
         private int? GetCarIdUserInput()
         {
-            Console.WriteLine("Specify the car id:");
+            return GetUserIntValue("Specify the car id:");
+        }
+
+        private int? GetFuelEntryIdUserInput()
+        {
+            return GetUserIntValue("Specify the fuel entry id:");        
+        }
+
+        private int? GetUserIntValue(string initalText)
+        {
+            Console.WriteLine(initalText);
             var readKey = Console.ReadLine();
             int userSelection;
             var convResult = int.TryParse(readKey, out userSelection);
@@ -149,7 +214,13 @@ namespace FCT.Control.Services
             return Console.ReadLine();
         }
 
-        private bool IsValidCarDescription(string carDesc)
+        private string GetPetrolStationDescriptionText()
+        {
+            Console.WriteLine("Please enter the pertol station description.");
+            return Console.ReadLine();
+        }
+
+        private bool IsValidText(string carDesc)
         {
             return carDesc != null && carDesc != string.Empty;
         }
@@ -178,11 +249,41 @@ namespace FCT.Control.Services
             PrintConfirmationMassage(affectedRows);
         }
 
+        private void InsertFuelConsumption(string petrolStationDesc, int carId)
+        {
+            var fuelConEntry = new FuelConEntry()
+            {
+                CarId = carId,
+                PetrolStationDesc = petrolStationDesc,
+                PetrolType = "gasoline",
+                FuelingDate = GetCurrentDateTime(),
+                LiterAmount = 100.0f,
+                PricePerLiter = 4.5f,
+                FullPrice = 450.0f,
+                DistanceMade = 3000.0f,
+                Terrain = "highways"
+            };
+            fuelConEntry.FuelConsumption = fuelConEntry.DistanceMade / fuelConEntry.LiterAmount;
+
+            var fuelConEntrys = new FuelConEntry[] { fuelConEntry };
+            var affectedRows = _dbWriter.InsertFuelConsumptions(fuelConEntrys);
+
+            PrintConfirmationMassage(affectedRows);
+        }
+
         private void UpdateCarDescription(string newCarDescription, CarDescription carDescToUpdate)
         {
             carDescToUpdate.Description = newCarDescription;
             var carDescriptions = new CarDescription[] { carDescToUpdate };
             var affectedRows = _dbWriter.UpdateCarDescriptions(carDescriptions);
+            PrintConfirmationMassage(affectedRows);
+        }
+
+        private void UpdateFuelConEntry(string newPetrolStationDesc, FuelConEntry fuelConsEntryToUpdate)
+        {
+            fuelConsEntryToUpdate.PetrolStationDesc = newPetrolStationDesc;
+            var fuelConEntrys = new FuelConEntry[] { fuelConsEntryToUpdate };
+            var affectedRows = _dbWriter.UpdateFuelConsumptions(fuelConEntrys);
             PrintConfirmationMassage(affectedRows);
         }
 
@@ -198,6 +299,11 @@ namespace FCT.Control.Services
             {
                 Console.WriteLine(dbModel.Summary + "\n");
             }
+        }
+
+        private string GetCurrentDateTime()
+        {
+            return DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss.fff");
         }
     }
 }

@@ -7,5 +7,7 @@ namespace FCT.Infrastructure.Services
     {
         int InsertCarDescriptions(IEnumerable<CarDescription> carDescriptions);
         int UpdateCarDescriptions(IEnumerable<CarDescription> carDescriptions);
+        int InsertFuelConsumptions(IEnumerable<FuelConEntry> fuelConsumptions);
+        int UpdateFuelConsumptions(IEnumerable<FuelConEntry> fuelConsumptions);
     }
 }
