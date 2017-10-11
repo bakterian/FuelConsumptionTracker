@@ -8,7 +8,7 @@ IF OBJECT_ID('[dbo].[CarDescription]', 'U') IS NULL
 		CREATE TABLE [dbo].[CarDescription](
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[Description] [nvarchar](100)  NOT NULL,
-		[Manufucaturer] [nvarchar](100)  NOT NULL,
+		[Manufacturer] [nvarchar](100)  NOT NULL,
 		[Model] [nvarchar](100)  NOT NULL,
 		[HorsePower] [int] NOT NULL,
 		[EngineSize] [int] NOT NULL,

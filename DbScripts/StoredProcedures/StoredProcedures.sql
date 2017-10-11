@@ -15,7 +15,7 @@ BEGIN
 	SET NOCOUNT ON;	
 	SELECT [Id]
 		,[Description]
-		,[Manufucaturer]
+		,[Manufacturer]
 		,[Model]
 		,[HorsePower] 
 		,[EngineSize]
@@ -124,7 +124,7 @@ GO
 Create PROCEDURE [dbo].[spInsertCarDescription]
 (
 	@Description [nvarchar](100),
-	@Manufucaturer [nvarchar](100),
+	@Manufacturer [nvarchar](100),
 	@Model [nvarchar](100),
 	@HorsePower [int],
 	@EngineSize [int],
@@ -138,30 +138,12 @@ Create PROCEDURE [dbo].[spInsertCarDescription]
 )
 AS
 BEGIN
-	SET NOCOUNT ON;	
-	
-	IF EXISTS (Select 1 from  [dbo].[CarDescription] where Description = @Description )
-	
-	UPDATE  [CarDescription]  SET
-	Manufucaturer = @Manufucaturer,
-	Model = @Model,
-	HorsePower = @HorsePower,
-	EngineSize = @EngineSize,
-	PetrolType = @PetrolType,
-	FuelTankSize = @FuelTankSize,
-	Weight = @Weight,
-	TopSpeed = @TopSpeed,
-	Acceleration = @Acceleration,
-	AvgFuelConsumption = @AvgFuelConsumption,		
-	ProductionYear = @ProductionYear
-	WHERE Description = @Description
-
-	ELSE
+	IF NOT EXISTS (Select 1 from  [dbo].[CarDescription] where Description = @Description)
 
 	INSERT INTO  [dbo].[CarDescription] 
 	(
 	   [Description]
-	   ,[Manufucaturer]
+	   ,[Manufacturer]
 	   ,[Model]
 	   ,[HorsePower]
 	   ,[EngineSize]
@@ -177,7 +159,7 @@ BEGIN
 	VALUES
 	(
 	@Description,
-	@Manufucaturer,
+	@Manufacturer,
 	@Model,
 	@HorsePower,
 	@EngineSize,
@@ -191,6 +173,55 @@ BEGIN
 	)
 END
 GO
+
+
+
+IF OBJECT_ID('spUpdateCarDescription', 'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[spUpdateCarDescription]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create PROCEDURE [dbo].[spUpdateCarDescription]
+(
+	@Id [int],
+	@Description [nvarchar](100),
+	@Manufacturer [nvarchar](100),
+	@Model [nvarchar](100),
+	@HorsePower [int],
+	@EngineSize [int],
+	@PetrolType [nvarchar](100),
+	@FuelTankSize [int],
+	@Weight [int],
+	@TopSpeed [float],
+	@Acceleration [float],
+	@AvgFuelConsumption [float],		
+	@ProductionYear [int]
+)
+AS
+BEGIN
+	IF EXISTS (Select 1 from  [dbo].[CarDescription] where Id = @Id )
+	
+	UPDATE  [CarDescription]  SET
+	Description = @Description,
+	Manufacturer = @Manufacturer,
+	Model = @Model,
+	HorsePower = @HorsePower,
+	EngineSize = @EngineSize,
+	PetrolType = @PetrolType,
+	FuelTankSize = @FuelTankSize,
+	Weight = @Weight,
+	TopSpeed = @TopSpeed,
+	Acceleration = @Acceleration,
+	AvgFuelConsumption = @AvgFuelConsumption,		
+	ProductionYear = @ProductionYear
+	WHERE Id = @Id
+	
+END
+GO
+
 
 
 IF OBJECT_ID('spInsertFuelConsumption', 'P') IS NOT NULL
@@ -216,8 +247,6 @@ Create PROCEDURE [dbo].[spInsertFuelConsumption]
 )
 AS
 BEGIN
-	SET NOCOUNT ON;	
-	
 	IF EXISTS (Select 1 from  [dbo].[CarDescription] where Id = @CarId )
 	
 	INSERT INTO  [dbo].[FuelConsumption] 
@@ -252,7 +281,6 @@ GO
 
 
 
-
 IF OBJECT_ID('spUpdateFuelConsumption', 'P') IS NOT NULL
     DROP PROCEDURE [dbo].[spUpdateFuelConsumption]
 GO
@@ -264,16 +292,32 @@ GO
 Create PROCEDURE [dbo].[spUpdateFuelConsumption]
 (
 	@Id [int],
-	@DistanceMade [float]
+	@CarId [int],
+	@PetrolStationDesc [nvarchar](100),
+	@PetrolType [nvarchar](50),
+	@FuelingDate [datetime],
+	@LiterAmount [float],
+	@PricePerLiter [float],
+	@FullPrice [float],
+	@DistanceMade [float],
+	@FuelConsumption [float],
+	@Terrain [nvarchar](100)
 )
 AS
 BEGIN
-	SET NOCOUNT ON;	
-	
 	IF EXISTS (Select 1 from  [dbo].[FuelConsumption] where Id = @Id )
 	
 	UPDATE  [FuelConsumption]  SET
-	DistanceMade = @DistanceMade
+	CarId = @CarId,
+	PetrolStationDesc= @PetrolStationDesc,
+	PetrolType = @PetrolType,
+	FuelingDate= @FuelingDate,
+	LiterAmount= @LiterAmount,
+	PricePerLiter = @PricePerLiter ,
+	FullPrice = @FullPrice,
+	DistanceMade = @DistanceMade,
+	FuelConsumption = @FuelConsumption,
+	Terrain = @Terrain
 	WHERE Id = @Id
 END
 GO
