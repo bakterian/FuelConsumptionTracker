@@ -1,5 +1,5 @@
 ﻿using Ninject.Modules;
-using FCT.Infrastructure.Services;
+using FCT.Infrastructure.Interfaces;
 using FCT.Control.Services;
 
 namespace FCT.Control.KernelModules

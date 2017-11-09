@@ -1,7 +1,7 @@
 ﻿using FCT.Infrastructure.Models;
 using System.Collections.Generic;
 
-namespace FCT.Infrastructure.Services
+namespace FCT.Infrastructure.Interfaces
 {
     public interface IDbWriter
     {

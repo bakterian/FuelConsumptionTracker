@@ -1,5 +1,5 @@
 ﻿
-namespace FCT.Infrastructure.Services
+namespace FCT.Infrastructure.Interfaces
 {
     public interface IConsoleRunner
     {

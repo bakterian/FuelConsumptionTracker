@@ -1,6 +1,6 @@
 ﻿using FCT.Infrastructure.Enums;
 using FCT.Infrastructure.Models;
-using FCT.Infrastructure.Services;
+using FCT.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +32,7 @@ namespace FCT.Control.Services
 
         private void HandleResponse(ConsoleUserOption userOption)
         {
-            switch(userOption)
+            switch (userOption)
             {
                 case ConsoleUserOption.GetAllCarDescriptions:
                     var carDescriptions = _dbReader.GetCarDescriptions();
@@ -44,7 +44,7 @@ namespace FCT.Control.Services
                     break;
                 case ConsoleUserOption.GetAllFuelConEntriesByCarId:
                     var carId = GetCarIdUserInput();
-                    if(carId.HasValue)
+                    if (carId.HasValue)
                     {
                         var fuelConsByCarId = _dbReader.GetFuelConEntries(carId.Value);
                         PrintModelSummaries(fuelConsByCarId);
@@ -65,7 +65,7 @@ namespace FCT.Control.Services
                         Console.WriteLine("Invalid car description was entered, aborting...\n");
                     }
                     break;
-                case ConsoleUserOption.UpdateCarDescription:                
+                case ConsoleUserOption.UpdateCarDescription:
                     var id = GetCarIdUserInput();
                     if (id.HasValue)
                     {
@@ -75,7 +75,8 @@ namespace FCT.Control.Services
                             Console.WriteLine($"There is no car with given Id={id}, aborting...\n");
                         }
                         else
-                        { var newCarDesText = GetCarDescriptionText();
+                        {
+                            var newCarDesText = GetCarDescriptionText();
                             if (IsValidText(newCarDesText))
                             {
                                 UpdateCarDescription(newCarDesText, carDesToUpdate);
@@ -163,14 +164,14 @@ namespace FCT.Control.Services
         {
             Console.WriteLine
             (
-            "Please press the chosen number and hit enter:\n"+
-            "1 - Get all car descriptions\n"+
-            "2 - Get all fuel consumption entries\n"+
+            "Please press the chosen number and hit enter:\n" +
+            "1 - Get all car descriptions\n" +
+            "2 - Get all fuel consumption entries\n" +
             "3 - Get all fuel consumption entries by car id\n" +
-            "4 - Insert car description\n"+
+            "4 - Insert car description\n" +
             "5 - Update car description\n" +
             "6 - Insert fuel consumption\n" +
-            "7 - Update fuel consumption\n"+
+            "7 - Update fuel consumption\n" +
             "8 - Close program"
             );
         }
@@ -193,7 +194,7 @@ namespace FCT.Control.Services
 
         private int? GetFuelEntryIdUserInput()
         {
-            return GetUserIntValue("Specify the fuel entry id:");        
+            return GetUserIntValue("Specify the fuel entry id:");
         }
 
         private int? GetUserIntValue(string initalText)
@@ -202,7 +203,6 @@ namespace FCT.Control.Services
             var readKey = Console.ReadLine();
             int userSelection;
             var convResult = int.TryParse(readKey, out userSelection);
-
             int? sel = userSelection;
             if (convResult == false) sel = null;
             return userSelection;

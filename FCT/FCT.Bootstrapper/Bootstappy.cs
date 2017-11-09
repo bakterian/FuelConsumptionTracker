@@ -1,8 +1,9 @@
 ﻿using FCT.Control.KernelModules;
+using FCT.Control.RegionModules;
 using FCT.DataAccess.KernelModules;
-using FCT.Infrastructure.Services;
+using FCT.Infrastructure.Interfaces;
 using Ninject;
-
+//TODO: remove un-need presentation interfaces from this project
 namespace FCT.Bootstrapper
 {
     public class Bootstrappy
@@ -14,10 +15,12 @@ namespace FCT.Bootstrapper
             _kernel = new StandardKernel();
         }
 
-        public void Run()
+        public Shell Run()
         {//To be triggered from FCT.App.Window
             LoadCommonModule();
             LoadWindowModule();
+            var root = GetInitializedRootView();
+            return root;
         }
 
         public void RunInConsole()
@@ -49,6 +52,22 @@ namespace FCT.Bootstrapper
         {
             var cr = _kernel.Get<IConsoleRunner>();
             cr.RunConsoleSession();
+        }
+
+        private Shell GetInitializedRootView()
+        {
+            var rootView = new Shell();
+            rootView = LoadRegions(rootView);
+            return rootView;
+        }
+
+        private Shell LoadRegions(Shell rootView)
+        {
+            var regionConfigurator = new RegionConfigurator();
+            regionConfigurator.LoadRegions(new WindowRegionCollection());
+
+            var bindedRootView  = regionConfigurator.Configure(rootView, _kernel);
+            return bindedRootView;
         }
     }
 }

@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCT.Bootstrapper", "FCT.Boo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCT.Control.UnitTests", "FCT.Control.UnitTests\FCT.Control.UnitTests.csproj", "{BD553416-43EB-4814-8456-2AF5291949D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCT.App.Window", "FCT.App.Window\FCT.App.Window.csproj", "{EE14E847-B5E0-46E4-A43B-8A3A15B91465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCT.WindowControls", "FCT.WindowControls\FCT.WindowControls.csproj", "{C3493AE9-3EFB-4493-AADE-10C2E4747CED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{BD553416-43EB-4814-8456-2AF5291949D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD553416-43EB-4814-8456-2AF5291949D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD553416-43EB-4814-8456-2AF5291949D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE14E847-B5E0-46E4-A43B-8A3A15B91465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE14E847-B5E0-46E4-A43B-8A3A15B91465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE14E847-B5E0-46E4-A43B-8A3A15B91465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE14E847-B5E0-46E4-A43B-8A3A15B91465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3493AE9-3EFB-4493-AADE-10C2E4747CED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3493AE9-3EFB-4493-AADE-10C2E4747CED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3493AE9-3EFB-4493-AADE-10C2E4747CED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3493AE9-3EFB-4493-AADE-10C2E4747CED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

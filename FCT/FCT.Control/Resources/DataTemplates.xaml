@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ViewModels="clr-namespace:FCT.Control.ViewModels"
+        xmlns:Views="clr-namespace:FCT.Control.Views" >
+
+    <DataTemplate DataType="{x:Type ViewModels:CarSelectionViewModel}">
+        <Views:CarSelectionView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:FileMenuViewModel}">
+        <Views:FileMenuView/>
+    </DataTemplate>
+</ResourceDictionary>
