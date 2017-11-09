@@ -1,0 +1,12 @@
+﻿<ResourceDictionary
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:ViewModels="clr-namespace:FCT.Control.ViewModels"
+        xmlns:Views="clr-namespace:FCT.Control.Views" >
+
+    <Style TargetType="dxb:MainMenuControl" x:Key="MainMenuStyle">
+        <Setter Property="Background" Value="LightGoldenrodYellow" />
+    </Style>
+</ResourceDictionary>
+

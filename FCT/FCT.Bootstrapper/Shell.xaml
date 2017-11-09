@@ -1,0 +1,43 @@
+﻿<Window x:Class="FCT.Bootstrapper.Shell"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FCT.Bootstrapper"
+             xmlns:ViewModels="clr-namespace:FCT.Control.ViewModels;assembly=FCT.Control"
+             xmlns:Views="clr-namespace:FCT.Control.Views;assembly=FCT.Control"
+             mc:Ignorable="d"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Window.Resources>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/FCT.Bootstrapper;component/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+    </Window.Resources>
+    <Grid x:Name="RootTopGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ContentControl Grid.Row="0" x:Name="FileMenu" />
+        <ContentControl Grid.Row="1" x:Name="CarSelection"/>
+        <dx:DXTabControl Grid.Row="2" AllowMerging="True" TabContentCacheMode="None" Margin="5,5,0,0">
+            <dx:DXTabItem Header="Table">
+                <ContentControl x:Name="Table"/>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="Statistics">
+                <ContentControl x:Name="Statsitics"/>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="Spreadsheets">
+                <ContentControl x:Name="Spreadsheets"/>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="Car Data">
+                <ContentControl x:Name="CarData"/>
+            </dx:DXTabItem>
+        </dx:DXTabControl>
+    </Grid>
+</Window>

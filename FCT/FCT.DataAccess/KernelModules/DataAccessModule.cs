@@ -1,6 +1,6 @@
 ﻿using Ninject.Modules;
 using FCT.DataAccess.Services;
-using FCT.Infrastructure.Services;
+using FCT.Infrastructure.Interfaces;
 
 namespace FCT.DataAccess.KernelModules
 {

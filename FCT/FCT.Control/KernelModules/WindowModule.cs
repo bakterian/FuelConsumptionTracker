@@ -1,5 +1,8 @@
 ﻿using System;
 using Ninject.Modules;
+using FCT.Infrastructure.Interfaces;
+using FCT.Control.ViewModels;
+using FCT.Control.Services;
 
 namespace FCT.Control.KernelModules
 {
@@ -7,7 +10,8 @@ namespace FCT.Control.KernelModules
     {
         public override void Load()
         {
-            //TODO:
+            Bind<ICarSelectionViewModel>().To<CarSelectionViewModel>().InSingletonScope();
+            Bind<IFileMenuViewModel>().To<FileMenuViewModel>().InSingletonScope();
         }
     }
 }
