@@ -15,10 +15,10 @@
         <GroupBox Grid.Column="0" BorderBrush="AliceBlue" BorderThickness="2" Margin="10">
             <StackPanel Orientation="Horizontal" >
                 <Label Content="Car: " FontSize="15" Width="40"/>
-                <ComboBox Width="160" Margin="10 0 0 0"
+                <ComboBox Width="160" Margin="0 0 0 0"
                           ItemsSource="{Binding CarDescriptions, Mode=OneWay}" DisplayMemberPath="Description" 
-                          SelectedItem="{Binding SelectedCarDescription, Mode=TwoWay}" />
-                <!--cal:Message.Attach="[Event SelectionChanged] = [Action OnCarSelectionChange()]"-->
+                          SelectedItem="{Binding SelectedCarDescription, Mode=TwoWay}"
+                          cal:Message.Attach="[Event SelectionChanged] = [Action OnCarSelectionChange()];"  />
             </StackPanel>
         </GroupBox>
         <TextBlock Grid.Column="1" Text="{Binding Header.Value}" 

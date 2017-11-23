@@ -4,8 +4,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/FCT.Control;component/Resources/DataTemplates.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/FCT.Control;component/Resources/CommonStyles.xaml"/>
-        <ResourceDictionary Source="ShellViewTemplate.xaml"/>
+        <ResourceDictionary Source="/FCT.Control;component/Resources/Themes/DarkTheme.xaml"/>
+        <ResourceDictionary Source="/FCT.Control;component/Resources/DataTemplates.xaml"/>
+        <ResourceDictionary Source="/FCT.Control;component/Resources/CommonStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -8,15 +8,8 @@
              xmlns:Views="clr-namespace:FCT.Control.Views;assembly=FCT.Control"
              mc:Ignorable="d"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Window.Resources>
-        <ResourceDictionary >
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/FCT.Bootstrapper;component/Resources/Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-        
-    </Window.Resources>
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="Window_Loaded" 
+            Style="{DynamicResource WindowBaseStyle}">
     <Grid x:Name="RootTopGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -25,19 +18,6 @@
         </Grid.RowDefinitions>
         <ContentControl Grid.Row="0" x:Name="FileMenu" />
         <ContentControl Grid.Row="1" x:Name="CarSelection"/>
-        <dx:DXTabControl Grid.Row="2" AllowMerging="True" TabContentCacheMode="None" Margin="5,5,0,0">
-            <dx:DXTabItem Header="Table">
-                <ContentControl x:Name="Table"/>
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="Statistics">
-                <ContentControl x:Name="Statsitics"/>
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="Spreadsheets">
-                <ContentControl x:Name="Spreadsheets"/>
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="Car Data">
-                <ContentControl x:Name="CarData"/>
-            </dx:DXTabItem>
-        </dx:DXTabControl>
+        <ContentControl Grid.Row="2" x:Name="MainTab" Margin="5,5,0,0"/>
     </Grid>
 </Window>

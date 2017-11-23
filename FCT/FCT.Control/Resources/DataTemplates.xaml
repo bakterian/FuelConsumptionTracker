@@ -10,4 +10,16 @@
     <DataTemplate DataType="{x:Type ViewModels:FileMenuViewModel}">
         <Views:FileMenuView/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:MainTabViewModel}">
+        <Views:MainTabView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:FuelConsumptionViewModel}">
+        <Views:FuelConsumptionView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:StatisticsViewModel}">
+        <Views:StatisticsView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type ViewModels:CarDataViewModel}">
+        <Views:CarDataView/>
+    </DataTemplate>
 </ResourceDictionary>

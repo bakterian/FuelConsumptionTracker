@@ -13,6 +13,7 @@ namespace FCT.Control.RegionModules
         {
             Regions.Add(new RegionBinding(Region.FileMenu, typeof(IFileMenuViewModel)));
             Regions.Add(new RegionBinding(Region.CarSelection, typeof(ICarSelectionViewModel)));
+            Regions.Add(new RegionBinding(Region.MainTab, typeof(IMainTabViewModel)));
         }
     }
 }
