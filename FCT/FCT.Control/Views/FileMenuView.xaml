@@ -3,11 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:local="clr-namespace:FCT.Control.Views"
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
+             xmlns:enums="clr-namespace:FCT.Infrastructure.Enums;assembly=FCT.Infrastructure"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -18,33 +16,69 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <dxb:MainMenuControl BarItemDisplayMode="ContentAndGlyph" Caption="MainMenu" 
-                             AllowCustomizationMenu="False" 
-                             Style="{StaticResource MainMenuStyle}">
-            <dxb:BarSubItem Content="File" Glyph="{dx:DXImage Image=Home_16x16.png}">
-                <dxb:BarButtonItem Content="New" Glyph="{dx:DXImage Image=New_16x16.png}"/>
-                <dxb:BarButtonItem Content="Open" Glyph="{dx:DXImage Image=Open_16x16.png}"/>
-                <dxb:BarButtonItem Content="Close" Glyph="{dx:DXImage Image=Close_16x16.png}"/>
-            </dxb:BarSubItem>
-            <dxb:BarSubItem dxb:MergingProperties.Name="settings" Content="Settings" Glyph="{dx:DXImage Image=IDE_16x16.png}" MergeType="MergeItems">
-                <dxb:BarItemMenuHeader Content="Font Properties">
-                    <dxb:BarCheckItem x:Name="fBold" Glyph="{dx:DXImage Image=Bold_16x16.png}" IsChecked="{Binding IsBold, Mode=TwoWay}" Content="Bold"/>
-                    <dxb:BarCheckItem x:Name="fItalic" Glyph="{dx:DXImage Image=Italic_16x16.png}" IsChecked="{Binding IsItalic, Mode=TwoWay}"  Content="Italic"/>
-                    <dxb:BarCheckItem x:Name="fUnderline" Glyph="{dx:DXImage Image=Underline_16x16.png}"  IsChecked="{Binding IsUnderline, Mode=TwoWay}" Content="Underline"/>
-                </dxb:BarItemMenuHeader>
-            </dxb:BarSubItem>
-            <!--<dxb:BarEditItem x:Name="bMergeStyle" Content="Merge Style:" Alignment="Far" EditValue="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(dxb:MergingProperties.ToolBarMergeStyle), Mode=TwoWay}">
-                <dxb:BarEditItem.EditSettings>
-                    <dxe:ComboBoxEditSettings>
-                        <dxe:ComboBoxEditSettings.Items>
-                            <dxb:ToolBarMergeStyle>All</dxb:ToolBarMergeStyle>
-                            <dxb:ToolBarMergeStyle>MainMenuAndStatusBar</dxb:ToolBarMergeStyle>
-                            <dxb:ToolBarMergeStyle>None</dxb:ToolBarMergeStyle>
-                        </dxe:ComboBoxEditSettings.Items>
-                    </dxe:ComboBoxEditSettings>
-                </dxb:BarEditItem.EditSettings>
-            </dxb:BarEditItem>
-            <dxb:BarCheckItem x:Name="bAllowMerging" Content="AllowMerging" IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(dxb:MergingProperties.ElementMergingBehavior), Mode=TwoWay}" Alignment="Far"/>-->
-        </dxb:MainMenuControl>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" Style="{DynamicResource MenuBaseStyle}">
+                <MenuItem Header="_File" Style="{DynamicResource MenuItemBaseStyle}">
+                    <MenuItem Header="_Open" Style="{DynamicResource MenuItemBaseStyle}"       
+                         cal:Message.Attach="[Event Click] = [Action OnFileOpen();]" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Open_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_Save" Style="{DynamicResource MenuItemBaseStyle}"
+                         cal:Message.Attach="[Event Click] = [Action OnFileSave();]" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/SaveTo_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Exit" Style="{DynamicResource MenuItemBaseStyle}">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Close_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Themes" Style="{DynamicResource MenuItemBaseStyle}">
+                    <MenuItem Header="_RoyalDark" Style="{DynamicResource MenuItemBaseStyle}"
+                              cal:Message.Attach="[Event Click] = [Action OnThemeChange('RoyalDark');]">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/LocalColorScheme_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_RoyalWhite" Style="{DynamicResource MenuItemBaseStyle}"
+                              cal:Message.Attach="[Event Click] = [Action OnThemeChange('RoyalWhite');]">                          
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/LocalColorScheme_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_AeroDark" Style="{DynamicResource MenuItemBaseStyle}"
+                              cal:Message.Attach="[Event Click] = [Action OnThemeChange('AeroDark');]">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/LocalColorScheme_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_AeroWhite" Style="{DynamicResource MenuItemBaseStyle}"
+                              cal:Message.Attach="[Event Click] = [Action OnThemeChange('AeroWhite');]">                              
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/LocalColorScheme_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Help" Style="{DynamicResource MenuItemBaseStyle}">
+                    <MenuItem Header="_DbInfo" Style="{DynamicResource MenuItemBaseStyle}"
+                              cal:Message.Attach="[Event Click] = [Action OnDbInfo();]">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Version_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_About" Style="{DynamicResource MenuItemBaseStyle}"
+                              cal:Message.Attach="[Event Click] = [Action OnAbout();]">
+                        <MenuItem.Icon>
+                            <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Question_16x16.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
     </Grid>
 </UserControl>

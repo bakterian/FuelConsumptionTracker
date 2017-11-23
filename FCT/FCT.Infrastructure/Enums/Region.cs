@@ -5,10 +5,6 @@ namespace FCT.Infrastructure.Enums
     {
         FileMenu,
         CarSelection,
-        Table,
-        Statistics,
-        Spreedsheets,
-        CarData,
-        AddNewCar
+        MainTab
     }
 }

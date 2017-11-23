@@ -1,22 +1,59 @@
 ﻿using FCT.Infrastructure.Interfaces;
 using FCT.Infrastructure.Models;
 using System.Collections.ObjectModel;
-using PostSharp.Patterns.Model;
 
 namespace FCT.Control.ViewModels
 {
-    [NotifyPropertyChanged]
     public class CarSelectionViewModel : RegionBaseViewModel, ICarSelectionViewModel
     {
+        //this is WA to enforce copying of Caliburn Micro DLLs (a reference in the xaml is not enough)
+        private Caliburn.Micro.Parameter _calParameter; 
+
         private readonly IDbReader _dbReader;
 
         private readonly IDbWriter _dbWriter;
 
-        public GenericModel<string> Header { get; set; }
+        private GenericModel<string> _header;
+        public GenericModel<string> Header
+        {
+            get { return _header; }
+            set
+            {
+                if(!value.Equals(_header))
+                {
+                    _header = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
-        public ObservableCollection<CarDescription> CarDescriptions {get; set;}
+        private ObservableCollection<CarDescription> _carDescriptions;
+        public ObservableCollection<CarDescription> CarDescriptions
+        {
+            get { return _carDescriptions; }
+            set
+            {
+                if (!value.Equals(_carDescriptions))
+                {
+                    _carDescriptions = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
-        public CarDescription SelectedCarDescription { get; set; }
+        private CarDescription _selectedCarDescription;
+        public CarDescription SelectedCarDescription
+        {
+            get { return _selectedCarDescription; }
+            set
+            {
+                if (!value.Equals(_selectedCarDescription))
+                {
+                    _selectedCarDescription = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public CarSelectionViewModel
             (

@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCT.App.Console", "FCT.App.Console\FCT.App.Console.csproj", "{7F55FD32-5055-4F33-8C72-F5175E487BB0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCT.DataAccess.UnitTests", "FCT.DataAccess.UnitTests\FCT.DataAccess.UnitTests.csproj", "{8F8BE1A9-69E2-49B2-825B-FFCC21FA233C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2320C4DA-16ED-426D-85D6-109B43B97BE6} = {2320C4DA-16ED-426D-85D6-109B43B97BE6}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCT.Control", "FCT.Control\FCT.Control.csproj", "{2320C4DA-16ED-426D-85D6-109B43B97BE6}"
 EndProject
