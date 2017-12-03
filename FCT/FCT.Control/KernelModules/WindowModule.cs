@@ -21,6 +21,8 @@ namespace FCT.Control.KernelModules
             Bind<IStatisticsViewModel>().To<StatisticsViewModel>().InSingletonScope();
             Bind<IMainTabViewModel>().To<MainTabViewModel>().InSingletonScope();
             Bind<IThemeSwitcher>().ToConstant(GetThemeSwitcher()).InSingletonScope();
+            Bind<IDialogService>().To<DialogService>().InSingletonScope();
+            Bind<IDbActionsNotifier>().To<DbActionsNotifier>().InSingletonScope();
         }
 
         private ThemeSwitcher GetThemeSwitcher()

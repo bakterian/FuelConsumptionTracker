@@ -1,8 +1,11 @@
-﻿using FCT.Control.KernelModules;
+﻿using System;
+using System.ComponentModel;
+using FCT.Control.KernelModules;
 using FCT.Control.RegionModules;
 using FCT.DataAccess.KernelModules;
 using FCT.Infrastructure.Interfaces;
 using Ninject;
+using FCT.Control.Services;
 //TODO: remove un-need presentation interfaces from this project
 namespace FCT.Bootstrapper
 {
@@ -19,6 +22,7 @@ namespace FCT.Bootstrapper
         {//To be triggered from FCT.App.Window
             LoadCommonModule();
             LoadWindowModule();
+            _kernel.Get<ILogger>().Information("Staring window app");
             var root = GetInitializedRootView();
             return root;
         }
@@ -28,6 +32,7 @@ namespace FCT.Bootstrapper
             LoadCommonModule();
             LoadConsoleModule();
             StartConsoleSession();
+            _kernel.Get<ILogger>().Information("Staring console app");
         }
 
         private void LoadConsoleModule()
@@ -44,8 +49,9 @@ namespace FCT.Bootstrapper
 
         private void LoadCommonModule()
         {
+            var commonModule = new CommonModule();
             var dataAccessModule = new DataAccessModule();
-            _kernel.Load(dataAccessModule);
+            _kernel.Load(dataAccessModule, commonModule);
         }
 
         private void StartConsoleSession()
@@ -57,8 +63,14 @@ namespace FCT.Bootstrapper
         private Shell GetInitializedRootView()
         {
             var rootView = new Shell();
+            _kernel.Bind<IAppClosingNotifier>().ToConstant(new AppClosingNotifier(rootView));
             rootView = LoadRegions(rootView);
             return rootView;
+        }
+
+        private void OnAppClosing(object sender, CancelEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private Shell LoadRegions(Shell rootView)

@@ -237,9 +237,9 @@ namespace FCT.Control.Services
                 PetrolType = "gasoline",
                 FuelTankSize = 60,
                 Weight = 1330,
-                TopSpeed = 240.0f,
-                Acceleration = 6.4f,
-                AvgFuelConsumption = 11.4f,
+                TopSpeed = 240.0M,
+                Acceleration = 6.4M,
+                AvgFuelConsumption = 11.4M,
                 ProductionYear = 2009
             };
 
@@ -257,10 +257,10 @@ namespace FCT.Control.Services
                 PetrolStationDesc = petrolStationDesc,
                 PetrolType = "gasoline",
                 FuelingDate = GetCurrentDateTime(),
-                LiterAmount = 100.0f,
-                PricePerLiter = 4.5f,
-                FullPrice = 450.0f,
-                DistanceMade = 3000.0f,
+                LiterAmount = 100.0M,
+                PricePerLiter = 4.5M,
+                FullPrice = 450.0M,
+                DistanceMade = 3000.0M,
                 Terrain = "highways"
             };
             fuelConEntry.FuelConsumption = fuelConEntry.DistanceMade / fuelConEntry.LiterAmount;

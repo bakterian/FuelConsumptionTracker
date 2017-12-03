@@ -51,7 +51,32 @@
     <Reference Include="PresentationFramework">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.5.0\lib\net45\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Formatting.Compact, Version=1.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.1.0.0\lib\net45\Serilog.Formatting.Compact.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Settings.AppSettings, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Settings.AppSettings.2.1.2\lib\net45\Serilog.Settings.AppSettings.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.PeriodicBatching, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.PeriodicBatching.2.1.1\lib\net45\Serilog.Sinks.PeriodicBatching.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.RollingFile, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.RollingFile.3.3.0\lib\net45\Serilog.Sinks.RollingFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.RollingFileAlternate, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.RollingFileAlternate.2.0.9\lib\net451\Serilog.Sinks.RollingFileAlternate.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.Seq, Version=3.4.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.Seq.3.4.0\lib\net45\Serilog.Sinks.Seq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -69,11 +94,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KernelModules\CommonModule.cs" />
     <Compile Include="KernelModules\ConsoleModule.cs" />
     <Compile Include="KernelModules\WindowModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionModules\WindowRegionCollection.cs" />
     <Compile Include="Services\ConsoleRunner.cs" />
+    <Compile Include="Services\DbActionsNotifier.cs" />
+    <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\Logger.cs" />
+    <Compile Include="Services\AppClosingNotifier.cs" />
     <Compile Include="Services\ThemeSwitcher.cs" />
     <Compile Include="ViewModels\CarDataViewModel.cs" />
     <Compile Include="ViewModels\CarSelectionViewModel.cs" />
@@ -109,6 +139,10 @@
     <ProjectReference Include="..\FCT.Infrastructure\FCT.Infrastructure.csproj">
       <Project>{ce826573-38f8-43d3-8dd6-40f821ff69f4}</Project>
       <Name>FCT.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FCT.WindowControls\FCT.WindowControls.csproj">
+      <Project>{c3493ae9-3efb-4493-aade-10c2e4747ced}</Project>
+      <Name>FCT.WindowControls</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

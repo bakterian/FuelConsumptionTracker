@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FCT.Control.Views"
+             xmlns:controls="clr-namespace:FCT.WindowControls.TableControl;assembly=FCT.WindowControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid HorizontalAlignment="Left">
-        <DataGrid ItemsSource="{Binding CarDescriptionCollection}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <controls:TableControl Grid.Row="0" 
+                               TableItems="{Binding CarDescriptionCollection}" 
+                               GroupBy="PetrolType"/>
     </Grid>
 </UserControl>

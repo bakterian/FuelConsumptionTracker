@@ -22,11 +22,16 @@
     </Style>
     <Style x:Key="MenuItemBaseStyle" TargetType="MenuItem" >
         <Setter Property="Background"
-                        Value="{DynamicResource BackgroundBrush}" />
+                        Value="{DynamicResource BackgroundBrushV2}" />
         <Setter Property="Foreground"
                         Value="{DynamicResource ForegroundBrush}" />
         <Setter Property="BorderBrush"
-                        Value="{DynamicResource BackgroundBrush}" />
+                        Value="{DynamicResource BackgroundBrushV2}" />
+    </Style>
+
+    <Style TargetType="GroupBox" >
+        <Setter Property="Foreground"
+                        Value="{DynamicResource ForegroundBrush}" />
     </Style>
 
 </ResourceDictionary>

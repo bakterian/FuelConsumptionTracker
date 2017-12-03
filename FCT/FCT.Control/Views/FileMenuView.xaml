@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="0 0 0 2">
         <DockPanel>
             <Menu DockPanel.Dock="Top" Style="{DynamicResource MenuBaseStyle}">
                 <MenuItem Header="_File" Style="{DynamicResource MenuItemBaseStyle}">

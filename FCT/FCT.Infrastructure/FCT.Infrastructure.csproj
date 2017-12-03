@@ -43,20 +43,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\PresentableItem.cs" />
     <Compile Include="Enums\AppTheme.cs" />
     <Compile Include="Enums\ConsoleUserOption.cs" />
+    <Compile Include="Enums\ItemAction.cs" />
     <Compile Include="Enums\Region.cs" />
+    <Compile Include="Enums\UserResponse.cs" />
+    <Compile Include="Interfaces\IAppClosingNotifier.cs" />
     <Compile Include="Interfaces\ICarDataViewModel.cs" />
     <Compile Include="Interfaces\ICarSelectionViewModel.cs" />
+    <Compile Include="Interfaces\IDbActionsNotifier.cs" />
+    <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\IFileMenuViewModel.cs" />
     <Compile Include="Interfaces\IFuelConsumptionViewModel.cs" />
+    <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IMainTabViewModel.cs" />
+    <Compile Include="Interfaces\INotifyAppClosing.cs" />
+    <Compile Include="Interfaces\INotifyDbActions.cs" />
     <Compile Include="Interfaces\IRegionViewModel.cs" />
     <Compile Include="Interfaces\IStatisticsViewModel.cs" />
     <Compile Include="Interfaces\ITabViewModel.cs" />
     <Compile Include="Interfaces\IThemeSwitcher.cs" />
     <Compile Include="Models\BaseDbModel.cs" />
     <Compile Include="Models\CarDescription.cs" />
+    <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\FuelConEntry.cs" />
     <Compile Include="AbstractionClasses\RegionCollection.cs" />
     <Compile Include="Models\GenericModel.cs" />
@@ -67,12 +77,6 @@
     <Compile Include="Interfaces\IDbReader.cs" />
     <Compile Include="Interfaces\IDbWriter.cs" />
     <Compile Include="Interfaces\IRegionStore.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FCT.WindowControls\FCT.WindowControls.csproj">
-      <Project>{C3493AE9-3EFB-4493-AADE-10C2E4747CED}</Project>
-      <Name>FCT.WindowControls</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

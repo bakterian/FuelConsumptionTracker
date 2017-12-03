@@ -1,5 +1,6 @@
 ﻿using FCT.Infrastructure.Interfaces;
 using FCT.Infrastructure.Models;
+using FCT.WindowControls;
 using System.Collections.ObjectModel;
 
 namespace FCT.Control.ViewModels
@@ -7,11 +8,11 @@ namespace FCT.Control.ViewModels
     public class CarSelectionViewModel : RegionBaseViewModel, ICarSelectionViewModel
     {
         //this is WA to enforce copying of Caliburn Micro DLLs (a reference in the xaml is not enough)
-        private Caliburn.Micro.Parameter _calParameter; 
-
+        private Caliburn.Micro.Parameter _calParameter;
+        private WaObject _waObject;
         private readonly IDbReader _dbReader;
-
         private readonly IDbWriter _dbWriter;
+        private readonly IDbActionsNotifier _dbActionsNotifier;
 
         private GenericModel<string> _header;
         public GenericModel<string> Header
@@ -58,11 +59,13 @@ namespace FCT.Control.ViewModels
         public CarSelectionViewModel
             (
             IDbReader dbReader, 
-            IDbWriter dbWriter
+            IDbWriter dbWriter,
+            IDbActionsNotifier dbActionsNotifier
             )
         {
             _dbReader = dbReader;
             _dbWriter = dbWriter;
+            _dbActionsNotifier = dbActionsNotifier;
         }
 
         public override void Initialize()
@@ -83,6 +86,16 @@ namespace FCT.Control.ViewModels
             var test = true;
             //TODO: fire event aggregator to notify subscribed view models
             //persist the user setting in the database
+        }
+
+        public void OnWrite()
+        {
+            _dbActionsNotifier.FireWriteNotification();
+        }
+
+        public void OnRead()
+        {
+            _dbActionsNotifier.FireReadNotification();
         }
     }
 }

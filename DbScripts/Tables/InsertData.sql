@@ -16,7 +16,7 @@ INSERT INTO [dbo].[CarDescription]
 		   ,[AvgFuelConsumption]
 		   ,[ProductionYear])
      VALUES
-           ('TestCar'
+           ('TestVehicle1'
            ,'Dodge'
            ,'Charger'
            ,431
@@ -44,7 +44,7 @@ INSERT INTO [dbo].[CarDescription]
 		   ,[AvgFuelConsumption]
 		   ,[ProductionYear])
      VALUES
-           ('TestVehicle'
+           ('TestVehicle2'
            ,'Citroen'
            ,'2CV'
            ,16
@@ -56,6 +56,34 @@ INSERT INTO [dbo].[CarDescription]
 		   ,35.0
 		   ,4.4
            ,1963);
+
+if (not exists (select top 1 * from [dbo].[CarDescription] where Description = 'TestVehicle3'))
+INSERT INTO [dbo].[CarDescription]
+           ([Description]
+		   ,[Manufacturer]
+           ,[Model]
+           ,[HorsePower]
+		   ,[EngineSize]
+		   ,[PetrolType]
+           ,[FuelTankSize]
+           ,[Weight]
+		   ,[TopSpeed] 
+		   ,[Acceleration]
+		   ,[AvgFuelConsumption]
+		   ,[ProductionYear])
+     VALUES
+           ('TestVehicle3'
+           ,'Mazda'
+           ,'RX8'
+           ,213
+           ,1308
+		   ,'gasoline'
+           ,60
+           ,1500
+		   ,220
+		   ,5
+		   ,19
+           ,2009);
 		   
 if (not exists (select top 1 * from [dbo].[FuelConsumption] where PetrolStationDesc = 'Shell 1'))
 INSERT INTO [dbo].[FuelConsumption]
