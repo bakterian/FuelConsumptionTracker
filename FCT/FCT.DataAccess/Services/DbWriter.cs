@@ -40,6 +40,19 @@ namespace FCT.DataAccess.Services
             return affectedRows;
         }
 
+        public int DeleteCarDescriptions(IEnumerable<CarDescription> carDescriptions)
+        {
+            var affectedRows = 0;
+
+            using (IDbConnection connection =
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+            {
+                affectedRows = connection.Execute("dbo.spDeleteCarDescription @Id", carDescriptions);
+            }
+
+            return affectedRows;
+        }
+
 
         public int InsertFuelConsumptions(IEnumerable<FuelConEntry> fuelConsumptions)
         {
@@ -66,6 +79,19 @@ namespace FCT.DataAccess.Services
                 affectedRows = connection.Execute("dbo.spUpdateFuelConsumption @Id, @CarId, @PetrolStationDesc,	@PetrolType," +
                     " @FuelingDate, @LiterAmount, @PricePerLiter, @FullPrice, @DistanceMade," +
                     " @FuelConsumption, @Terrain", fuelConsumptions);
+            }
+
+            return affectedRows;
+        }
+
+        public int DeleteFuelConsumptions(IEnumerable<FuelConEntry> fuelConsumptions)
+        {
+            var affectedRows = 0;
+
+            using (IDbConnection connection =
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+            {
+                affectedRows = connection.Execute("dbo.spDeleteFuelConsumption @Id", fuelConsumptions);
             }
 
             return affectedRows;

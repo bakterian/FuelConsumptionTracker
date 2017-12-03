@@ -5,20 +5,22 @@
     <SolidColorBrush x:Key="WindowBorderBrush"
                          Color="White" />
 
-    <SolidColorBrush x:Key="WindowBackgroundBrush"
-                     Color="White"/>
+    <LinearGradientBrush  x:Key="WindowBackgroundBrush" EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+        <GradientStop Color="#FF3E4CDC"/>
+        <GradientStop Color="White" Offset="0.199"/>
+    </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="2ndBackgroundBrush"
-                     Color="#E0F0F0" />
+    <SolidColorBrush Color="WhiteSmoke"  x:Key="BackgroundBrushV2"/>
 
+    <SolidColorBrush x:Key="BackgroundBrush"
+                     Color="White" />
+    
     <SolidColorBrush x:Key="WindowForegroundBrush"
                      Color="Black" />
     <SolidColorBrush x:Key="LabelBrush"
                      Color="Black" />
     <SolidColorBrush x:Key="HighlightBrush"
                      Color="DarkGreen" />
-    <SolidColorBrush x:Key="BackgroundBrush"
-                     Color="White" />
     <SolidColorBrush x:Key="ForegroundBrush"
                      Color="Black" />
 </ResourceDictionary>

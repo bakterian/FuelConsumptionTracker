@@ -131,9 +131,9 @@ Create PROCEDURE [dbo].[spInsertCarDescription]
 	@PetrolType [nvarchar](100),
 	@FuelTankSize [int],
 	@Weight [int],
-	@TopSpeed [float],
-	@Acceleration [float],
-	@AvgFuelConsumption [float],		
+	@TopSpeed [decimal],
+	@Acceleration [decimal],
+	@AvgFuelConsumption [decimal],		
 	@ProductionYear [int]
 )
 AS
@@ -176,6 +176,27 @@ GO
 
 
 
+IF OBJECT_ID('spDeleteCarDescription', 'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[spDeleteCarDescription]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create PROCEDURE [dbo].[spDeleteCarDescription]
+(
+	@Id [int]
+)
+AS
+BEGIN
+	DELETE FROM [dbo].[CarDescription]
+	WHERE Id = @Id;
+END
+GO
+
+
+
 IF OBJECT_ID('spUpdateCarDescription', 'P') IS NOT NULL
     DROP PROCEDURE [dbo].[spUpdateCarDescription]
 GO
@@ -195,9 +216,9 @@ Create PROCEDURE [dbo].[spUpdateCarDescription]
 	@PetrolType [nvarchar](100),
 	@FuelTankSize [int],
 	@Weight [int],
-	@TopSpeed [float],
-	@Acceleration [float],
-	@AvgFuelConsumption [float],		
+	@TopSpeed [decimal],
+	@Acceleration [decimal],
+	@AvgFuelConsumption [decimal],		
 	@ProductionYear [int]
 )
 AS
@@ -238,11 +259,11 @@ Create PROCEDURE [dbo].[spInsertFuelConsumption]
 	@PetrolStationDesc [nvarchar](100),
 	@PetrolType [nvarchar](50),
 	@FuelingDate [datetime],
-	@LiterAmount [float],
-	@PricePerLiter [float],
-	@FullPrice [float],
-	@DistanceMade [float],
-	@FuelConsumption [float],
+	@LiterAmount [decimal],
+	@PricePerLiter [decimal],
+	@FullPrice [decimal],
+	@DistanceMade [decimal],
+	@FuelConsumption [decimal],
 	@Terrain [nvarchar](100)
 )
 AS
@@ -296,11 +317,11 @@ Create PROCEDURE [dbo].[spUpdateFuelConsumption]
 	@PetrolStationDesc [nvarchar](100),
 	@PetrolType [nvarchar](50),
 	@FuelingDate [datetime],
-	@LiterAmount [float],
-	@PricePerLiter [float],
-	@FullPrice [float],
-	@DistanceMade [float],
-	@FuelConsumption [float],
+	@LiterAmount [decimal],
+	@PricePerLiter [decimal],
+	@FullPrice [decimal],
+	@DistanceMade [decimal],
+	@FuelConsumption [decimal],
 	@Terrain [nvarchar](100)
 )
 AS
@@ -319,5 +340,26 @@ BEGIN
 	FuelConsumption = @FuelConsumption,
 	Terrain = @Terrain
 	WHERE Id = @Id
+END
+GO
+
+
+
+IF OBJECT_ID('spDeleteFuelConsumption', 'P') IS NOT NULL
+    DROP PROCEDURE [dbo].[spDeleteFuelConsumption]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+Create PROCEDURE [dbo].[spDeleteFuelConsumption]
+(
+	@Id [int]
+)
+AS
+BEGIN
+	DELETE FROM [dbo].[FuelConsumption]
+	WHERE Id = @Id;
 END
 GO

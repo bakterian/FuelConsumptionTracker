@@ -15,9 +15,9 @@ IF OBJECT_ID('[dbo].[CarDescription]', 'U') IS NULL
 		[PetrolType] [nvarchar](100)  NOT NULL,
 		[FuelTankSize] [int] NOT NULL,
 		[Weight] [int] NOT NULL,
-		[TopSpeed] [float] NOT NULL,
-		[Acceleration] [float] NOT NULL,
-		[AvgFuelConsumption] [float] NOT NULL,		
+		[TopSpeed] [decimal] NOT NULL,
+		[Acceleration] [decimal] NOT NULL,
+		[AvgFuelConsumption] [decimal] NOT NULL,		
 		[ProductionYear] [int] NOT NULL,
 		CONSTRAINT [PK_CarDescription] PRIMARY KEY CLUSTERED
 		([Id] ASC)
@@ -37,11 +37,11 @@ IF OBJECT_ID('[dbo].[FuelConsumption]', 'U') IS NULL
 		[PetrolStationDesc] [nvarchar](100) NOT NULL,
 		[PetrolType] [nvarchar](50) NOT NULL,
 		[FuelingDate] [datetime] NOT NULL,
-		[LiterAmount] [float] NOT NULL,
-		[PricePerLiter] [float] NOT NULL,
-		[FullPrice] [float] NOT NULL,
-		[DistanceMade] [float] NOT NULL,
-		[FuelConsumption] [float] NOT NULL,
+		[LiterAmount] [decimal] NOT NULL,
+		[PricePerLiter] [decimal] NOT NULL,
+		[FullPrice] [decimal] NOT NULL,
+		[DistanceMade] [decimal] NOT NULL,
+		[FuelConsumption] [decimal] NOT NULL,
 		[Terrain] [nvarchar](100) NOT NULL,
 		CONSTRAINT [PK_FuelConsumption] PRIMARY KEY CLUSTERED
 		([Id] ASC)
@@ -50,7 +50,7 @@ IF OBJECT_ID('[dbo].[FuelConsumption]', 'U') IS NULL
 		) ON [PRIMARY]
 		
 		ALTER TABLE [dbo].[FuelConsumption] WITH CHECK ADD CONSTRAINT [FK_FuelConsumption_CarId] FOREIGN KEY (CarId)     
-		REFERENCES [dbo].[CarDescription] ([Id])     
+		REFERENCES [dbo].[CarDescription] ([Id]) ON DELETE CASCADE   
 		ALTER TABLE [dbo].[FuelConsumption] CHECK CONSTRAINT [FK_FuelConsumption_CarId]   
 	END
 GO

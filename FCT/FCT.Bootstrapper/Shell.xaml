@@ -8,7 +8,7 @@
              xmlns:Views="clr-namespace:FCT.Control.Views;assembly=FCT.Control"
              mc:Ignorable="d"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="Window_Loaded" 
+             d:DesignHeight="300" d:DesignWidth="300"
             Style="{DynamicResource WindowBaseStyle}">
     <Grid x:Name="RootTopGrid">
         <Grid.RowDefinitions>
