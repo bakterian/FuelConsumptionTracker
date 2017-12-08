@@ -154,19 +154,23 @@
     <Resource Include="Resources\Icons\Version_16x16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Resources\CommonStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\DataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Themes\DarkTheme.xaml">
+    <Page Include="Resources\Themes\DarkThemeRoyal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\DarkThemeAero.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Themes\WhiteTheme.xaml">
+    <Page Include="Resources\Themes\WhiteThemeAero.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\WhiteThemeRoyal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

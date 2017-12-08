@@ -34,25 +34,25 @@ namespace FCT.Control.KernelModules
                 {
                     Theme = AppTheme.AeroDark,
                     GeneralSourceUri = new Uri("/PresentationFramework.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml", UriKind.Relative),
-                    ColorSourceUri = new Uri("/FCT.Control;component/Resources/Themes/DarkTheme.xaml", System.UriKind.Relative)
+                    ColorSourceUri = new Uri("/FCT.Control;component/Resources/Themes/DarkThemeAero.xaml", System.UriKind.Relative)
                 },
                 new ThemeMap()
                 {
                     Theme = AppTheme.AeroWhite,
                     GeneralSourceUri = new Uri("/PresentationFramework.Aero, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35;component/themes/Aero.NormalColor.xaml", UriKind.Relative),
-                    ColorSourceUri = new Uri("/FCT.Control;component/Resources/Themes/WhiteTheme.xaml", System.UriKind.Relative)
+                    ColorSourceUri = new Uri("/FCT.Control;component/Resources/Themes/WhiteThemeAero.xaml", System.UriKind.Relative)
                 },
                 new ThemeMap()
                 {
                     Theme = AppTheme.RoyalDark,
                     GeneralSourceUri = new Uri("/PresentationFramework.Royale, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35;component/themes/Royale.NormalColor.xaml", System.UriKind.Relative),
-                    ColorSourceUri = new Uri("/FCT.Control;component/Resources/Themes/DarkTheme.xaml", System.UriKind.Relative)
+                    ColorSourceUri = new Uri("/FCT.Control;component/Resources/Themes/DarkThemeRoyal.xaml", System.UriKind.Relative)
                 },
                 new ThemeMap()
                 {
                     Theme = AppTheme.RoyalWhite,
                     GeneralSourceUri = new Uri("/PresentationFramework.Royale, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35;component/themes/Royale.NormalColor.xaml", System.UriKind.Relative),
-                    ColorSourceUri = new Uri("/FCT.Control;component/Resources/Themes/WhiteTheme.xaml", System.UriKind.Relative)
+                    ColorSourceUri = new Uri("/FCT.Control;component/Resources/Themes/WhiteThemeRoyal.xaml", System.UriKind.Relative)
                 }
             }; 
 

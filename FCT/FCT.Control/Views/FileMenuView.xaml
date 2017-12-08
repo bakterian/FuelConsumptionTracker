@@ -8,70 +8,63 @@
              xmlns:enums="clr-namespace:FCT.Infrastructure.Enums;assembly=FCT.Infrastructure"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/FCT.Control;component/Resources/CommonStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid Margin="0 0 0 2">
         <DockPanel>
-            <Menu DockPanel.Dock="Top" Style="{DynamicResource MenuBaseStyle}">
-                <MenuItem Header="_File" Style="{DynamicResource MenuItemBaseStyle}">
-                    <MenuItem Header="_Open" Style="{DynamicResource MenuItemBaseStyle}"       
+            <Menu DockPanel.Dock="Top" >
+                <MenuItem Header="_File" >
+                    <MenuItem Header="_Open"        
                          cal:Message.Attach="[Event Click] = [Action OnFileOpen();]" >
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Open_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Save" Style="{DynamicResource MenuItemBaseStyle}"
+                    <MenuItem Header="_Save" 
                          cal:Message.Attach="[Event Click] = [Action OnFileSave();]" >
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/SaveTo_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="_Exit" Style="{DynamicResource MenuItemBaseStyle}">
+                    <MenuItem Header="_Exit" >
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Close_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Themes" Style="{DynamicResource MenuItemBaseStyle}">
-                    <MenuItem Header="_RoyalDark" Style="{DynamicResource MenuItemBaseStyle}"
+                <MenuItem Header="_Themes" >
+                    <MenuItem Header="_RoyalDark" 
                               cal:Message.Attach="[Event Click] = [Action OnThemeChange('RoyalDark');]">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/LocalColorScheme_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_RoyalWhite" Style="{DynamicResource MenuItemBaseStyle}"
+                    <MenuItem Header="_RoyalWhite" 
                               cal:Message.Attach="[Event Click] = [Action OnThemeChange('RoyalWhite');]">                          
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/LocalColorScheme_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_AeroDark" Style="{DynamicResource MenuItemBaseStyle}"
+                    <MenuItem Header="_AeroDark" 
                               cal:Message.Attach="[Event Click] = [Action OnThemeChange('AeroDark');]">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/LocalColorScheme_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_AeroWhite" Style="{DynamicResource MenuItemBaseStyle}"
+                    <MenuItem Header="_AeroWhite" 
                               cal:Message.Attach="[Event Click] = [Action OnThemeChange('AeroWhite');]">                              
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/LocalColorScheme_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Help" Style="{DynamicResource MenuItemBaseStyle}">
-                    <MenuItem Header="_DbInfo" Style="{DynamicResource MenuItemBaseStyle}"
+                <MenuItem Header="_Help" >
+                    <MenuItem Header="_DbInfo"
                               cal:Message.Attach="[Event Click] = [Action OnDbInfo();]">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Version_16x16.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_About" Style="{DynamicResource MenuItemBaseStyle}"
+                    <MenuItem Header="_About" 
                               cal:Message.Attach="[Event Click] = [Action OnAbout();]">
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Question_16x16.png"/>

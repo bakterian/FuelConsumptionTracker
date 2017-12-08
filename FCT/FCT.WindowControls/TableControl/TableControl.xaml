@@ -10,50 +10,42 @@
         <Style TargetType="Expander" x:Key="ExpanderStyle">
             <Setter Property="IsExpanded" Value="True"/>
         </Style>
+        <Style TargetType="DataGridRow" x:Key="DataGridRowStyle" 
+               BasedOn="{StaticResource {x:Type DataGridRow}}">
+        </Style>
+               
     </UserControl.Resources>
     <Grid HorizontalAlignment="Left">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Border  Grid.Column="0" CornerRadius="4">
-                <StackPanel>
-                    <ComboBox />
-                    <TextBox />
-                    <ToggleButton />
+            <Border Grid.Column="0" CornerRadius="4" BorderThickness="3" 
+                    BorderBrush="{DynamicResource BorderBrush}">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Group By" />
+                    <ComboBox Margin="10 0 0 0" Height="24" Width="90" />
                 </StackPanel>
-            </Border>-->
+            </Border>
+            <Border Grid.Column="1" Margin="10 0 0 0" CornerRadius="4" BorderThickness="3"
+                    BorderBrush="{DynamicResource BorderBrush}">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Label Content="Filter By" />
+                    <ComboBox Margin="10 0 0 0" Height="24" Width="90" />
+                    <TextBox  Margin="10 0 0 0" Height="24" Width="90"  Background="Transparent"/>
+                </StackPanel>
+            </Border>
         </Grid>
         <DataGrid x:Name="TableDataGrid" Grid.Row="1"
                   AlternatingRowBackground="Gainsboro"  AlternationCount="2"
                   CanUserReorderColumns="True" CanUserResizeColumns="True" 
                   CanUserResizeRows="False" AutoGenerateColumns = "True">
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Margin" Value="0,0,0,0"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="DataGridRow">
-                                <Border BorderThickness="{TemplateBinding Border.BorderThickness}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" Name="DGR_Border" SnapsToDevicePixels="True">
-                                    <SelectiveScrollingGrid>
-                                        <DataGridCellsPresenter ItemsPanel="{TemplateBinding ItemsControl.ItemsPanel}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
-                                    </SelectiveScrollingGrid>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsNewItem" Value="True">
-                            <Setter Property="Margin" Value="1,0,0,0"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.RowStyle>
+            
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>

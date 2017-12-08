@@ -9,10 +9,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/FCT.Control;component/Resources/CommonStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/FCT.Control;component/Resources/DataTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="TabControl" x:Key="TabStyle">
+            <Style TargetType="TabControl" x:Key="TabStyle" BasedOn="{StaticResource {x:Type TabControl}}">
                 <Setter Property="ItemTemplate" >
                     <Setter.Value>
                         <DataTemplate>
@@ -20,6 +19,7 @@
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="Margin" Value="5,5,10,7" />
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -27,18 +27,5 @@
         <TabControl ItemsSource="{Binding Tabs}" 
                     SelectedItem="{Binding SelectedTab}" 
                     Style="{StaticResource TabStyle}" />
-        <!--<TabItem Header="Table">
-                <ContentControl x:Name="Table"/>
-            </TabItem>
-            <TabItem Header="Statistics">
-                <ContentControl x:Name="Statsitics"/>
-            </TabItem>
-            <TabItem Header="Spreadsheets">
-                <ContentControl x:Name="Spreadsheets"/>
-            </TabItem>
-            <TabItem Header="Car Data">
-                <ContentControl x:Name="CarData"/>
-            </TabItem>-->
-
     </Grid>
 </UserControl>
