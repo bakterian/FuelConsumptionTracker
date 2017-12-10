@@ -42,7 +42,6 @@
             </Border>
         </Grid>
         <DataGrid x:Name="TableDataGrid" Grid.Row="1"
-                  AlternatingRowBackground="Gainsboro"  AlternationCount="2"
                   CanUserReorderColumns="True" CanUserResizeColumns="True" 
                   CanUserResizeRows="False" AutoGenerateColumns = "True">
             
