@@ -25,7 +25,7 @@ namespace FCT.WindowControls.TableControl
 
         public static readonly DependencyProperty GroupByProperty =
         DependencyProperty.Register("GroupBy",typeof(string), typeof(TableControl),
-            new PropertyMetadata(null));
+            new PropertyMetadata(string.Empty));
 
         private static void onDepPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -40,8 +40,8 @@ namespace FCT.WindowControls.TableControl
         }
 
         public ICollectionView TableItemsCollcetionView { get; private set; }
-
         public TableControlViewModel TableControlVM { get; private set; }
+
         public TableControl()
         {
             InitializeComponent();
@@ -54,20 +54,35 @@ namespace FCT.WindowControls.TableControl
 
         private void InitializeControl()
         {
+
             TableItemsCollcetionView = CollectionViewSource.GetDefaultView(TableItems);
             if (TableItemsCollcetionView != null)
             {
                 TableControlVM = new TableControlViewModel();
                 TableControlVM.TableItems = TableItems;
-                TableControlVM.GroupBy = GroupBy;
+
+                TableControlVM.GroupBySelection = GroupBy;
                 TableControlVM.GroupDescriptions = TableItemsCollcetionView.GroupDescriptions;
-                TableControlVM.AddGrouping();
-                //DataContext = TableControlVM;
+                TableControlVM.GetTableGroupNames();
+
+                TableControlVM.GroupingEnabled = !string.IsNullOrEmpty(GroupBy);
+                if(string.IsNullOrEmpty(GroupBy) &&
+                    TableControlVM.TableGroupNames.Count > 0)
+                {
+                    TableControlVM.GroupBySelection = TableControlVM.TableGroupNames[0];
+                }
+                if(TableControlVM.GroupingEnabled)
+                {
+                    TableControlVM.AddGrouping();
+                }
+
+                TableControlVM.RefreshAction = TableItemsCollcetionView.Refresh;
 
                 UnregisterDataItemsCollectionEventHandlers();
                 RegisterDataItemsCollectionEventHandlers();
 
                 TableDataGrid.ItemsSource = TableItemsCollcetionView;
+                DataContext = TableControlVM;
             }
         }
 
