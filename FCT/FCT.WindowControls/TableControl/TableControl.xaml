@@ -4,16 +4,113 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FCT.WindowControls.TableControl"
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <Style TargetType="Expander" x:Key="ExpanderStyle">
-            <Setter Property="IsExpanded" Value="True"/>
+        <Style x:Key="FilterGroupCombobox" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="ItemsSource" Value="{Binding TableGroupNames, Mode=OneWay}" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="130" />
+            <Setter Property="Margin" Value="10 0 0 0" />
         </Style>
         <Style TargetType="DataGridRow" x:Key="DataGridRowStyle" 
                BasedOn="{StaticResource {x:Type DataGridRow}}">
         </Style>
-               
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Background" Color="#FF2D2D30"/>
+        <SolidColorBrush x:Key="Button.Border" Color="#FFF1F1F1"/>
+        <SolidColorBrush x:Key="Button.Foreground" Color="#FFF1F1F1"/>
+        <SolidColorBrush x:Key="MiddleBorder.BorderBrush" Color="#FF474749"/>
+        <LinearGradientBrush x:Key="MiddleBorder.Background"  EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF006483" Offset="1"/>
+            <GradientStop Color="#FFCBE8F3"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="InnerBorder.Background"  EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF2D2D30" Offset="0.988"/>
+            <GradientStop Color="#FF878787"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Border}"/>
+            <Setter Property="Foreground" Value="{StaticResource Button.Foreground}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid >
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                    <VisualState x:Name="Pressed"/>
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentControl.Content)" Storyboard.TargetName="contentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="ON"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="InnerBorder">
+                                                <EasingThicknessKeyFrame KeyTime="0" Value="0,0,24,0"/>
+                                            </ThicknessAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentControl.Content)" Storyboard.TargetName="contentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="OFF"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="InnerBorder">
+                                                <EasingThicknessKeyFrame KeyTime="0" Value="24,0,0,0"/>
+                                            </ThicknessAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Indeterminate">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentControl.Content)" Storyboard.TargetName="contentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="?"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="InnerBorder">
+                                                <EasingThicknessKeyFrame KeyTime="0" Value="24,0,0,0"/>
+                                            </ThicknessAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="border" CornerRadius="10" BorderBrush="{StaticResource Button.Background}" BorderThickness="1" Background="{TemplateBinding Background}" SnapsToDevicePixels="true" >
+                                <Border x:Name="MiddleBorder" Margin="1,1" CornerRadius="8" BorderBrush="{StaticResource MiddleBorder.BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{StaticResource MiddleBorder.Background}" SnapsToDevicePixels="true" >
+                                    <Border x:Name="InnerBorder" Margin="24,0,0,0" CornerRadius="6" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Background="{StaticResource InnerBorder.Background}" SnapsToDevicePixels="true" >
+                                        <ContentPresenter x:Name="contentPresenter" Content="?" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                    </Border>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="DataGridComboBoxStyle" TargetType="ComboBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=FilterToggle, Path=IsChecked}" Value="False">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid HorizontalAlignment="Left">
         <Grid.RowDefinitions>
@@ -25,26 +122,68 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" CornerRadius="4" BorderThickness="3" 
+            <GroupBox Grid.Column="0" Header="Group By" BorderThickness="3" 
                     BorderBrush="{DynamicResource BorderBrush}">
                 <StackPanel Orientation="Horizontal" Margin="10">
-                    <Label Content="Group By" />
-                    <ComboBox Margin="10 0 0 0" Height="24" Width="90" />
+                    <ToggleButton Style="{DynamicResource ToggleButtonStyle}" 
+                                  IsChecked="{Binding GroupingEnabled, Mode=TwoWay}"
+                                  Height="24" Width="60" x:Name="GroupToggle" 
+                                  cal:Message.Attach="[Event Checked] = [Action OnGroupByEnableChange()];
+                                  [Event Unchecked] = [Action OnGroupByEnableChange()]"/>
+                    <ComboBox SelectedItem="{Binding GroupBySelection}" 
+                              cal:Message.Attach="[Event SelectionChanged] = [Action OnGroupBySelectionChange()]" >
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource FilterGroupCombobox}">
+                            <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=GroupToggle, Path=IsChecked}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
                 </StackPanel>
-            </Border>
-            <Border Grid.Column="1" Margin="10 0 0 0" CornerRadius="4" BorderThickness="3"
+            </GroupBox>
+            <GroupBox Grid.Column="1" Margin="20 0 0 0" Header="Filter By" BorderThickness="3"
                     BorderBrush="{DynamicResource BorderBrush}">
                 <StackPanel Orientation="Horizontal" Margin="10">
-                    <Label Content="Filter By" />
-                    <ComboBox Margin="10 0 0 0" Height="24" Width="90" />
-                    <TextBox  Margin="10 0 0 0" Height="24" Width="90"  Background="Transparent"/>
+                    <ToggleButton Style="{DynamicResource ToggleButtonStyle}" 
+                                  Height="24" Width="60" x:Name="FilterToggle"
+                                  IsChecked="{Binding FilteringEnabled, Mode=TwoWay}"
+                                  cal:Message.Attach="[Event Checked] = [Action OnFilterByChange()];
+                                  [Event Unchecked] = [Action OnFilterByChange()]"/>
+                    <ComboBox SelectedItem="{Binding FilterBySelection}" 
+                              cal:Message.Attach="[Event SelectionChanged] = [Action OnFilterByChange()];" >
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource FilterGroupCombobox}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=FilterToggle, Path=IsChecked}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <TextBox  Margin="10 0 0 0" Height="24" Width="130" 
+                              Text="{Binding FilterPhrase, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Background="Transparent">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=FilterToggle, Path=IsChecked}" Value="False">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <Setter Property="Foreground" Value="Transparent" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </StackPanel>
-            </Border>
+            </GroupBox>
         </Grid>
         <DataGrid x:Name="TableDataGrid" Grid.Row="1"
                   CanUserReorderColumns="True" CanUserResizeColumns="True" 
                   CanUserResizeRows="False" AutoGenerateColumns = "True">
-            
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -54,27 +193,6 @@
                             </StackPanel>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander Style="{StaticResource ExpanderStyle}">
-                                            <Expander.Header>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Path=Name}" />
-                                                    <TextBlock Text=" " />
-                                                    <TextBlock Text="{Binding Path=ItemCount}"/>
-                                                    <TextBlock Text=" Items"/>
-                                                </StackPanel>
-                                            </Expander.Header>
-                                            <ItemsPresenter />
-                                        </Expander>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </DataGrid.GroupStyle>
         </DataGrid>
