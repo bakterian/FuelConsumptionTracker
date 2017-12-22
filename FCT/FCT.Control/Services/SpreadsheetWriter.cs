@@ -38,6 +38,7 @@ namespace FCT.Control.Services
             }
             else
             {
+                if(saveFileInfo.Exists) saveFileInfo.Delete();
                 using (var package = new ExcelPackage(saveFileInfo))
                 {
                     foreach (var worksheetPayload in worksheetPayloads)

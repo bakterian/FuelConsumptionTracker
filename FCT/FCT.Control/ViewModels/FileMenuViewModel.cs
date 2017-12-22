@@ -87,9 +87,14 @@ namespace FCT.Control.ViewModels
                 var saveWasSuccessfull = await _spreadsheetGoverner.SaveDbDataToExcelFileAsync(saveFilePath);
                 //consider displaying a spinner if these operation take to long
                 // the spinner would stop at this point
-                if (!saveWasSuccessfull)
+
+                if (saveWasSuccessfull)
                 {
-                    PopulateErrorMsg("File Save", "Save file operation was unsuccessfull.");
+                    PopulateInfoMsg("File Save", "Save file operation was successfull.");
+                }
+                else
+                {
+                    PopulateErrorMsg("File Save", "Save file operation was  not successfull.");
                 }
             }
         }
@@ -98,6 +103,13 @@ namespace FCT.Control.ViewModels
         {
             _logger.Error(errorMsg);
             _dialogService.ShowErrorMsg(caption, errorMsg);
+            //TODO: switch to toast message in stead of the old pop-up dialog
+        }
+
+        private void PopulateInfoMsg(string caption, string infoMsg)
+        {
+            _logger.Information(infoMsg);
+            _dialogService.ShowInfoMsg(caption, infoMsg);
             //TODO: switch to toast message in stead of the old pop-up dialog
         }
 
