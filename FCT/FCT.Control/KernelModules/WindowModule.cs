@@ -23,6 +23,11 @@ namespace FCT.Control.KernelModules
             Bind<IThemeSwitcher>().ToConstant(GetThemeSwitcher()).InSingletonScope();
             Bind<IDialogService>().To<DialogService>().InSingletonScope();
             Bind<IDbActionsNotifier>().To<DbActionsNotifier>().InSingletonScope();
+            Bind<IFileDialogService>().To<FileDialogService>();
+            Bind<IDataTableMapper>().To<DataTableMapper>();
+            Bind<ISpreadsheetWriter>().To<SpreadsheetWriter>();
+            Bind<ISpreadsheetReader>().To<SpreadsheetReader>();
+            Bind<ISpreadsheetGoverner>().To<SpreadsheetGoverner>();
         }
 
         private ThemeSwitcher GetThemeSwitcher()

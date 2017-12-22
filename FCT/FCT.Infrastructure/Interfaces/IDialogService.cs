@@ -6,8 +6,8 @@ namespace FCT.Infrastructure.Interfaces
     {
         UserResponse AskUser(string caption, string question);
 
-        void ShowInfoMsg(string caption, string question);
+        void ShowInfoMsg(string caption, string errorMsg);
 
-        void ShowErrorMsg(string caption, string question);
+        void ShowErrorMsg(string caption, string infoMsg);
     }
 }
