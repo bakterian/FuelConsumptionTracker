@@ -5,6 +5,8 @@ namespace FCT.Infrastructure.Models
 {
     public abstract class BaseDbModel
     {
+        public int Id { get; set; }
+
         public abstract string Summary { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;

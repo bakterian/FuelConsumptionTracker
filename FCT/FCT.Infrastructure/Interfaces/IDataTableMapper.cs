@@ -11,6 +11,10 @@ namespace FCT.Infrastructure.Interfaces
 
         DataTable ConvertToDataTable<T>(IEnumerable<T> data, Attribute[] supportedPropAttributes);
 
-        IEnumerable<T> ConvertToEnumerable<T>(DataTable dataTable);
+        bool IsConversionToEnumerablePossible<T>(DataTable dataTable, Attribute[] supportedPropAttributes);
+
+        Task<IEnumerable<T>> ConvertToDbEnumerableAsync<T>(DataTable dataTable, Attribute[] supportedPropAttributes) where T : new(); 
+
+        IEnumerable<T> ConvertToDbEnumerable<T>(DataTable dataTable, Attribute[] supportedPropAttributes) where T : new();
     }
 }

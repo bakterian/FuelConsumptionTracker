@@ -1,4 +1,5 @@
 ﻿using FCT.Infrastructure.Attributes;
+using System.Collections.Generic;
 
 namespace FCT.Infrastructure.Models
 {
@@ -14,8 +15,6 @@ namespace FCT.Infrastructure.Models
         private decimal _distanceMade;
         private decimal _fuelConsumption;
         private string _terrain;
-
-        public int Id { get; set; }
 
         [PresentableItem]
         public int CarId
@@ -155,6 +154,47 @@ namespace FCT.Infrastructure.Models
                     RaisePropertyChanged();
                 }
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            var isEqual = false;
+            var item = obj as FuelConEntry;
+
+            if (item != null &&
+                CarId == item.CarId &&
+                PetrolStationDesc == item.PetrolStationDesc &&
+                PetrolType == item.PetrolType &&
+                FuelingDate == item.FuelingDate &&
+                LiterAmount == item.LiterAmount &&
+                PricePerLiter == item.PricePerLiter &&
+                FullPrice == item.FullPrice &&
+                DistanceMade == item.DistanceMade &&
+                FuelConsumption == item.FuelConsumption &&
+                Terrain == item.Terrain
+                )
+            {
+
+                isEqual = true;
+            }
+
+            return isEqual;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1402654746;
+            hashCode = hashCode * -1521134295 + CarId.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PetrolStationDesc);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PetrolType);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FuelingDate);
+            hashCode = hashCode * -1521134295 + LiterAmount.GetHashCode();
+            hashCode = hashCode * -1521134295 + PricePerLiter.GetHashCode();
+            hashCode = hashCode * -1521134295 + FullPrice.GetHashCode();
+            hashCode = hashCode * -1521134295 + DistanceMade.GetHashCode();
+            hashCode = hashCode * -1521134295 + FuelConsumption.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Terrain);
+            return hashCode;
         }
 
         public override string Summary =>

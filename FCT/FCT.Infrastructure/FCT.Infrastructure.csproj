@@ -54,6 +54,8 @@
     <Compile Include="Interfaces\ICarSelectionViewModel.cs" />
     <Compile Include="Interfaces\IDataTableMapper.cs" />
     <Compile Include="Interfaces\IDbActionsNotifier.cs" />
+    <Compile Include="Interfaces\IDbTabVmStore.cs" />
+    <Compile Include="Interfaces\IDbTabViewModel.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
     <Compile Include="Interfaces\ISpreadsheetGoverner.cs" />
     <Compile Include="Interfaces\ISpreadsheetReader.cs" />
@@ -86,5 +88,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

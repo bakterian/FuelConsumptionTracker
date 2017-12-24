@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <controls:TableControl Grid.Row="0" 
-                               TableItems="{Binding FuelConEntries}" 
+                               TableItems="{Binding TableDataCollection}" 
                                GroupBy="CarId"/>
     </Grid>
 </UserControl>

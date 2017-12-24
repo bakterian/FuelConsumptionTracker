@@ -4,11 +4,20 @@ using System.ComponentModel;
 using System.Data;
 using FCT.Infrastructure.Interfaces;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Reflection;
 
 namespace FCT.Control.Services
 {
     public class DataTableMapper : IDataTableMapper
     {
+        private readonly ILogger _logger;
+
+        public DataTableMapper(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public Task<DataTable> ConvertToDataTableAsync<T>(IEnumerable<T> data, Attribute[] supportedPropAttributes)
         {
             return Task.FromResult<DataTable>(ConvertToDataTable(data, supportedPropAttributes));
@@ -38,9 +47,122 @@ namespace FCT.Control.Services
             return dataTable;
         }
 
-        public IEnumerable<T> ConvertToEnumerable<T>(DataTable dataTable)
+        public Task<IEnumerable<T>> ConvertToDbEnumerableAsync<T>(DataTable dataTable, Attribute[] supportedPropAttributes) where T : new()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(ConvertToDbEnumerable<T>(dataTable, supportedPropAttributes));
         }
+
+        public IEnumerable<T> ConvertToDbEnumerable<T>(DataTable dataTable, Attribute[] supportedPropAttributes) where T : new()
+        {
+            var supportedProperties = GetSupportedProperties<T>(supportedPropAttributes);
+
+            var itemCollection = new List<T>();
+
+            var row = dataTable.Rows[0];
+
+            foreach (DataRow dataTableRow in dataTable.Rows)
+            {
+                var newItem = new T();
+                for (var i = 0; i < supportedProperties.Count; i++)
+                {
+                    var colValue = dataTableRow.ItemArray[i];
+                    var targetProperty = supportedProperties[i];
+                    targetProperty.SetValue(newItem, Convert.ChangeType(colValue, targetProperty.PropertyType));
+                }
+                itemCollection.Add(newItem);
+            }
+
+            return itemCollection;
+        }
+
+        public bool IsConversionToEnumerablePossible<T>(DataTable dataTable, Attribute[] supportedPropAttributes)
+        {
+            var conversionPossible = false;
+
+            if (dataTable.Rows.Count == 0 && dataTable.Columns.Count == 0)
+            {
+                _logger.Error("DataTable contains no elements.");
+            }
+            else if (dataTable.Rows.Count == 0)
+            {
+                _logger.Error("DataTable contains no elemet rows.");
+            }
+            else if (dataTable.Columns.Count != GetSupportedProperties<T>(supportedPropAttributes).Count)
+            {
+                _logger.Error($"DataTable column vs target properties count mismatch.\nDataTable: {dataTable.Columns.Count}, TargetProperties: {GetSupportedProperties<T>(supportedPropAttributes).Count}.");
+            }
+            else if (!ColumnNamesMatchTargetProperties<T>(dataTable, supportedPropAttributes))
+            {
+                _logger.Error("DataTable column names are not matching target property names.");
+            }
+            else if (!DataTableRowWidthIsConsistent(dataTable))
+            {
+                _logger.Error("DataTable row width is not consistent.");
+            }
+            else
+            {
+                conversionPossible = true;
+            }
+
+            return conversionPossible;
+        }
+
+        private static List<PropertyInfo> GetSupportedProperties<T>(Attribute[] supportedPropAttributes)
+        {
+            var suppAttributeTypes = supportedPropAttributes.Select(_ => _.GetType());
+
+            Func<IEnumerable<CustomAttributeData>, bool> ContainsSuppAttributes =
+                (customAttributes) => customAttributes.Any(_ => suppAttributeTypes.Contains(_.AttributeType));
+
+            var supportedProperties = typeof(T)
+                .GetProperties()
+                .Where(x => ContainsSuppAttributes(x.CustomAttributes))
+                .ToList();
+            return supportedProperties;
+        }
+
+        private bool ColumnNamesMatchTargetProperties<T>(DataTable dataTable, Attribute[] supportedPropAttributes)
+        {
+            var isMatch = true;
+
+            var suppPropertyNames = GetSupportedProperties<T>(supportedPropAttributes).Select(_ => _.Name).ToArray();
+            var dataColumns= dataTable.Columns;
+
+            for (int i = 0; i < suppPropertyNames.Count(); i++)
+            {
+                if(!dataColumns[i].ColumnName.Equals(suppPropertyNames[i]))
+                {
+                    isMatch = false;
+                    break;
+                }
+            }
+            return isMatch;
+        }
+
+        private bool DataTableRowWidthIsConsistent(DataTable dataTable)
+        {
+            var rowsAreEqaulSized = true;
+            var colCount = dataTable.Columns.Count;
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                if(!dataRow.ItemArray.Count().Equals(colCount))
+                {
+                    rowsAreEqaulSized = false;
+                    break;
+                }
+                foreach (var item in dataRow.ItemArray)
+                {
+                    if(!(item is string))
+                    {
+                        rowsAreEqaulSized = false;
+                        break;
+                    }
+                }
+            }
+
+            return rowsAreEqaulSized;
+        }
+        
     }
 }

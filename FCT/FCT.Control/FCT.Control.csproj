@@ -105,6 +105,7 @@
     <Compile Include="Services\ConsoleRunner.cs" />
     <Compile Include="Services\DataTableMapper.cs" />
     <Compile Include="Services\DbActionsNotifier.cs" />
+    <Compile Include="Services\DbTabVmStore.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\SpreadsheetGoverner.cs" />
     <Compile Include="Services\SpreadsheetReader.cs" />
@@ -120,7 +121,7 @@
     <Compile Include="ViewModels\MainTabViewModel.cs" />
     <Compile Include="ViewModels\RegionBaseViewModel.cs" />
     <Compile Include="ViewModels\StatisticsViewModel.cs" />
-    <Compile Include="ViewModels\TabBaseViewModel.cs" />
+    <Compile Include="ViewModels\DbTabBaseViewModel.cs" />
     <Compile Include="Views\CarDataView.xaml.cs">
       <DependentUpon>CarDataView.xaml</DependentUpon>
     </Compile>

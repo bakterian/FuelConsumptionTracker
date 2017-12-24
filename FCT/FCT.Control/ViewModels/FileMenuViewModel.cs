@@ -1,6 +1,7 @@
 ﻿using FCT.Infrastructure.Enums;
 using FCT.Infrastructure.Interfaces;
 using System;
+using System.IO;
 
 namespace FCT.Control.ViewModels
 {
@@ -33,13 +34,12 @@ namespace FCT.Control.ViewModels
         }
 
         public void OnFileOpen()
-        {
-
+        {   //WA for Caliburn as it does not support async methods
+            LoadFile();
         }
 
         public void OnFileSave()
         {   //WA for Caliburn as it does not support async methods
-            //TODO: ask user to save data in the DB if there is dirty data
             SaveFile();
         }
 
@@ -75,16 +75,58 @@ namespace FCT.Control.ViewModels
 
         }
 
-        private async void SaveFile()
+        private async void LoadFile()
         {
-            var saveFilePath = _fileDialogService.GetSaveFilePath();
-            if (string.IsNullOrEmpty(saveFilePath))
+            var openFilePath = _fileDialogService.GetOpenFilePath();
+
+            if (openFilePath.Equals("Operation Aborted"))
             {
-                PopulateErrorMsg("File Save", "The specified path is invalid.");
+                _logger.Information("[FileMenuViewModel] Load operation was aborted.");
+            }
+
+            else if (string.IsNullOrEmpty(openFilePath) || !(new FileInfo(openFilePath).Exists))
+            {
+                PopulateErrorMsg("File Open", "The specified path is invalid.");
+            }
+            else if (IsFileLocked(new FileInfo(openFilePath)))
+            {
+                PopulateErrorMsg("File Open", "The specified is locked.\nPlease make sure that the file is not opened in other programs.");
             }
             else
             {
-                var saveWasSuccessfull = await _spreadsheetGoverner.SaveDbDataToExcelFileAsync(saveFilePath);
+                var loadWasSuccessfull = await _spreadsheetGoverner.LoadTableDatafromExcelFileAsync(openFilePath);
+
+                if (loadWasSuccessfull)
+                {
+                    PopulateInfoMsg("File Load", "Load file operation was successfull.");
+                }
+                else
+                {
+                    PopulateErrorMsg("File Load", "Load file operation was not successfull.\nCheck error log for details.");
+                }
+            }
+        }
+
+        private async void SaveFile()
+        {
+            var saveFilePath = _fileDialogService.GetSaveFilePath();
+
+            if (saveFilePath.Equals("Operation Aborted"))
+            {
+                _logger.Information("[FileMenuViewModel] Save operation was aborted.");
+            }
+
+            else if (string.IsNullOrEmpty(saveFilePath))
+            {
+                PopulateErrorMsg("File Save", "The specified path is invalid.");
+            }
+            else if((new FileInfo(saveFilePath)).Exists && IsFileLocked(new FileInfo(saveFilePath)))
+            {
+                PopulateErrorMsg("File Save", "The specified is locked.\nPlease make sure that the file is not opened in other programs.");
+            }
+            else
+            {
+                var saveWasSuccessfull = await _spreadsheetGoverner.SaveTableDataToExcelFileAsync(saveFilePath);
                 //consider displaying a spinner if these operation take to long
                 // the spinner would stop at this point
 
@@ -94,7 +136,7 @@ namespace FCT.Control.ViewModels
                 }
                 else
                 {
-                    PopulateErrorMsg("File Save", "Save file operation was  not successfull.");
+                    PopulateErrorMsg("File Save", "Save file operation was  not successfull.\nCheck error log for details.");
                 }
             }
         }
@@ -113,5 +155,30 @@ namespace FCT.Control.ViewModels
             //TODO: switch to toast message in stead of the old pop-up dialog
         }
 
+        protected virtual bool IsFileLocked(FileInfo file)
+        {
+            var fileIsLocked = false;
+            FileStream stream = null;
+
+            try
+            {
+                stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                fileIsLocked = true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            return fileIsLocked;
+        }
     }
 }

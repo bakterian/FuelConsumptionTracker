@@ -1,5 +1,6 @@
 ﻿using FCT.Infrastructure.Interfaces;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FCT.Control.ViewModels
 {
@@ -8,6 +9,7 @@ namespace FCT.Control.ViewModels
         private readonly IFuelConsumptionViewModel _fuelConsumptonViewModel;
         private readonly ICarDataViewModel _carDataViewModel;
         private readonly IStatisticsViewModel _statisticsViewModel;
+        private readonly IDbTabVmStore _dbTabVmStore;
 
         private ObservableCollection<ITabViewModel> _tabs;
         public ObservableCollection<ITabViewModel> Tabs
@@ -41,12 +43,14 @@ namespace FCT.Control.ViewModels
             (
                 IFuelConsumptionViewModel fuelConsumptionViewModel,
                 ICarDataViewModel carDataViewModel,
-                IStatisticsViewModel statisticsViewModel
+                IStatisticsViewModel statisticsViewModel,
+                IDbTabVmStore dbTabVmStore
             )
         {
             _fuelConsumptonViewModel = fuelConsumptionViewModel;
             _carDataViewModel = carDataViewModel;
             _statisticsViewModel = statisticsViewModel;
+            _dbTabVmStore = dbTabVmStore;
         }
 
         public override void Initialize()
@@ -57,6 +61,8 @@ namespace FCT.Control.ViewModels
             AddInitilizedTab(_carDataViewModel);
             AddInitilizedTab(_statisticsViewModel);
 
+            InitiliazeDbVmStore();
+
             SelectedTab = _fuelConsumptonViewModel;
         }
         
@@ -64,6 +70,14 @@ namespace FCT.Control.ViewModels
         {
             tabViewModel.Init();
             Tabs.Add(tabViewModel);
+        }
+
+        private void InitiliazeDbVmStore()
+        {
+            foreach (var tab in Tabs)
+            {
+                if (tab is IDbTabViewModel) _dbTabVmStore.Add((IDbTabViewModel)tab);
+            }
         }
 
     }
