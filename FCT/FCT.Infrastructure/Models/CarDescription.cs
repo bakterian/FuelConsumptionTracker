@@ -1,4 +1,5 @@
 ﻿using FCT.Infrastructure.Attributes;
+using System.Collections.Generic;
 
 namespace FCT.Infrastructure.Models
 {
@@ -17,8 +18,6 @@ namespace FCT.Infrastructure.Models
         private decimal _avgFuelConsumption;
         private int _productionYear;
 
-
-        public int Id { get; set; }
 
         [PresentableItem]
         public string Description
@@ -189,5 +188,50 @@ namespace FCT.Infrastructure.Models
 
         public override string Summary =>
             $"Id: {Id}\nDescription: {Description}\nManufucaturer: {Manufacturer}\nModel: {Model}\nHorsePower: {HorsePower}";
+
+        public override bool Equals(object obj)
+        {
+            var isEqual = false;
+            var item = obj as CarDescription;
+
+            if (item != null &&
+                Description == item.Description &&
+                Manufacturer == item.Manufacturer &&
+                Model == item.Model &&
+                HorsePower == item.HorsePower &&
+                EngineSize == item.EngineSize &&
+                PetrolType == item.PetrolType &&
+                FuelTankSize == item.FuelTankSize &&
+                Weight == item.Weight &&
+                TopSpeed == item.TopSpeed &&
+                Acceleration == item.Acceleration &&
+                AvgFuelConsumption == item.AvgFuelConsumption &&
+                ProductionYear == item.ProductionYear 
+                )
+            {
+
+                isEqual = true;
+            }
+
+            return isEqual;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 988141777;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Description);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Manufacturer);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Model);
+            hashCode = hashCode * -1521134295 + HorsePower.GetHashCode();
+            hashCode = hashCode * -1521134295 + EngineSize.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PetrolType);
+            hashCode = hashCode * -1521134295 + FuelTankSize.GetHashCode();
+            hashCode = hashCode * -1521134295 + Weight.GetHashCode();
+            hashCode = hashCode * -1521134295 + TopSpeed.GetHashCode();
+            hashCode = hashCode * -1521134295 + Acceleration.GetHashCode();
+            hashCode = hashCode * -1521134295 + AvgFuelConsumption.GetHashCode();
+            hashCode = hashCode * -1521134295 + ProductionYear.GetHashCode();
+            return hashCode;
+        }
     }
 }

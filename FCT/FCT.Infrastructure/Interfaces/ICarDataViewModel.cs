@@ -1,7 +1,7 @@
 ﻿
 namespace FCT.Infrastructure.Interfaces
 {
-    public interface ICarDataViewModel : ITabViewModel
+    public interface ICarDataViewModel : IDbTabViewModel
     {
     }
 }

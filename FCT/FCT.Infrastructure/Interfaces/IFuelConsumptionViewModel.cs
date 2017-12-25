@@ -1,7 +1,7 @@
 ﻿
 namespace FCT.Infrastructure.Interfaces
 {
-    public interface IFuelConsumptionViewModel : ITabViewModel
+    public interface IFuelConsumptionViewModel : IDbTabViewModel
     {
     }
 }

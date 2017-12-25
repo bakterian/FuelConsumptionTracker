@@ -15,14 +15,14 @@ namespace FCT.Control.Services
             return response == DialogResult.Yes ? UserResponse.Affirmative : UserResponse.Negative;
         }
 
-        public void ShowErrorMsg(string caption, string question)
+        public void ShowErrorMsg(string caption, string errorMsg)
         {
-            MessageBox.Show(question, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(errorMsg, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public void ShowInfoMsg(string caption, string question)
+        public void ShowInfoMsg(string caption, string infoMsg)
         {
-            MessageBox.Show(question, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(infoMsg, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

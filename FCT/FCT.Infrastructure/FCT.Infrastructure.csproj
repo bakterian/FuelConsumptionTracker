@@ -52,8 +52,15 @@
     <Compile Include="Interfaces\IAppClosingNotifier.cs" />
     <Compile Include="Interfaces\ICarDataViewModel.cs" />
     <Compile Include="Interfaces\ICarSelectionViewModel.cs" />
+    <Compile Include="Interfaces\IDataTableMapper.cs" />
     <Compile Include="Interfaces\IDbActionsNotifier.cs" />
+    <Compile Include="Interfaces\IDbTabVmStore.cs" />
+    <Compile Include="Interfaces\IDbTabViewModel.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />
+    <Compile Include="Interfaces\ISpreadsheetGoverner.cs" />
+    <Compile Include="Interfaces\ISpreadsheetReader.cs" />
+    <Compile Include="Interfaces\ISpreadsheetWriter.cs" />
+    <Compile Include="Interfaces\IFileDialogService.cs" />
     <Compile Include="Interfaces\IFileMenuViewModel.cs" />
     <Compile Include="Interfaces\IFuelConsumptionViewModel.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
@@ -81,5 +88,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
