@@ -29,7 +29,7 @@ namespace FCT.Control.UnitTests
                 CarId = 1,
                 PetrolStationDesc = "shell",
                 PetrolType = "gasoline",
-                FuelingDate = DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss.fff"),
+                FuelingDate = new DateTime(2015, 07, 09),
                 LiterAmount = 100.0M,
                 PricePerLiter = 4.5M,
                 FullPrice = 450.0M,
@@ -42,7 +42,7 @@ namespace FCT.Control.UnitTests
                 CarId = 1,
                 PetrolStationDesc = "bp",
                 PetrolType = "gasoline",
-                FuelingDate = DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss.fff"),
+                FuelingDate = new DateTime(2015, 07, 09),
                 LiterAmount = 200.0M,
                 PricePerLiter = 4.5M,
                 FullPrice = 450.0M,
@@ -260,10 +260,10 @@ namespace FCT.Control.UnitTests
             testDataTable.Columns.Add("Terrain");
 
             testDataTable.Rows.Add((0).ToString(CultureInfo.CurrentCulture), "shell", "gasoline",
-                                    DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss.fff"),
+                                    (new DateTime(2015, 08, 13)).ToString("yyyy-MM-dd"),
                                     (100.0M).ToString(), (4.5M).ToString(), (450.0M).ToString(), (1000.0M).ToString(), "10", "highways");
             testDataTable.Rows.Add((1).ToString(CultureInfo.CurrentCulture), "lukoil", "gasoline",
-                                    DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss.fff"),
+                                    (new DateTime(2015, 07, 15)).ToString("yyyy-MM-dd"),
                                     "100", (4.5M).ToString(), "450", "1000", "20", "city");
 
             var mapper = new DataTableMapper(_logger);

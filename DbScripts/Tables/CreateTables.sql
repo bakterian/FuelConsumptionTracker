@@ -36,7 +36,7 @@ IF OBJECT_ID('[dbo].[FuelConsumption]', 'U') IS NULL
 		[CarId] [int] NOT NULL,
 		[PetrolStationDesc] [nvarchar](100) NOT NULL,
 		[PetrolType] [nvarchar](50) NOT NULL,
-		[FuelingDate] [datetime] NOT NULL,
+		[FuelingDate] [date] NOT NULL,
 		[LiterAmount] [decimal] NOT NULL,
 		[PricePerLiter] [decimal] NOT NULL,
 		[FullPrice] [decimal] NOT NULL,

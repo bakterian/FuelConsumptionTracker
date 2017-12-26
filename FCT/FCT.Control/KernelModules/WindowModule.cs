@@ -7,7 +7,6 @@ using System.Windows;
 using System.Collections.Generic;
 using FCT.Infrastructure.Models;
 using FCT.Infrastructure.Enums;
-using Caliburn.Micro;
 
 namespace FCT.Control.KernelModules
 {

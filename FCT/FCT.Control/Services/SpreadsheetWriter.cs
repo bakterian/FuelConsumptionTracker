@@ -45,7 +45,7 @@ namespace FCT.Control.Services
                     {
                         var worksheetHeading = worksheetPayload.Item1;
                         var dataTable = worksheetPayload.Item2;
-
+                        var columnsWithDateTime = GetColumnIdsWithDateTimes(dataTable);
                         var workSheet = package.Workbook.Worksheets.Add(worksheetHeading);
 
                         // add the content into the Excel file  
@@ -86,6 +86,19 @@ namespace FCT.Control.Services
                             r.Style.Border.Left.Color.SetColor(System.Drawing.Color.Black);
                             r.Style.Border.Right.Color.SetColor(System.Drawing.Color.Black);
                         }
+
+                        if(columnsWithDateTime.Count > 0)
+                        {
+                            foreach (var columnId in columnsWithDateTime)
+                            {
+                                using (ExcelRange col = workSheet.Cells[2, columnId, 2 + dataTable.Rows.Count, columnId])
+                                {
+                                    col.Style.Numberformat.Format = "dd-MM-yyyy";
+                                    //col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                                }
+                            }
+                        }
+
                     }
                     package.SaveAs(saveFileInfo);
                 }
@@ -104,6 +117,21 @@ namespace FCT.Control.Services
             }
 
             return writtingWasSuccessfull;
+        }
+
+        private IList<int> GetColumnIdsWithDateTimes(DataTable dataTable)
+        {
+            var columnIds = new List<int>();
+
+            for (int i = 0; i < dataTable.Columns.Count; i++)
+            {
+                if (dataTable.Columns[i].DataType.Equals(typeof(DateTime)))
+                {
+                    columnIds.Add(i + 1);
+                }
+            }
+
+            return columnIds;
         }
     }
 }

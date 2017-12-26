@@ -101,7 +101,7 @@ INSERT INTO [dbo].[FuelConsumption]
            (1
            ,'Shell 1'
            ,'gasoline'
-           ,getdate()
+           ,'2016-05-16'
            ,16
 		   ,2
            ,32
@@ -125,7 +125,7 @@ INSERT INTO [dbo].[FuelConsumption]
            (1
            ,'Shell 2'
            ,'gasoline'
-           ,getdate()
+           ,'2016-06-02'
            ,30
 		   ,3
            ,90
@@ -149,7 +149,7 @@ INSERT INTO [dbo].[FuelConsumption]
            (2
            ,'Lukoil 1'
            ,'gasoline'
-           ,getdate()
+           ,'1973-12-23'
            ,9
 		   ,3
            ,27
@@ -173,7 +173,7 @@ INSERT INTO [dbo].[FuelConsumption]
            (2
            ,'Lukoil 2'
            ,'gasoline'
-           ,getdate()
+           ,'1974-01-27'
            ,20
 		   ,2.5
            ,50

@@ -1,4 +1,5 @@
 ﻿using FCT.Infrastructure.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace FCT.Infrastructure.Models
@@ -8,7 +9,7 @@ namespace FCT.Infrastructure.Models
         private int _carId;
         private string _petrolStationDesc;
         private string _petrolType;
-        private string _fuelingDate;
+        private DateTime _fuelingDate;
         private decimal _literAmount;
         private decimal _pricePerLiter;
         private decimal _fullPrice;
@@ -59,7 +60,7 @@ namespace FCT.Infrastructure.Models
         }
 
         [PresentableItem]
-        public string FuelingDate
+        public DateTime FuelingDate
         {
             get { return _fuelingDate; }
             set
@@ -187,7 +188,7 @@ namespace FCT.Infrastructure.Models
             hashCode = hashCode * -1521134295 + CarId.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PetrolStationDesc);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PetrolType);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FuelingDate);
+            hashCode = hashCode * -1521134295 + EqualityComparer<DateTime>.Default.GetHashCode(FuelingDate);
             hashCode = hashCode * -1521134295 + LiterAmount.GetHashCode();
             hashCode = hashCode * -1521134295 + PricePerLiter.GetHashCode();
             hashCode = hashCode * -1521134295 + FullPrice.GetHashCode();
