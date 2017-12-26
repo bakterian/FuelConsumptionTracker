@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using FCT.Infrastructure.Attributes;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace FCT.WindowControls.TableControl
 {
@@ -145,7 +146,38 @@ namespace FCT.WindowControls.TableControl
         internal void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if ((e.PropertyDescriptor as System.ComponentModel.PropertyDescriptor).
-                 Attributes.OfType<PresentableItem>().Count() == 0) e.Cancel = true;
+                 Attributes.OfType<PresentableItem>().Count() == 0)
+            {//Don't Dispaly properties which are not marked as PresentableItem
+                e.Cancel = true;
+            }
+
+            else if (e.PropertyType.Equals(typeof(DateTime)))
+            {//Use a dedicated template for DateTime properties
+                var datePickerstyle = (Style)(sender as DataGrid).TryFindResource("DatePickerStyle");
+
+                var binding = new Binding($"{e.PropertyName}");
+                binding.Converter = new DateTimeConverer();
+
+                var CellTemplate = TemplateGenerator.CreateDataTemplate
+                (
+                  () =>
+                  {
+                      var result = new DatePicker();
+                      result.Style = datePickerstyle;
+                      result.SetBinding(DatePicker.SelectedDateProperty, binding);                    
+                      return result;
+                  }
+                );
+
+                (sender as DataGrid).Columns.Add(new DataGridTemplateColumn
+                {
+                    Header = e.Column.Header,
+                    CellTemplate = CellTemplate
+                });
+
+                e.Cancel = true;
+
+            }
         }
 
         public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
@@ -158,9 +190,21 @@ namespace FCT.WindowControls.TableControl
             var isMatching = true;
             if(FilteringEnabled && !string.IsNullOrEmpty(FilterPhrase))
             {
-                isMatching = obj.GetType()?.
-                    GetRuntimeProperty(FilterBySelection)?.GetValue(obj)?.
-                    ToString().Contains(FilterPhrase) ?? false;
+                var objPropertyInfo = obj.GetType()?.GetRuntimeProperty(FilterBySelection);
+
+                if(objPropertyInfo != null)
+                {
+                    if (objPropertyInfo.PropertyType.Equals(typeof(DateTime)))
+                    {
+                        isMatching = ((DateTime) objPropertyInfo.GetValue(obj)).ToString("dd-MM-yyyy").Contains(FilterPhrase);
+                    }
+                    else
+                    {
+                        isMatching = objPropertyInfo.GetValue(obj)?.ToString().Contains(FilterPhrase) ?? false;
+                    }
+
+                }
+
 
             }
             return isMatching;

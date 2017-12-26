@@ -301,9 +301,9 @@ namespace FCT.Control.Services
             }
         }
 
-        private string GetCurrentDateTime()
+        private DateTime GetCurrentDateTime()
         {
-            return DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss.fff");
+            return new DateTime(DateTime.Now.Ticks);
         }
     }
 }

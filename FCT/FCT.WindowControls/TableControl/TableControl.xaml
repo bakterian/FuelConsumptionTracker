@@ -112,6 +112,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+
     <Grid HorizontalAlignment="Left">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

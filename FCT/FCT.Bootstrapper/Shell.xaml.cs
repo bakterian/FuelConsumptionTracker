@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,6 +28,9 @@ namespace FCT.Bootstrapper
 
             EnsureStandardPopupAlignment();
             SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
+
+            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name); ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            Thread.CurrentThread.CurrentCulture = ci;
         }
 
         private static void SystemParameters_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)

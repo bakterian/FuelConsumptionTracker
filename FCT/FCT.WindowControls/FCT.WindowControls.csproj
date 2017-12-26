@@ -56,11 +56,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TableControl\DateTimeConverer.cs" />
     <Compile Include="TableControl\TableControl.xaml.cs">
       <DependentUpon>TableControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableControl\TableControlViewModel.cs" />
+    <Compile Include="TableControl\TemplateGenerator.cs" />
     <Compile Include="WaObject.cs" />
   </ItemGroup>
   <ItemGroup>
