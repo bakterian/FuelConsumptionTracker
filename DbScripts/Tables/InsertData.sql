@@ -1,8 +1,8 @@
 USE [CarData]
 GO
 
-if (not exists (select top 1 * from [dbo].[CarDescription] where Description = 'TestVehicle1'))
-INSERT INTO [dbo].[CarDescription]
+if (not exists (select top 1 * from [dbo].[CarDescriptions] where Description = 'TestVehicle1'))
+INSERT INTO [dbo].[CarDescriptions]
            ([Description]
 		   ,[Manufacturer]
            ,[Model]
@@ -29,8 +29,8 @@ INSERT INTO [dbo].[CarDescription]
 		   ,19.2
            ,2005);
 		   
-if (not exists (select top 1 * from [dbo].[CarDescription] where Description = 'TestVehicle2'))
-INSERT INTO [dbo].[CarDescription]
+if (not exists (select top 1 * from [dbo].[CarDescriptions] where Description = 'TestVehicle2'))
+INSERT INTO [dbo].[CarDescriptions]
            ([Description]
 		   ,[Manufacturer]
            ,[Model]
@@ -57,8 +57,8 @@ INSERT INTO [dbo].[CarDescription]
 		   ,4.4
            ,1963);
 
-if (not exists (select top 1 * from [dbo].[CarDescription] where Description = 'TestVehicle3'))
-INSERT INTO [dbo].[CarDescription]
+if (not exists (select top 1 * from [dbo].[CarDescriptions] where Description = 'TestVehicle3'))
+INSERT INTO [dbo].[CarDescriptions]
            ([Description]
 		   ,[Manufacturer]
            ,[Model]
@@ -85,9 +85,10 @@ INSERT INTO [dbo].[CarDescription]
 		   ,19
            ,2009);
 		   
-if (not exists (select top 1 * from [dbo].[FuelConsumption] where PetrolStationDesc = 'Shell 1'))
-INSERT INTO [dbo].[FuelConsumption]
+if (not exists (select top 1 * from [dbo].[FuelConsumptions] where PetrolStationDesc = 'Shell 1'))
+INSERT INTO [dbo].[FuelConsumptions]
            ([CarId]
+		   ,[CarDescription]
 		   ,[PetrolStationDesc]
            ,[PetrolType]
            ,[FuelingDate]
@@ -99,6 +100,7 @@ INSERT INTO [dbo].[FuelConsumption]
 		   ,[Terrain])
      VALUES
            (1
+		   ,'TestVehicle1'
            ,'Shell 1'
            ,'gasoline'
            ,'2016-05-16'
@@ -109,9 +111,10 @@ INSERT INTO [dbo].[FuelConsumption]
 		   ,15
 		   ,'city');
 		   
-if (not exists (select top 1 * from [dbo].[FuelConsumption] where PetrolStationDesc = 'Shell 2'))
-INSERT INTO [dbo].[FuelConsumption]
+if (not exists (select top 1 * from [dbo].[FuelConsumptions] where PetrolStationDesc = 'Shell 2'))
+INSERT INTO [dbo].[FuelConsumptions]
            ([CarId]
+		   ,[CarDescription]		   
 		   ,[PetrolStationDesc]
            ,[PetrolType]
            ,[FuelingDate]
@@ -123,6 +126,7 @@ INSERT INTO [dbo].[FuelConsumption]
 		   ,[Terrain])
      VALUES
            (1
+		   ,'TestVehicle1'		   
            ,'Shell 2'
            ,'gasoline'
            ,'2016-06-02'
@@ -133,9 +137,10 @@ INSERT INTO [dbo].[FuelConsumption]
 		   ,15
 		   ,'highway');
 		   
-if (not exists (select top 1 * from [dbo].[FuelConsumption] where PetrolStationDesc = 'Lukoil 1'))
-INSERT INTO [dbo].[FuelConsumption]
+if (not exists (select top 1 * from [dbo].[FuelConsumptions] where PetrolStationDesc = 'Lukoil 1'))
+INSERT INTO [dbo].[FuelConsumptions]
            ([CarId]
+		   ,[CarDescription]		   
 		   ,[PetrolStationDesc]
            ,[PetrolType]
            ,[FuelingDate]
@@ -147,6 +152,7 @@ INSERT INTO [dbo].[FuelConsumption]
 		   ,[Terrain])
      VALUES
            (2
+		   ,'TestVehicle2'		   
            ,'Lukoil 1'
            ,'gasoline'
            ,'1973-12-23'
@@ -157,9 +163,10 @@ INSERT INTO [dbo].[FuelConsumption]
 		   ,4.5
 		   ,'city');
 		   
-if (not exists (select top 1 * from [dbo].[FuelConsumption] where PetrolStationDesc = 'Lukoil 2'))
-INSERT INTO [dbo].[FuelConsumption]
+if (not exists (select top 1 * from [dbo].[FuelConsumptions] where PetrolStationDesc = 'Lukoil 2'))
+INSERT INTO [dbo].[FuelConsumptions]
            ([CarId]
+		   ,[CarDescription]		   
 		   ,[PetrolStationDesc]
            ,[PetrolType]
            ,[FuelingDate]
@@ -171,6 +178,7 @@ INSERT INTO [dbo].[FuelConsumption]
 		   ,[Terrain])
      VALUES
            (2
+		   ,'TestVehicle1'		   
            ,'Lukoil 2'
            ,'gasoline'
            ,'1974-01-27'

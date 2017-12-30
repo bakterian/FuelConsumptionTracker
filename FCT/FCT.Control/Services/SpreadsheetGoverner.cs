@@ -79,11 +79,10 @@ namespace FCT.Control.Services
             var loadSuccessfull = false;
             var dataTables = _spreadsheetReader.ReadFromExcelFile(filePath);
             var presentationUpdateTasks = new List<Task>();
-            var i = 0;
 
             foreach (var dbTabVms in _dbTabVmStore.GetAll())
             {
-                presentationUpdateTasks.Add(dbTabVms.UpdateDataAsync(dataTables[i]));
+                presentationUpdateTasks.Add(dbTabVms.UpdateDataAsync(dataTables));
             }
 
             object tasks;

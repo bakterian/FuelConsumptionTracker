@@ -88,18 +88,20 @@ namespace FCT.WindowControls.TableControl
 
         public void UnregisterDataItemsCollectionEventHandlers()
         {
-            TableItemsCollcetionView.CollectionChanged -= TableControlVM.OnCarDataCollectionChange;
-            TableItemsCollcetionView.CurrentChanged -= TableControlVM.OnCarDataCellChange;
             TableItemsCollcetionView.Filter -= TableControlVM.OnCarDataFilterRequest;
             TableDataGrid.AutoGeneratingColumn -= TableControlVM.OnAutoGeneratingColumn;
+            TableDataGrid.LoadingRow -= TableControlVM.OnLoadingRow;
+            TableDataGrid.BeginningEdit -= TableControlVM.OnBeginningEdit;
+            TableDataGrid.InitializingNewItem -= TableControlVM.OnInitializingNewItem;
         }
 
         public void RegisterDataItemsCollectionEventHandlers()
         {
-            TableItemsCollcetionView.CollectionChanged += TableControlVM.OnCarDataCollectionChange;
-            TableItemsCollcetionView.CurrentChanged += TableControlVM.OnCarDataCellChange;
             TableItemsCollcetionView.Filter += TableControlVM.OnCarDataFilterRequest;
             TableDataGrid.AutoGeneratingColumn += TableControlVM.OnAutoGeneratingColumn;
+            TableDataGrid.LoadingRow += TableControlVM.OnLoadingRow;
+            TableDataGrid.BeginningEdit += TableControlVM.OnBeginningEdit;
+            TableDataGrid.InitializingNewItem += TableControlVM.OnInitializingNewItem;
         }
 
     }

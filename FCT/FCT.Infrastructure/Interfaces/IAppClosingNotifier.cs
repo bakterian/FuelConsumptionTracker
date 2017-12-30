@@ -1,7 +1,9 @@
-﻿namespace FCT.Infrastructure.Interfaces
+﻿using FCT.Infrastructure.Enums;
+
+namespace FCT.Infrastructure.Interfaces
 {
     public interface IAppClosingNotifier
     {
-        void RegisterForNotification(INotifyAppClosing closeListener);
+        void RegisterForNotification(INotifyAppClosing closeListener,NotificationPriority priority);
     }
 }

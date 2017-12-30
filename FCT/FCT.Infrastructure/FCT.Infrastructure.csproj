@@ -47,6 +47,7 @@
     <Compile Include="Enums\AppTheme.cs" />
     <Compile Include="Enums\ConsoleUserOption.cs" />
     <Compile Include="Enums\ItemAction.cs" />
+    <Compile Include="Enums\NotificationPriority.cs" />
     <Compile Include="Enums\Region.cs" />
     <Compile Include="Enums\UserResponse.cs" />
     <Compile Include="Interfaces\IAppClosingNotifier.cs" />

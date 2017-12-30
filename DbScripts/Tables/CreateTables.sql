@@ -1,11 +1,11 @@
 USE [CarData]
 GO
 
-IF OBJECT_ID('[dbo].[CarDescription]', 'U') IS NULL
+IF OBJECT_ID('[dbo].[CarDescriptions]', 'U') IS NULL
 	SET ANSI_NULLS ON
 	SET QUOTED_IDENTIFIER ON
 	BEGIN
-		CREATE TABLE [dbo].[CarDescription](
+		CREATE TABLE [dbo].[CarDescriptions](
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[Description] [nvarchar](100)  NOT NULL,
 		[Manufacturer] [nvarchar](100)  NOT NULL,
@@ -27,13 +27,14 @@ IF OBJECT_ID('[dbo].[CarDescription]', 'U') IS NULL
 	END  
 GO  
 
-IF OBJECT_ID('[dbo].[FuelConsumption]', 'U') IS NULL
+IF OBJECT_ID('[dbo].[FuelConsumptions]', 'U') IS NULL
 	SET ANSI_NULLS ON
 	SET QUOTED_IDENTIFIER ON
 	BEGIN
-		CREATE TABLE [dbo].[FuelConsumption](
+		CREATE TABLE [dbo].[FuelConsumptions](
 		[Id] [int] IDENTITY(1,1) NOT NULL,
 		[CarId] [int] NOT NULL,
+		[CarDescription] [nvarchar](100)  NOT NULL,
 		[PetrolStationDesc] [nvarchar](100) NOT NULL,
 		[PetrolType] [nvarchar](50) NOT NULL,
 		[FuelingDate] [date] NOT NULL,
@@ -49,8 +50,8 @@ IF OBJECT_ID('[dbo].[FuelConsumption]', 'U') IS NULL
 		ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 		) ON [PRIMARY]
 		
-		ALTER TABLE [dbo].[FuelConsumption] WITH CHECK ADD CONSTRAINT [FK_FuelConsumption_CarId] FOREIGN KEY (CarId)     
-		REFERENCES [dbo].[CarDescription] ([Id]) ON DELETE CASCADE   
-		ALTER TABLE [dbo].[FuelConsumption] CHECK CONSTRAINT [FK_FuelConsumption_CarId]   
+		ALTER TABLE [dbo].[FuelConsumptions] WITH CHECK ADD CONSTRAINT [FK_FuelConsumption_CarId] FOREIGN KEY (CarId)     
+		REFERENCES [dbo].[CarDescriptions] ([Id]) ON DELETE CASCADE   
+		ALTER TABLE [dbo].[FuelConsumptions] CHECK CONSTRAINT [FK_FuelConsumption_CarId]   
 	END
 GO

@@ -61,7 +61,7 @@ namespace FCT.DataAccess.Services
             using (IDbConnection connection =
                 new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
             {
-                affectedRows = connection.Execute("dbo.spInsertFuelConsumption @CarId, @PetrolStationDesc,	@PetrolType," +
+                affectedRows = connection.Execute("dbo.spInsertFuelConsumption @CarId, @CarDescription, @PetrolStationDesc,	@PetrolType," +
                     " @FuelingDate, @LiterAmount, @PricePerLiter, @FullPrice, @DistanceMade," +
                     " @FuelConsumption, @Terrain", fuelConsumptions);
             }
@@ -76,7 +76,7 @@ namespace FCT.DataAccess.Services
             using (IDbConnection connection =
                 new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
             {
-                affectedRows = connection.Execute("dbo.spUpdateFuelConsumption @Id, @CarId, @PetrolStationDesc,	@PetrolType," +
+                affectedRows = connection.Execute("dbo.spUpdateFuelConsumption @Id, @CarId, @CarDescription, @PetrolStationDesc, @PetrolType," +
                     " @FuelingDate, @LiterAmount, @PricePerLiter, @FullPrice, @DistanceMade," +
                     " @FuelConsumption, @Terrain", fuelConsumptions);
             }
