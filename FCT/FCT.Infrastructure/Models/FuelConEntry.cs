@@ -7,6 +7,7 @@ namespace FCT.Infrastructure.Models
     public class FuelConEntry : BaseDbModel
     {
         private int _carId;
+        private string _carDescription;
         private string _petrolStationDesc;
         private string _petrolType;
         private DateTime _fuelingDate;
@@ -17,7 +18,6 @@ namespace FCT.Infrastructure.Models
         private decimal _fuelConsumption;
         private string _terrain;
 
-        [PresentableItem]
         public int CarId
         {
             get { return _carId; }
@@ -26,6 +26,20 @@ namespace FCT.Infrastructure.Models
                 if(!value.Equals(_carId))
                 {
                     _carId = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [PresentableItem]
+        public string CarDescription
+        {
+            get { return _carDescription; }
+            set
+            {
+                if (!value.Equals(_carDescription))
+                {
+                    _carDescription = value;
                     RaisePropertyChanged();
                 }
             }

@@ -24,6 +24,8 @@ namespace FCT.Control.ViewModels
             )
             : base(dialogService, appClosingNotifier, dbActionsNotifier, dataTableMapper)
         {
+            appClosingNotifier.RegisterForNotification(this, NotificationPriority.High);
+            dbActionsNotifier.RegisterForNotification(this, NotificationPriority.High);
             _dbReader = dbReader;
             _dbWriter = dbWriter;
         }

@@ -43,6 +43,11 @@ namespace FCT.Control.ViewModels
             SaveFile();
         }
 
+        public void OnExit()
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
         public void OnThemeChange(string theme)
         {
             string errorMsg = null;

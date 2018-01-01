@@ -1,14 +1,14 @@
 USE [CarData]
 GO
 
-IF OBJECT_ID('[dbo].[FuelConsumption]', 'U') IS NOT NULL
+IF OBJECT_ID('[dbo].[FuelConsumptions]', 'U') IS NOT NULL
 	BEGIN
-		DROP TABLE [dbo].[FuelConsumption]
+		DROP TABLE [dbo].[FuelConsumptions]
 	END
 GO
 
-IF OBJECT_ID('[dbo].[CarDescription]', 'U') IS NOT NULL
+IF OBJECT_ID('[dbo].[CarDescriptions]', 'U') IS NOT NULL
 	BEGIN
-		DROP TABLE [dbo].[CarDescription]
+		DROP TABLE [dbo].[CarDescriptions]
 	END
 GO

@@ -26,7 +26,7 @@ BEGIN
 		,[Acceleration]
 		,[AvgFuelConsumption]
 		,[ProductionYear]
-	FROM [dbo].[CarDescription]
+	FROM [dbo].[CarDescriptions]
 END
 GO
 
@@ -45,7 +45,7 @@ BEGIN
 	SET NOCOUNT ON;	
 	SELECT [Id]
 		,[Description]
-	FROM [dbo].[CarDescription]
+	FROM [dbo].[CarDescriptions]
 END
 GO
 
@@ -65,6 +65,7 @@ BEGIN
 	SET NOCOUNT ON;	
 	SELECT [Id]
 		,[CarId]
+		,[CarDescription]
 		,[PetrolStationDesc]
 		,[PetrolType]
 		,[FuelingDate] 
@@ -74,7 +75,7 @@ BEGIN
 		,[DistanceMade]
 		,[FuelConsumption]
 		,[Terrain]
-	FROM [dbo].[FuelConsumption]
+	FROM [dbo].[FuelConsumptions]
 END
 GO
 
@@ -97,6 +98,7 @@ BEGIN
 	SET NOCOUNT ON;	
 	SELECT [Id]
 		,[CarId]
+		,[CarDescription]
 		,[PetrolStationDesc]
 		,[PetrolType]
 		,[FuelingDate] 
@@ -106,7 +108,7 @@ BEGIN
 		,[DistanceMade]
 		,[FuelConsumption]
 		,[Terrain]
-	FROM [dbo].[FuelConsumption]
+	FROM [dbo].[FuelConsumptions]
 	WHERE CarId = @CarId
 END
 GO
@@ -131,16 +133,16 @@ Create PROCEDURE [dbo].[spInsertCarDescription]
 	@PetrolType [nvarchar](100),
 	@FuelTankSize [int],
 	@Weight [int],
-	@TopSpeed [decimal],
-	@Acceleration [decimal],
-	@AvgFuelConsumption [decimal],		
+	@TopSpeed [decimal](18,2),
+	@Acceleration [decimal](18,2),
+	@AvgFuelConsumption [decimal](18,2),		
 	@ProductionYear [int]
 )
 AS
 BEGIN
-	IF NOT EXISTS (Select 1 from  [dbo].[CarDescription] where Description = @Description)
+	IF NOT EXISTS (Select 1 from  [dbo].[CarDescriptions] where Description = @Description)
 
-	INSERT INTO  [dbo].[CarDescription] 
+	INSERT INTO  [dbo].[CarDescriptions] 
 	(
 	   [Description]
 	   ,[Manufacturer]
@@ -190,7 +192,7 @@ Create PROCEDURE [dbo].[spDeleteCarDescription]
 )
 AS
 BEGIN
-	DELETE FROM [dbo].[CarDescription]
+	DELETE FROM [dbo].[CarDescriptions]
 	WHERE Id = @Id;
 END
 GO
@@ -216,16 +218,16 @@ Create PROCEDURE [dbo].[spUpdateCarDescription]
 	@PetrolType [nvarchar](100),
 	@FuelTankSize [int],
 	@Weight [int],
-	@TopSpeed [decimal],
-	@Acceleration [decimal],
-	@AvgFuelConsumption [decimal],		
+	@TopSpeed [decimal](18,2),
+	@Acceleration [decimal](18,2),
+	@AvgFuelConsumption [decimal](18,2),		
 	@ProductionYear [int]
 )
 AS
 BEGIN
-	IF EXISTS (Select 1 from  [dbo].[CarDescription] where Id = @Id )
+	IF EXISTS (Select 1 from  [dbo].[CarDescriptions] where Id = @Id )
 	
-	UPDATE  [CarDescription]  SET
+	UPDATE  [CarDescriptions]  SET
 	Description = @Description,
 	Manufacturer = @Manufacturer,
 	Model = @Model,
@@ -256,23 +258,25 @@ GO
 Create PROCEDURE [dbo].[spInsertFuelConsumption]
 (
 	@CarId [int],
+	@CarDescription [nvarchar](100),
 	@PetrolStationDesc [nvarchar](100),
 	@PetrolType [nvarchar](50),
 	@FuelingDate [date],
-	@LiterAmount [decimal],
-	@PricePerLiter [decimal],
-	@FullPrice [decimal],
-	@DistanceMade [decimal],
-	@FuelConsumption [decimal],
+	@LiterAmount [decimal](18,2),
+	@PricePerLiter [decimal](18,2),
+	@FullPrice [decimal](18,2),
+	@DistanceMade [decimal](18,2),
+	@FuelConsumption [decimal](18,2),
 	@Terrain [nvarchar](100)
 )
 AS
 BEGIN
-	IF EXISTS (Select 1 from  [dbo].[CarDescription] where Id = @CarId )
+	IF EXISTS (Select 1 from  [dbo].[CarDescriptions] where Id = @CarId )
 	
-	INSERT INTO  [dbo].[FuelConsumption] 
+	INSERT INTO  [dbo].[FuelConsumptions] 
 	(
 		[CarId]
+	   ,[CarDescription]
 	   ,[PetrolStationDesc]
 	   ,[PetrolType]
 	   ,[FuelingDate]
@@ -287,6 +291,7 @@ BEGIN
 	VALUES
 	(
 	@CarId,
+	@CarDescription,
 	@PetrolStationDesc,
 	@PetrolType,
 	@FuelingDate,
@@ -314,22 +319,24 @@ Create PROCEDURE [dbo].[spUpdateFuelConsumption]
 (
 	@Id [int],
 	@CarId [int],
+	@CarDescription [nvarchar](100),
 	@PetrolStationDesc [nvarchar](100),
 	@PetrolType [nvarchar](50),
 	@FuelingDate [date],
-	@LiterAmount [decimal],
-	@PricePerLiter [decimal],
-	@FullPrice [decimal],
-	@DistanceMade [decimal],
-	@FuelConsumption [decimal],
+	@LiterAmount [decimal](18,2),
+	@PricePerLiter [decimal](18,2),
+	@FullPrice [decimal](18,2),
+	@DistanceMade [decimal](18,2),
+	@FuelConsumption [decimal](18,2),
 	@Terrain [nvarchar](100)
 )
 AS
 BEGIN
-	IF EXISTS (Select 1 from  [dbo].[FuelConsumption] where Id = @Id )
+	IF EXISTS (Select 1 from  [dbo].[FuelConsumptions] where Id = @Id )
 	
-	UPDATE  [FuelConsumption]  SET
+	UPDATE  [FuelConsumptions]  SET
 	CarId = @CarId,
+	CarDescription=	@CarDescription,
 	PetrolStationDesc= @PetrolStationDesc,
 	PetrolType = @PetrolType,
 	FuelingDate= @FuelingDate,

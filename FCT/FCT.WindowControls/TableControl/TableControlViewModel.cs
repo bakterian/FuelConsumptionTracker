@@ -9,6 +9,7 @@ using System.Reflection;
 using FCT.Infrastructure.Attributes;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using FCT.Infrastructure.Models;
 
 namespace FCT.WindowControls.TableControl
 {
@@ -27,7 +28,6 @@ namespace FCT.WindowControls.TableControl
         public ObservableCollection<GroupDescription> GroupDescriptions { get; set; }
 
         public ObservableCollection<string> TableGroupNames { get; set; } = new ObservableCollection<string>();
-
 
         public string GroupBySelection
         {
@@ -120,6 +120,30 @@ namespace FCT.WindowControls.TableControl
             }
         }
 
+        internal void OnLoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            if(e.Row.IsNewItem) e.Row.Tag = "NewEmptyRow";
+        }
+
+        internal void OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            if (e.Row.IsNewItem) e.Row.Tag = null;
+        }
+
+        public void OnInitializingNewItem(object sender, InitializingNewItemEventArgs e)
+        {
+            var dateTimeProp = e.NewItem?
+            .GetType()
+            .GetRuntimeProperties()
+            .Where(prop => prop.PropertyType.Equals(typeof(DateTime)))?
+            .FirstOrDefault();
+             
+            if(dateTimeProp != null)
+            {
+                dateTimeProp.SetValue(e.NewItem, DateTime.Now);
+            }
+        }
+
         public void OnGroupBySelectionChange()
         {
             GroupDescriptions.Clear();
@@ -155,8 +179,7 @@ namespace FCT.WindowControls.TableControl
             {//Use a dedicated template for DateTime properties
                 var datePickerstyle = (Style)(sender as DataGrid).TryFindResource("DatePickerStyle");
 
-                var binding = new Binding($"{e.PropertyName}");
-                binding.Converter = new DateTimeConverer();
+                var itemBinding = new Binding($"{e.PropertyName}");
 
                 var CellTemplate = TemplateGenerator.CreateDataTemplate
                 (
@@ -164,7 +187,7 @@ namespace FCT.WindowControls.TableControl
                   {
                       var result = new DatePicker();
                       result.Style = datePickerstyle;
-                      result.SetBinding(DatePicker.SelectedDateProperty, binding);                    
+                      result.SetBinding(DatePicker.SelectedDateProperty, itemBinding);
                       return result;
                   }
                 );
@@ -210,14 +233,6 @@ namespace FCT.WindowControls.TableControl
             return isMatching;
         }
 
-        public void OnCarDataCellChange(object sender, EventArgs e)
-        {
-            //TODO fire event for car data cell change => update db entry?
-        }
 
-        public void OnCarDataCollectionChange(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            //TODO fire event and notify that element has been added. If not triggered by observable collection
-        }
     }
 }

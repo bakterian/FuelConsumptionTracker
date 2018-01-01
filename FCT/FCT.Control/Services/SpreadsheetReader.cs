@@ -26,7 +26,7 @@ namespace FCT.Control.Services
                 foreach (var ws in pck.Workbook.Worksheets)
                 {
                     var tbl = new DataTable();
-
+                    tbl.TableName = ws.Name;
                     foreach (var firstRowCell in ws.Cells[1, 1, 1, ws.Dimension.End.Column])
                     {
                         tbl.Columns.Add(firstRowCell.Text);

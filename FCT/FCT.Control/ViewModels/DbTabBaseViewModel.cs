@@ -47,8 +47,6 @@ namespace FCT.Control.ViewModels
                 IDataTableMapper dataTableMapper
             )
         {    //TODO: dispose any listneres when exiting
-            appClosingNotifier.RegisterForNotification(this);
-            dbActionsNotifier.RegisterForNotification(this);
             DialogService = dialogService;
             DataTableMapper = dataTableMapper;
 
@@ -123,7 +121,20 @@ namespace FCT.Control.ViewModels
             }
             else if(e.Action == NotifyCollectionChangedAction.Replace)
             {
-                TableDataCollectionActions.Add(new Tuple<T, ItemAction>((T)e.NewItems[0], ItemAction.Update));
+                var newAction = new Tuple<T, ItemAction>((T)e.NewItems[0], ItemAction.Update);
+
+                var existingMatch = TableDataCollectionActions.FirstOrDefault(_ => 
+                (_.Item1 as BaseDbModel).Id.Equals((newAction.Item1 as BaseDbModel).Id) && _.Item2.Equals(newAction.Item2));
+
+                if(existingMatch != null)
+                {
+                    var index = TableDataCollectionActions.IndexOf(existingMatch);
+                    TableDataCollectionActions[index] = newAction;
+                }
+                else
+                {
+                    TableDataCollectionActions.Add(newAction);
+                }               
             }
         }
 
@@ -175,14 +186,15 @@ namespace FCT.Control.ViewModels
             return DataTableMapper.ConvertToDataTableAsync(TableDataCollection.Select(_ => (T)_), new[] { new PresentableItem() });
         }
 
-        public async Task UpdateDataAsync(DataTable data)
+        public virtual async Task UpdateDataAsync(IList<DataTable> dataTables)
         {
+            var data = dataTables.FirstOrDefault(_ => _.TableName.Equals(HeaderName));
+
             var newTableCollectionItems = await DataTableMapper.ConvertToDbEnumerableAsync<T>( data, new[] { new PresentableItem() });
 
             var newCollection = newTableCollectionItems.ToArray();
             var collectionSize = TableDataCollection.Count;
             var newCollectionSize = newTableCollectionItems.Count();
-
             for (int i = 0; i < Math.Max(collectionSize,newCollectionSize); i++)
             {
                 if(i >= collectionSize)

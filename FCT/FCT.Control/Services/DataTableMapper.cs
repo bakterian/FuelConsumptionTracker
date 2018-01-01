@@ -58,19 +58,35 @@ namespace FCT.Control.Services
 
             var itemCollection = new List<T>();
 
-            var row = dataTable.Rows[0];
-
-            foreach (DataRow dataTableRow in dataTable.Rows)
+            try
             {
-                var newItem = new T();
-                for (var i = 0; i < supportedProperties.Count; i++)
+                foreach (DataRow dataTableRow in dataTable.Rows)
                 {
-                    var colValue = dataTableRow.ItemArray[i];
-                    var targetProperty = supportedProperties[i];
-                    targetProperty.SetValue(newItem, Convert.ChangeType(colValue, targetProperty.PropertyType));
+                    var newItem = new T();
+                    for (var i = 0; i < supportedProperties.Count; i++)
+                    {
+                        var colValue = dataTableRow.ItemArray[i];
+                        var targetProperty = supportedProperties[i];
+
+                        try
+                        {
+                            targetProperty.SetValue(newItem, Convert.ChangeType(colValue, targetProperty.PropertyType));
+                        }
+                        catch (Exception e )
+                        {
+                            var test = 1;
+                            throw;
+                        }
+                    }
+                    itemCollection.Add(newItem);
                 }
-                itemCollection.Add(newItem);
             }
+            catch (Exception e)
+            {
+                _logger.Error(e, "[TableDataMapper] Error during data table to IEnumerable conversion.");
+                throw;
+            }
+
 
             return itemCollection;
         }

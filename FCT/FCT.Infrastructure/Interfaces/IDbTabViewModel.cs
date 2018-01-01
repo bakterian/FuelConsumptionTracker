@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace FCT.Infrastructure.Interfaces
@@ -7,6 +8,6 @@ namespace FCT.Infrastructure.Interfaces
     {
         Task<DataTable> GetDataTableAsync();
 
-        Task UpdateDataAsync(DataTable data);
+        Task UpdateDataAsync(IList<DataTable> data);
     }
 }

@@ -116,7 +116,7 @@
     <Grid HorizontalAlignment="Left">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="390" />
         </Grid.RowDefinitions>
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
@@ -184,7 +184,9 @@
         </Grid>
         <DataGrid x:Name="TableDataGrid" Grid.Row="1"
                   CanUserReorderColumns="True" CanUserResizeColumns="True" 
-                  CanUserResizeRows="False" AutoGenerateColumns = "True">
+                  CanUserResizeRows="False" AutoGenerateColumns = "True"
+                  ScrollViewer.CanContentScroll="True" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>

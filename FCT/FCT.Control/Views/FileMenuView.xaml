@@ -25,7 +25,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="_Exit" >
+                    <MenuItem Header="_Exit" 
+                         cal:Message.Attach="[Event Click] = [Action OnExit();]" >
                         <MenuItem.Icon>
                             <Image Source="pack://application:,,,/FCT.Control;component/Resources/Icons/Close_16x16.png"/>
                         </MenuItem.Icon>
