@@ -78,6 +78,7 @@ namespace FCT.Control.ViewModels
         {
             var carDescList = _dbReader.GetCarDescriptions();
             CarDescriptions = new ObservableCollection<CarDescription>(carDescList);
+            CarDescriptions.Insert(0,new CarDescription());
             if (CarDescriptions.Count > 0) SelectedCarDescription = CarDescriptions[0];
         }
 

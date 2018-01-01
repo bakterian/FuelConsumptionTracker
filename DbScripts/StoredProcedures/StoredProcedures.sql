@@ -133,9 +133,9 @@ Create PROCEDURE [dbo].[spInsertCarDescription]
 	@PetrolType [nvarchar](100),
 	@FuelTankSize [int],
 	@Weight [int],
-	@TopSpeed [decimal],
-	@Acceleration [decimal],
-	@AvgFuelConsumption [decimal],		
+	@TopSpeed [decimal](18,2),
+	@Acceleration [decimal](18,2),
+	@AvgFuelConsumption [decimal](18,2),		
 	@ProductionYear [int]
 )
 AS
@@ -218,9 +218,9 @@ Create PROCEDURE [dbo].[spUpdateCarDescription]
 	@PetrolType [nvarchar](100),
 	@FuelTankSize [int],
 	@Weight [int],
-	@TopSpeed [decimal],
-	@Acceleration [decimal],
-	@AvgFuelConsumption [decimal],		
+	@TopSpeed [decimal](18,2),
+	@Acceleration [decimal](18,2),
+	@AvgFuelConsumption [decimal](18,2),		
 	@ProductionYear [int]
 )
 AS
@@ -262,11 +262,11 @@ Create PROCEDURE [dbo].[spInsertFuelConsumption]
 	@PetrolStationDesc [nvarchar](100),
 	@PetrolType [nvarchar](50),
 	@FuelingDate [date],
-	@LiterAmount [decimal],
-	@PricePerLiter [decimal],
-	@FullPrice [decimal],
-	@DistanceMade [decimal],
-	@FuelConsumption [decimal],
+	@LiterAmount [decimal](18,2),
+	@PricePerLiter [decimal](18,2),
+	@FullPrice [decimal](18,2),
+	@DistanceMade [decimal](18,2),
+	@FuelConsumption [decimal](18,2),
 	@Terrain [nvarchar](100)
 )
 AS
@@ -323,11 +323,11 @@ Create PROCEDURE [dbo].[spUpdateFuelConsumption]
 	@PetrolStationDesc [nvarchar](100),
 	@PetrolType [nvarchar](50),
 	@FuelingDate [date],
-	@LiterAmount [decimal],
-	@PricePerLiter [decimal],
-	@FullPrice [decimal],
-	@DistanceMade [decimal],
-	@FuelConsumption [decimal],
+	@LiterAmount [decimal](18,2),
+	@PricePerLiter [decimal](18,2),
+	@FullPrice [decimal](18,2),
+	@DistanceMade [decimal](18,2),
+	@FuelConsumption [decimal](18,2),
 	@Terrain [nvarchar](100)
 )
 AS

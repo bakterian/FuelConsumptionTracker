@@ -15,9 +15,9 @@ IF OBJECT_ID('[dbo].[CarDescriptions]', 'U') IS NULL
 		[PetrolType] [nvarchar](100)  NOT NULL,
 		[FuelTankSize] [int] NOT NULL,
 		[Weight] [int] NOT NULL,
-		[TopSpeed] [decimal] NOT NULL,
-		[Acceleration] [decimal] NOT NULL,
-		[AvgFuelConsumption] [decimal] NOT NULL,		
+		[TopSpeed] [decimal](18,2) NOT NULL,
+		[Acceleration] [decimal](18,2) NOT NULL,
+		[AvgFuelConsumption] [decimal](18,2) NOT NULL,		
 		[ProductionYear] [int] NOT NULL,
 		CONSTRAINT [PK_CarDescription] PRIMARY KEY CLUSTERED
 		([Id] ASC)
@@ -38,11 +38,11 @@ IF OBJECT_ID('[dbo].[FuelConsumptions]', 'U') IS NULL
 		[PetrolStationDesc] [nvarchar](100) NOT NULL,
 		[PetrolType] [nvarchar](50) NOT NULL,
 		[FuelingDate] [date] NOT NULL,
-		[LiterAmount] [decimal] NOT NULL,
-		[PricePerLiter] [decimal] NOT NULL,
-		[FullPrice] [decimal] NOT NULL,
-		[DistanceMade] [decimal] NOT NULL,
-		[FuelConsumption] [decimal] NOT NULL,
+		[LiterAmount] [decimal](18,2) NOT NULL,
+		[PricePerLiter] [decimal](18,2) NOT NULL,
+		[FullPrice] [decimal](18,2) NOT NULL,
+		[DistanceMade] [decimal](18,2) NOT NULL,
+		[FuelConsumption] [decimal](18,2) NOT NULL,
 		[Terrain] [nvarchar](100) NOT NULL,
 		CONSTRAINT [PK_FuelConsumption] PRIMARY KEY CLUSTERED
 		([Id] ASC)

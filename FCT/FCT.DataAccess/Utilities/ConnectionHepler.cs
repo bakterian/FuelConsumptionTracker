@@ -4,9 +4,10 @@ namespace FCT.DataAccess.Utilities
 {
     public static class ConnectionHepler
     {
-        public static string ConVal(string name)
+        public static string ConVal()
         {
-            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            var connectionStrName = ConfigurationManager.AppSettings.Get("DbConnectionName");
+            return ConfigurationManager.ConnectionStrings[connectionStrName].ConnectionString;
         }
     }
 }

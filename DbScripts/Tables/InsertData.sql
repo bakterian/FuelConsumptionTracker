@@ -24,7 +24,7 @@ INSERT INTO [dbo].[CarDescriptions]
 		   ,'gasoline'
            ,70
            ,1785
-		   ,265.0
+		   ,265.789
 		   ,4.9
 		   ,19.2
            ,2005);
@@ -52,7 +52,7 @@ INSERT INTO [dbo].[CarDescriptions]
 		   ,'gasoline'
            ,20
            ,560
-		   ,85.0
+		   ,85.153
 		   ,35.0
 		   ,4.4
            ,1963);
@@ -160,7 +160,7 @@ INSERT INTO [dbo].[FuelConsumptions]
 		   ,3
            ,27
            ,200
-		   ,4.5
+		   ,4.52
 		   ,'city');
 		   
 if (not exists (select top 1 * from [dbo].[FuelConsumptions] where PetrolStationDesc = 'Lukoil 2'))
@@ -183,7 +183,7 @@ INSERT INTO [dbo].[FuelConsumptions]
            ,'gasoline'
            ,'1974-01-27'
            ,20
-		   ,2.5
+		   ,2.51
            ,50
            ,400
 		   ,5

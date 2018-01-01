@@ -12,7 +12,24 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <controls:TableControl Grid.Row="0" 
-                               TableItems="{Binding TableDataCollection}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <controls:TableControl Grid.Row="0" Grid.Column="0" TableItems="{Binding TableDataCollection, NotifyOnSourceUpdated=True}" />
+        <Grid Grid.Row="0" Grid.Column="1">
+            <GroupBox Margin="30 10 10 10" VerticalAlignment="Top" Header="Automation" BorderThickness="3" BorderBrush="{DynamicResource BorderBrush}">
+                <StackPanel Orientation="Vertical" Margin="6">
+                    <StackPanel Orientation="Horizontal" >
+                        <CheckBox Margin="0 2 0 0" IsChecked="{Binding AutoFuelConsCalc, Mode=TwoWay}" />
+                        <TextBlock Margin="6 0 0 0" Text="Fuel consumption calculation"  />
+                    </StackPanel>
+                    <StackPanel Margin="0 6 0 0" Orientation="Horizontal" >
+                        <CheckBox Margin="0 2 0 0" IsChecked="{Binding AutoFullPriceCalc, Mode=TwoWay}" />
+                        <TextBlock Margin="6 0 0 0" Text="Fuel total price calculation"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>

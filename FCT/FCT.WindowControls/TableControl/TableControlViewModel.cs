@@ -9,6 +9,7 @@ using System.Reflection;
 using FCT.Infrastructure.Attributes;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using FCT.Infrastructure.Models;
 
 namespace FCT.WindowControls.TableControl
 {

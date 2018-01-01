@@ -121,7 +121,20 @@ namespace FCT.Control.ViewModels
             }
             else if(e.Action == NotifyCollectionChangedAction.Replace)
             {
-                TableDataCollectionActions.Add(new Tuple<T, ItemAction>((T)e.NewItems[0], ItemAction.Update));
+                var newAction = new Tuple<T, ItemAction>((T)e.NewItems[0], ItemAction.Update);
+
+                var existingMatch = TableDataCollectionActions.FirstOrDefault(_ => 
+                (_.Item1 as BaseDbModel).Id.Equals((newAction.Item1 as BaseDbModel).Id) && _.Item2.Equals(newAction.Item2));
+
+                if(existingMatch != null)
+                {
+                    var index = TableDataCollectionActions.IndexOf(existingMatch);
+                    TableDataCollectionActions[index] = newAction;
+                }
+                else
+                {
+                    TableDataCollectionActions.Add(newAction);
+                }               
             }
         }
 

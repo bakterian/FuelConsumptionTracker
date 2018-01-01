@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.ComponentModel;
+using FCT.Infrastructure.Models;
 
 namespace FCT.WindowControls.TableControl
 {
@@ -54,8 +55,16 @@ namespace FCT.WindowControls.TableControl
 
         private void InitializeControl()
         {
+            //var myCollectionViewSource = new CollectionViewSource();
+            //Binding binding = new Binding();
+            //binding.Source = TableItems;
+            //BindingOperations.SetBinding(myCollectionViewSource,
+            //                              CollectionViewSource.SourceProperty,
+            //                              binding);
+            //TableItemsCollcetionView = myCollectionViewSource.View;
 
             TableItemsCollcetionView = CollectionViewSource.GetDefaultView(TableItems);
+
             if (TableItemsCollcetionView != null)
             {
                 TableControlVM = new TableControlViewModel();

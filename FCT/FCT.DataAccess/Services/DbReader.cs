@@ -13,7 +13,7 @@ namespace FCT.DataAccess.Services
         public IEnumerable<CarDescription> GetCarDescriptions()
         {
             using (IDbConnection connection =
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 return connection.Query<CarDescription>("dbo.spGetAllCarDesciptions").ToList();
             }
@@ -22,7 +22,7 @@ namespace FCT.DataAccess.Services
         public IEnumerable<FuelConEntry> GetFuelConEntries()
         {
             using (IDbConnection connection =
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 return connection.Query<FuelConEntry>("dbo.spGetAllFuelConsumption").ToList();
             }
@@ -31,7 +31,7 @@ namespace FCT.DataAccess.Services
         public IEnumerable<FuelConEntry> GetFuelConEntries(int carId)
         {
             using (IDbConnection connection =
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 return connection.Query<FuelConEntry>("dbo.spGetFuelConsumptionByCarId @CarId", new {CarId = carId}).ToList();
             }

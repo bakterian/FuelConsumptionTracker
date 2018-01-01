@@ -15,7 +15,7 @@ namespace FCT.DataAccess.Services
             var affectedRows = 0;
 
             using (IDbConnection connection = 
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 affectedRows = connection.Execute("dbo.spInsertCarDescription @Description, @Manufacturer,	@Model," +
                     " @HorsePower, @EngineSize, @PetrolType, @FuelTankSize, @Weight, @TopSpeed," +
@@ -30,7 +30,7 @@ namespace FCT.DataAccess.Services
             var affectedRows = 0;
 
             using (IDbConnection connection =
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 affectedRows = connection.Execute("dbo.spUpdateCarDescription @Id, @Description, @Manufacturer,	@Model," +
                     " @HorsePower, @EngineSize, @PetrolType, @FuelTankSize, @Weight, @TopSpeed," +
@@ -45,7 +45,7 @@ namespace FCT.DataAccess.Services
             var affectedRows = 0;
 
             using (IDbConnection connection =
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 affectedRows = connection.Execute("dbo.spDeleteCarDescription @Id", carDescriptions);
             }
@@ -59,7 +59,7 @@ namespace FCT.DataAccess.Services
             var affectedRows = 0;
 
             using (IDbConnection connection =
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 affectedRows = connection.Execute("dbo.spInsertFuelConsumption @CarId, @CarDescription, @PetrolStationDesc,	@PetrolType," +
                     " @FuelingDate, @LiterAmount, @PricePerLiter, @FullPrice, @DistanceMade," +
@@ -74,7 +74,7 @@ namespace FCT.DataAccess.Services
             var affectedRows = 0;
 
             using (IDbConnection connection =
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 affectedRows = connection.Execute("dbo.spUpdateFuelConsumption @Id, @CarId, @CarDescription, @PetrolStationDesc, @PetrolType," +
                     " @FuelingDate, @LiterAmount, @PricePerLiter, @FullPrice, @DistanceMade," +
@@ -89,7 +89,7 @@ namespace FCT.DataAccess.Services
             var affectedRows = 0;
 
             using (IDbConnection connection =
-                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal("CarDataDB")))
+                new System.Data.SqlClient.SqlConnection(ConnectionHepler.ConVal()))
             {
                 affectedRows = connection.Execute("dbo.spDeleteFuelConsumption @Id", fuelConsumptions);
             }
