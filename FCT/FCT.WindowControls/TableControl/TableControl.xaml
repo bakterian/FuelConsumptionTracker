@@ -113,7 +113,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid HorizontalAlignment="Left">
+    <Grid HorizontalAlignment="Left" x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="390" />

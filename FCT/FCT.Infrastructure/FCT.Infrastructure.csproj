@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\PresentableItem.cs" />
+    <Compile Include="Events\CarSelectionChangedEvent.cs" />
     <Compile Include="Enums\AppTheme.cs" />
     <Compile Include="Enums\ConsoleUserOption.cs" />
     <Compile Include="Enums\ItemAction.cs" />

@@ -1,4 +1,6 @@
-﻿using FCT.Infrastructure.Enums;
+﻿using Caliburn.Micro;
+using FCT.Infrastructure.Enums;
+using FCT.Infrastructure.Events;
 using FCT.Infrastructure.Interfaces;
 using FCT.Infrastructure.Models;
 using System;
@@ -27,9 +29,10 @@ namespace FCT.Control.ViewModels
             IDbActionsNotifier dbActionsNotifier,
             IDataTableMapper dataTableMapper,
             IDbReader dbReader,
-            IDbWriter dbWriter
+            IDbWriter dbWriter,
+            IEventAggregator eventAggregator
             )
-            : base(dialogService, appClosingNotifier, dbActionsNotifier, dataTableMapper)
+            : base(dialogService, appClosingNotifier, dbActionsNotifier, dataTableMapper, eventAggregator)
 
         {
             appClosingNotifier.RegisterForNotification(this, NotificationPriority.Low);
@@ -179,5 +182,18 @@ namespace FCT.Control.ViewModels
             };
         }
 
+        public override void Handle(CarSelectionChangedEvent message)
+        {
+            if(string.IsNullOrEmpty(message.SelectedCar))
+            {
+                FilterBy = string.Empty;
+                FilterPhrase = string.Empty;
+            }
+            else
+            {
+                FilterBy = "CarDescription";
+                FilterPhrase = message.SelectedCar;
+            }
+        }
     }
 }

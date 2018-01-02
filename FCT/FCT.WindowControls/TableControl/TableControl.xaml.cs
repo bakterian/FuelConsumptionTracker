@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.ComponentModel;
-using FCT.Infrastructure.Models;
 
 namespace FCT.WindowControls.TableControl
 {
@@ -16,7 +14,17 @@ namespace FCT.WindowControls.TableControl
         public static readonly DependencyProperty TableItemsProperty =
         DependencyProperty.Register("TableItems", 
         typeof(ObservableCollection<object>), typeof(TableControl),
-        new PropertyMetadata(null,onDepPropertyChanged));
+        new PropertyMetadata(null, OnTableItemsChanged));
+
+        public static readonly DependencyProperty GroupByProperty =
+        DependencyProperty.Register("GroupBy", typeof(string), typeof(TableControl),
+            new PropertyMetadata(OnGroupByChange));
+
+        private static readonly DependencyProperty FilterByProperty =
+           DependencyProperty.Register("FilterBy", typeof(string), typeof(TableControl), new PropertyMetadata(null, OnFilterByChange));
+
+        private static readonly DependencyProperty FilterPhraseProperty =
+        DependencyProperty.Register("FilterPhrase", typeof(string), typeof(TableControl), new PropertyMetadata(null, OnFilterPhraseChange));
 
         public ObservableCollection<object> TableItems
         {
@@ -24,11 +32,7 @@ namespace FCT.WindowControls.TableControl
             set { SetValue(TableItemsProperty, value); }
         }
 
-        public static readonly DependencyProperty GroupByProperty =
-        DependencyProperty.Register("GroupBy",typeof(string), typeof(TableControl),
-            new PropertyMetadata(string.Empty));
-
-        private static void onDepPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnTableItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var tableControl = d as TableControl;
             tableControl?.InitializeControl();
@@ -40,58 +44,72 @@ namespace FCT.WindowControls.TableControl
             set { SetValue(GroupByProperty, value); }
         }
 
+        private static void OnGroupByChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tableControl = d as TableControl;
+            tableControl?.TableControlVM?.OnGroupByInternalChange(tableControl?.GroupBy);
+        }
+
+        public string FilterBy
+        {
+            get { return (string)GetValue(FilterByProperty); }
+            set { SetValue(FilterByProperty, value); }
+        }
+
+        private static void OnFilterByChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tableControl = d as TableControl;
+            tableControl?.TableControlVM?.OnFilterByInternalChange(tableControl.FilterBy);
+        }
+
+        public string FilterPhrase
+        {
+            get { return (string)GetValue(FilterPhraseProperty); }
+            set { SetValue(FilterPhraseProperty, value); }
+        }
+
+        private static void OnFilterPhraseChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tableControl = d as TableControl;
+            if (tableControl != null && tableControl.TableControlVM != null && tableControl.FilterPhrase != null)
+            {
+                tableControl.TableControlVM.FilterPhrase = tableControl.FilterPhrase;
+            }
+        }
+
         public ICollectionView TableItemsCollcetionView { get; private set; }
         public TableControlViewModel TableControlVM { get; private set; }
 
         public TableControl()
         {
+            TableControlVM = new TableControlViewModel();
             InitializeComponent();
-        }
-
-        private void OnCarItemsCollectionChange(object sender, EventArgs e)
-        {
-             InitializeControl();
+            LayoutRoot.DataContext = TableControlVM;
         }
 
         private void InitializeControl()
         {
-            //var myCollectionViewSource = new CollectionViewSource();
-            //Binding binding = new Binding();
-            //binding.Source = TableItems;
-            //BindingOperations.SetBinding(myCollectionViewSource,
-            //                              CollectionViewSource.SourceProperty,
-            //                              binding);
-            //TableItemsCollcetionView = myCollectionViewSource.View;
-
             TableItemsCollcetionView = CollectionViewSource.GetDefaultView(TableItems);
 
             if (TableItemsCollcetionView != null)
             {
-                TableControlVM = new TableControlViewModel();
                 TableControlVM.TableItems = TableItems;
 
-                TableControlVM.GroupBySelection = GroupBy;
                 TableControlVM.GroupDescriptions = TableItemsCollcetionView.GroupDescriptions;
                 TableControlVM.GetTableGroupNames();
 
-                TableControlVM.GroupingEnabled = !string.IsNullOrEmpty(GroupBy);
-                if(string.IsNullOrEmpty(GroupBy) &&
-                    TableControlVM.TableGroupNames.Count > 0)
-                {
-                    TableControlVM.GroupBySelection = TableControlVM.TableGroupNames[0];
-                }
-                if(TableControlVM.GroupingEnabled)
-                {
-                    TableControlVM.AddGrouping();
-                }
-
                 TableControlVM.RefreshAction = TableItemsCollcetionView.Refresh;
+
+                TableControlVM.OnGroupByInternalChange(GroupBy); 
+                TableControlVM.OnFilterByInternalChange(FilterBy);
+                if(!string.IsNullOrEmpty(FilterPhrase)) TableControlVM.FilterPhrase = FilterPhrase;
+
 
                 UnregisterDataItemsCollectionEventHandlers();
                 RegisterDataItemsCollectionEventHandlers();
 
                 TableDataGrid.ItemsSource = TableItemsCollcetionView;
-                DataContext = TableControlVM;
+                //DataContext = TableControlVM;
             }
         }
 
@@ -112,6 +130,5 @@ namespace FCT.WindowControls.TableControl
             TableDataGrid.BeginningEdit += TableControlVM.OnBeginningEdit;
             TableDataGrid.InitializingNewItem += TableControlVM.OnInitializingNewItem;
         }
-
     }
 }

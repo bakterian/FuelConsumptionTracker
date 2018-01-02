@@ -1,4 +1,6 @@
-﻿using FCT.Infrastructure.Interfaces;
+﻿using Caliburn.Micro;
+using FCT.Infrastructure.Events;
+using FCT.Infrastructure.Interfaces;
 using FCT.Infrastructure.Models;
 using FCT.WindowControls;
 using System.Collections.ObjectModel;
@@ -13,6 +15,7 @@ namespace FCT.Control.ViewModels
         private readonly IDbReader _dbReader;
         private readonly IDbWriter _dbWriter;
         private readonly IDbActionsNotifier _dbActionsNotifier;
+        private readonly IEventAggregator _eventAggregator;
 
         private GenericModel<string> _header;
         public GenericModel<string> Header
@@ -60,12 +63,14 @@ namespace FCT.Control.ViewModels
             (
             IDbReader dbReader, 
             IDbWriter dbWriter,
-            IDbActionsNotifier dbActionsNotifier
+            IDbActionsNotifier dbActionsNotifier,
+            IEventAggregator eventAggregator
             )
         {
             _dbReader = dbReader;
             _dbWriter = dbWriter;
             _dbActionsNotifier = dbActionsNotifier;
+            _eventAggregator = eventAggregator;
         }
 
         public override void Initialize()
@@ -84,9 +89,9 @@ namespace FCT.Control.ViewModels
 
         public void OnCarSelectionChange()
         {
-            var test = true;
-            //TODO: fire event aggregator to notify subscribed view models
-            //persist the user setting in the database
+            var selectionEvent = new CarSelectionChangedEvent(SelectedCarDescription.Description);
+            _eventAggregator.PublishOnUIThread(selectionEvent);
+            //TODO: persist the user setting in the database
         }
 
         public void OnWrite()
