@@ -1,6 +1,5 @@
 ﻿using FCT.Infrastructure.Interfaces;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace FCT.Control.ViewModels
 {
@@ -79,6 +78,5 @@ namespace FCT.Control.ViewModels
                 if (tab is IDbTabViewModel) _dbTabVmStore.Add((IDbTabViewModel)tab);
             }
         }
-
     }
 }

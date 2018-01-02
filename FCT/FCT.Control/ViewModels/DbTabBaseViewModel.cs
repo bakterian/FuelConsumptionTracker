@@ -1,5 +1,7 @@
-﻿using FCT.Infrastructure.Attributes;
+﻿using Caliburn.Micro;
+using FCT.Infrastructure.Attributes;
 using FCT.Infrastructure.Enums;
+using FCT.Infrastructure.Events;
 using FCT.Infrastructure.Interfaces;
 using FCT.Infrastructure.Models;
 using System;
@@ -14,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace FCT.Control.ViewModels
 {
-    public abstract class DbTabBaseViewModel<T> : IDbTabViewModel, INotifyAppClosing, INotifyDbActions where T : new()
+    public abstract class DbTabBaseViewModel<T> : IDbTabViewModel, INotifyAppClosing, IHandle<CarSelectionChangedEvent>, INotifyDbActions, INotifyPropertyChanged where T : new()
     {
         public abstract string HeaderName { get; set; }
 
@@ -25,6 +27,28 @@ namespace FCT.Control.ViewModels
         protected readonly IDialogService DialogService;
 
         protected readonly IDataTableMapper DataTableMapper;
+
+        private string _filterBy;
+        public string FilterBy
+        {
+            get { return _filterBy; }
+            set
+            {
+                _filterBy = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _filterPhrase;
+        public string FilterPhrase
+        {
+            get { return _filterPhrase; }
+            set
+            {
+                _filterPhrase = value;
+                RaisePropertyChanged();
+            }
+        }
 
         private ObservableCollection<object> _tableDataCollection;
         public ObservableCollection<object> TableDataCollection
@@ -44,18 +68,21 @@ namespace FCT.Control.ViewModels
                 IDialogService dialogService,
                 IAppClosingNotifier appClosingNotifier,
                 IDbActionsNotifier dbActionsNotifier,
-                IDataTableMapper dataTableMapper
+                IDataTableMapper dataTableMapper,
+                IEventAggregator eventAggregator
             )
         {    //TODO: dispose any listneres when exiting
             DialogService = dialogService;
             DataTableMapper = dataTableMapper;
-
             TableDataCollectionActions = new List<Tuple<T, ItemAction>>();
+            eventAggregator.Subscribe(this);
         }
 
         protected abstract IEnumerable<T> GetTableEntries();
 
         protected abstract void PersistDisplayedData();
+
+        public abstract void Handle(CarSelectionChangedEvent message);
 
         public virtual void Init()
         {
@@ -119,14 +146,14 @@ namespace FCT.Control.ViewModels
 
                 TableDataCollectionActions.Add(new Tuple<T, ItemAction>(removedItem, (ItemAction)e.Action));
             }
-            else if(e.Action == NotifyCollectionChangedAction.Replace)
+            else if (e.Action == NotifyCollectionChangedAction.Replace)
             {
                 var newAction = new Tuple<T, ItemAction>((T)e.NewItems[0], ItemAction.Update);
 
-                var existingMatch = TableDataCollectionActions.FirstOrDefault(_ => 
+                var existingMatch = TableDataCollectionActions.FirstOrDefault(_ =>
                 (_.Item1 as BaseDbModel).Id.Equals((newAction.Item1 as BaseDbModel).Id) && _.Item2.Equals(newAction.Item2));
 
-                if(existingMatch != null)
+                if (existingMatch != null)
                 {
                     var index = TableDataCollectionActions.IndexOf(existingMatch);
                     TableDataCollectionActions[index] = newAction;
@@ -134,7 +161,7 @@ namespace FCT.Control.ViewModels
                 else
                 {
                     TableDataCollectionActions.Add(newAction);
-                }               
+                }
             }
         }
 
@@ -190,23 +217,23 @@ namespace FCT.Control.ViewModels
         {
             var data = dataTables.FirstOrDefault(_ => _.TableName.Equals(HeaderName));
 
-            var newTableCollectionItems = await DataTableMapper.ConvertToDbEnumerableAsync<T>( data, new[] { new PresentableItem() });
+            var newTableCollectionItems = await DataTableMapper.ConvertToDbEnumerableAsync<T>(data, new[] { new PresentableItem() });
 
             var newCollection = newTableCollectionItems.ToArray();
             var collectionSize = TableDataCollection.Count;
             var newCollectionSize = newTableCollectionItems.Count();
-            for (int i = 0; i < Math.Max(collectionSize,newCollectionSize); i++)
+            for (int i = 0; i < Math.Max(collectionSize, newCollectionSize); i++)
             {
-                if(i >= collectionSize)
+                if (i >= collectionSize)
                 {
                     (newCollection[i] as BaseDbModel).PropertyChanged += TableDataChanged;
                     TableDataCollection.Add(newCollection[i]);
                 }
-                else if(i >= newCollectionSize)
+                else if (i >= newCollectionSize)
                 {
                     TableDataCollection.RemoveAt(newCollectionSize);
                 }
-                else if(!TableDataCollection[i].Equals(newCollection[i]))
+                else if (!TableDataCollection[i].Equals(newCollection[i]))
                 {
                     (newCollection[i] as BaseDbModel).Id = (TableDataCollection[i] as BaseDbModel).Id;
                     (newCollection[i] as BaseDbModel).PropertyChanged += TableDataChanged;

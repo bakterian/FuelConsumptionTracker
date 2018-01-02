@@ -7,6 +7,7 @@ using System.Windows;
 using System.Collections.Generic;
 using FCT.Infrastructure.Models;
 using FCT.Infrastructure.Enums;
+using Caliburn.Micro;
 
 namespace FCT.Control.KernelModules
 {
@@ -29,6 +30,7 @@ namespace FCT.Control.KernelModules
             Bind<ISpreadsheetReader>().To<SpreadsheetReader>();
             Bind<ISpreadsheetGoverner>().To<SpreadsheetGoverner>();
             Bind<IDbTabVmStore>().To<DbTabVmStore>().InSingletonScope();
+            Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
         }
 
         private ThemeSwitcher GetThemeSwitcher()

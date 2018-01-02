@@ -144,29 +144,6 @@ namespace FCT.WindowControls.TableControl
             }
         }
 
-        public void OnGroupBySelectionChange()
-        {
-            GroupDescriptions.Clear();
-            AddGrouping();
-        }
-
-        public void OnGroupByEnableChange()
-        {
-            if (GroupingEnabled)
-            {
-                AddGrouping();
-            }
-            else
-            {
-                GroupDescriptions.Clear();
-            }
-        }
-
-        public void OnFilterByChange()
-        {
-            RefreshAction?.Invoke();
-        }
-
         internal void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if ((e.PropertyDescriptor as System.ComponentModel.PropertyDescriptor).
@@ -227,12 +204,61 @@ namespace FCT.WindowControls.TableControl
                     }
 
                 }
-
-
             }
             return isMatching;
         }
 
+        public void OnGroupBySelectionChange()
+        {
+            GroupDescriptions.Clear();
+            AddGrouping();
+        }
+
+        public void OnGroupByEnableChange()
+        {
+            if (GroupingEnabled)
+            {
+                AddGrouping();
+            }
+            else
+            {
+                GroupDescriptions.Clear();
+            }
+        }
+
+        public void OnGroupByInternalChange(string GroupBy)
+        {
+            GroupingEnabled = !string.IsNullOrEmpty(GroupBy);
+            if (string.IsNullOrEmpty(GroupBy) &&
+                TableGroupNames.Count > 0 )
+            {
+                GroupBySelection = TableGroupNames[0];
+            }
+            else
+            {
+                GroupBySelection = GroupBy;
+            }
+            if (GroupingEnabled)
+            {
+                GroupDescriptions.Clear();
+                AddGrouping();
+            }
+        }
+
+        public void OnFilterByChange()
+        {
+            RefreshAction?.Invoke();
+        }
+
+        public void OnFilterByInternalChange(string FilterBy)
+        {
+            FilteringEnabled = !string.IsNullOrEmpty(FilterBy);
+            if (FilteringEnabled)
+            {
+                FilterBySelection = FilterBy;
+                RefreshAction?.Invoke();
+            }
+        }
 
     }
 }

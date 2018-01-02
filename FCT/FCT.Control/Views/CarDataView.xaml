@@ -11,6 +11,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <controls:TableControl Grid.Row="0" 
+                               FilterBy="{Binding FilterBy, Mode=OneWay}"
+                               FilterPhrase="{Binding FilterPhrase, Mode=OneWay}"
                                TableItems="{Binding TableDataCollection}" />
     </Grid>
 </UserControl>

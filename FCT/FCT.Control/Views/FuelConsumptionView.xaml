@@ -16,7 +16,10 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <controls:TableControl Grid.Row="0" Grid.Column="0" TableItems="{Binding TableDataCollection, NotifyOnSourceUpdated=True}" />
+        <controls:TableControl Grid.Row="0" Grid.Column="0" 
+                               TableItems="{Binding TableDataCollection, NotifyOnSourceUpdated=True}"
+                               FilterBy="{Binding FilterBy, Mode=OneWay}"
+                               FilterPhrase="{Binding FilterPhrase, Mode=OneWay}"/>
         <Grid Grid.Row="0" Grid.Column="1">
             <GroupBox Margin="30 10 10 10" VerticalAlignment="Top" Header="Automation" BorderThickness="3" BorderBrush="{DynamicResource BorderBrush}">
                 <StackPanel Orientation="Vertical" Margin="6">
