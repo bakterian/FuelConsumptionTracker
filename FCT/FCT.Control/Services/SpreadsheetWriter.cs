@@ -46,7 +46,7 @@ namespace FCT.Control.Services
                         var worksheetHeading = worksheetPayload.Item1;
                         var dataTable = worksheetPayload.Item2;
                         var columnsWithDateTime = GetColumnIdsWithDateTimes(dataTable);
-                        var workSheet = package.Workbook.Worksheets.Add(worksheetHeading);
+                       var workSheet = package.Workbook.Worksheets.Add(worksheetHeading);
 
                         // add the content into the Excel file  
                         workSheet.Cells["A1"].LoadFromDataTable(dataTable, true);
@@ -91,7 +91,7 @@ namespace FCT.Control.Services
                         {
                             foreach (var columnId in columnsWithDateTime)
                             {
-                                using (ExcelRange col = workSheet.Cells[2, columnId, 2 + dataTable.Rows.Count, columnId])
+                                using (ExcelRange col = workSheet.Cells[2, columnId, 1 + dataTable.Rows.Count, columnId])
                                 {
                                     col.Style.Numberformat.Format = "dd-MM-yyyy";
                                     //col.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
