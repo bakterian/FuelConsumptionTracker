@@ -12,13 +12,15 @@ namespace FCT.Control.ViewModels
         private readonly IFileDialogService _fileDialogService;
         private readonly IDialogService _dialogService;
         private readonly ISpreadsheetGoverner _spreadsheetGoverner;
+        private readonly IDbInfoProvider _dbInfoProvider;
 
         public FileMenuViewModel(
             IThemeSwitcher themeSwitcher,
             ILogger logger,
             IFileDialogService fileDialogService,
             IDialogService dialogService,
-            ISpreadsheetGoverner spreadsheetGoverner
+            ISpreadsheetGoverner spreadsheetGoverner,
+            IDbInfoProvider dbInfoProvider
             )
         {
             _themeSwitcher = themeSwitcher;
@@ -26,6 +28,7 @@ namespace FCT.Control.ViewModels
             _fileDialogService = fileDialogService;
             _dialogService = dialogService;
             _spreadsheetGoverner = spreadsheetGoverner;
+            _dbInfoProvider = dbInfoProvider;
         }   
 
         public override void Initialize()
@@ -72,12 +75,12 @@ namespace FCT.Control.ViewModels
 
         public void OnDbInfo()
         {
-
+            _dialogService.ShowInfoMsg("Database Info", _dbInfoProvider.GetConnectionStatusInfos());
         }
 
         public void OnAbout()
         {
-
+            _dialogService.ShowInfoMsg("About","Made by Marcin Karczewski [Mid stack Ninja]");
         }
 
         private async void LoadFile()

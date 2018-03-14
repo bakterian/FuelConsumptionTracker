@@ -74,8 +74,7 @@ namespace FCT.Control.Services
                         }
                         catch (Exception e )
                         {
-                            var test = 1;
-                            throw;
+                            throw e;
                         }
                     }
                     itemCollection.Add(newItem);
@@ -84,7 +83,7 @@ namespace FCT.Control.Services
             catch (Exception e)
             {
                 _logger.Error(e, "[TableDataMapper] Error during data table to IEnumerable conversion.");
-                throw;
+                throw e;
             }
 
 

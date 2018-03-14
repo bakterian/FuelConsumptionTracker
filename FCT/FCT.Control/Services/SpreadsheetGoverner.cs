@@ -79,24 +79,24 @@ namespace FCT.Control.Services
             var loadSuccessfull = false;
             var dataTables = _spreadsheetReader.ReadFromExcelFile(filePath);
             var presentationUpdateTasks = new List<Task>();
-
+            var errorMsg = "Exception was thrown during data table to presentend data conversions.";
             foreach (var dbTabVms in _dbTabVmStore.GetAll())
             {
                 presentationUpdateTasks.Add(dbTabVms.UpdateDataAsync(dataTables));
             }
 
-            object tasks;
+            Task taskSummary;
             try
             {
-                tasks = Task.WhenAll(presentationUpdateTasks);
+                taskSummary = Task.WhenAll(presentationUpdateTasks);
             }
             catch (Exception e)
             {
-                _logger.Fatal(e, "Exception was thrown during data table to presentend data conversions.");
+                _logger.Fatal(e, errorMsg);
                 return loadSuccessfull;
             }
 
-            loadSuccessfull = true;
+            loadSuccessfull = !taskSummary.IsFaulted;
 
             return loadSuccessfull;
         }
