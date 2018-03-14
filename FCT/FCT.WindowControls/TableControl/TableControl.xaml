@@ -135,7 +135,7 @@
                               cal:Message.Attach="[Event SelectionChanged] = [Action OnGroupBySelectionChange()]" >
                         <ComboBox.Style>
                             <Style TargetType="ComboBox" BasedOn="{StaticResource FilterGroupCombobox}">
-                            <Style.Triggers>
+                                <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=GroupToggle, Path=IsChecked}" Value="False">
                                         <Setter Property="IsEnabled" Value="False" />
                                     </DataTrigger>
@@ -183,10 +183,14 @@
             </GroupBox>
         </Grid>
         <DataGrid x:Name="TableDataGrid" Grid.Row="1"
-                  CanUserReorderColumns="True" CanUserResizeColumns="True" 
-                  CanUserResizeRows="False" AutoGenerateColumns = "True"
+                  CanUserReorderColumns="True"
+                  CanUserResizeColumns="True" 
+                  CanUserResizeRows="False"
+                  AutoGenerateColumns = "True"
                   ScrollViewer.CanContentScroll="True" 
-                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  CanUserAddRows="False"
+                  Margin="0 0 0 10">
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>

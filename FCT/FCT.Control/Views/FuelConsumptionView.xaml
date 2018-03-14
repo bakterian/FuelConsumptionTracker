@@ -4,24 +4,103 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FCT.Control.Views"
+             xmlns:utils="clr-namespace:FCT.Control.Views.Utils"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              xmlns:controls="clr-namespace:FCT.WindowControls.TableControl;assembly=FCT.WindowControls"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <utils:GenTypeConverter x:Key="GenericTypeConv" />
+        <Storyboard x:Name="storyboard" x:Key="BorderSlowExpand">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="border">
+                <EasingDoubleKeyFrame KeyTime="0" Value="30"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="1060">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Springiness="7"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="border">
+                <EasingDoubleKeyFrame KeyTime="0" Value="30"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.4" Value="120">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <ElasticEase EasingMode="EaseOut" Springiness="7"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Name="storyboardRecovery" x:Key="BorderSlowCollapse">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="border">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1060" />
+                <EasingDoubleKeyFrame KeyTime="0:0:1.0" Value="30">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="border">
+                <EasingDoubleKeyFrame KeyTime="0" Value="120"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.0" Value="30">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" >
+            <Setter Property="Margin" Value="25 0 0 0" />
+            <Setter Property="Padding" Value="0 6 0 0" />
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}" >
+            <Setter Property="Margin" Value="5 5 0 0" />
+        </Style>
+        <Style x:Key="DecimalTolerantTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}" >
+            <Setter Property="Text">
+                <Setter.Value>
+                    <Binding Path="Text"
+                             Converter="{StaticResource GenericTypeConv}"
+                             ConverterParameter="Decimal"
+                             ValidatesOnNotifyDataErrors="True"
+                             ValidatesOnDataErrors="True"
+                             NotifyOnValidationError="True"
+                             UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <utils:NumericValidationRule ValidationType="{x:Type system:Decimal}" ValidatesOnTargetUpdated="True"  />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+    
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="expandoControl">
+            <BeginStoryboard x:Name="BorderSlowExpand_BeginStoryboard" Storyboard="{StaticResource BorderSlowExpand}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ToggleButton.Unchecked" SourceName="expandoControl">
+            <RemoveStoryboard BeginStoryboardName="BorderSlowExpand_BeginStoryboard"/>
+            <BeginStoryboard x:Name="BorderSlowExpand_BeginStoryboard1" Storyboard="{StaticResource BorderSlowCollapse}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <controls:TableControl Grid.Row="0" Grid.Column="0" 
                                TableItems="{Binding TableDataCollection, NotifyOnSourceUpdated=True}"
                                FilterBy="{Binding FilterBy, Mode=OneWay}"
                                FilterPhrase="{Binding FilterPhrase, Mode=OneWay}"/>
         <Grid Grid.Row="0" Grid.Column="1">
-            <GroupBox Margin="30 10 10 10" VerticalAlignment="Top" Header="Automation" BorderThickness="3" BorderBrush="{DynamicResource BorderBrush}">
+            <GroupBox Margin="30 10 10 10" VerticalAlignment="Top" Header="Automation" HorizontalAlignment="Left" Width="200"
+                      BorderThickness="3" BorderBrush="{DynamicResource BorderBrush}">
                 <StackPanel Orientation="Vertical" Margin="6">
                     <StackPanel Orientation="Horizontal" >
                         <CheckBox Margin="0 2 0 0" IsChecked="{Binding AutoFuelConsCalc, Mode=TwoWay}" />
@@ -33,6 +112,67 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
+            <Border x:Name="border" BorderThickness="3" CornerRadius="3" 
+                    BorderBrush="{DynamicResource BorderBrush}" Margin="6 0 0 0" Height="30" Width="30" 
+                    VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="1.5*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+
+                    <ToggleButton Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Style="{DynamicResource ExpandoBtnStyle}"  
+                                  x:Name="expandoControl" Margin="2 2 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="CarDescription"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewEntry.CarDescription, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="PetrolStationDesc" />
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NewEntry.PetrolStationDesc, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="PetrolType" />
+                    <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding NewEntry.PetrolType, Mode=TwoWay}" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="FuelingDate" />
+                    <DatePicker Grid.Row="2" Grid.Column="3" Style="{DynamicResource DatePickerStyle}" Margin="5 5 0 0"
+                                SelectedDate="{Binding NewEntry.FuelingDate, Mode=TwoWay}" />
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="4" Text="LiterAmount" />
+                    <TextBox Grid.Row="1" Grid.Column="5"  Text="{Binding NewEntry.LiterAmount, Mode=TwoWay}"
+                             Style="{DynamicResource DecimalTolerantTextBox}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="4" Text="PricePerLiter"/>
+                    <TextBox Grid.Row="2" Grid.Column="5" Text="{Binding NewEntry.PricePerLiter, Mode=TwoWay}"
+                             Style="{DynamicResource DecimalTolerantTextBox}"/>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="6" Text="FullPrice" />
+                    <TextBox Grid.Row="1" Grid.Column="7" Text="{Binding NewEntry.FullPrice, Mode=TwoWay}" Style="{DynamicResource DecimalTolerantTextBox}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="6" Text="DisOnBurnedFuel" />
+                    <TextBox Grid.Row="2" Grid.Column="7" Text="{Binding DistanceOnBurnedFuel, Mode=TwoWay}" Style="{DynamicResource DecimalTolerantTextBox}"/>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="8" Text="FuelConsumption" />
+                    <TextBox Grid.Row="1" Grid.Column="9" Text="{Binding NewEntry.FuelConsumption, Mode=TwoWay}" Style="{DynamicResource DecimalTolerantTextBox}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="8" Text="Terrain" />
+                    <TextBox Grid.Row="2" Grid.Column="9" Text="{Binding NewEntry.Terrain, Mode=TwoWay}" />
+
+                    <Button Grid.Row ="3" Grid.Column="8" Grid.ColumnSpan="2" Content="Add To List" 
+                            HorizontalAlignment="Right" Margin="0 5 0 5" Padding="10 0 10 0"
+                            cal:Message.Attach="[Event Click]=[Action OnSubmitNewEntry()];"/>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>

@@ -52,10 +52,12 @@
     <Compile Include="Enums\Region.cs" />
     <Compile Include="Enums\UserResponse.cs" />
     <Compile Include="Interfaces\IAppClosingNotifier.cs" />
+    <Compile Include="Interfaces\IAutoCalculationsService.cs" />
     <Compile Include="Interfaces\ICarDataViewModel.cs" />
     <Compile Include="Interfaces\ICarSelectionViewModel.cs" />
     <Compile Include="Interfaces\IDataTableMapper.cs" />
     <Compile Include="Interfaces\IDbActionsNotifier.cs" />
+    <Compile Include="Interfaces\IDbInfoProvider.cs" />
     <Compile Include="Interfaces\IDbTabVmStore.cs" />
     <Compile Include="Interfaces\IDbTabViewModel.cs" />
     <Compile Include="Interfaces\IDialogService.cs" />

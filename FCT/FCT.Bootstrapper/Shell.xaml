@@ -9,6 +9,10 @@
              mc:Ignorable="d"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              d:DesignHeight="300" d:DesignWidth="300"
+            Width="1300"
+            Height="820"
+            MinWidth="1300"
+            MinHeight="820"
             Style="{DynamicResource WindowBaseStyle}">
     <Grid x:Name="RootTopGrid">
         <Grid.RowDefinitions>

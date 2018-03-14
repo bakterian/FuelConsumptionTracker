@@ -31,6 +31,7 @@ namespace FCT.Control.KernelModules
             Bind<ISpreadsheetGoverner>().To<SpreadsheetGoverner>();
             Bind<IDbTabVmStore>().To<DbTabVmStore>().InSingletonScope();
             Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
+            Bind<IAutoCalculationsService>().To<AutoCalculationsService>();
         }
 
         private ThemeSwitcher GetThemeSwitcher()

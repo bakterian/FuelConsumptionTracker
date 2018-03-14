@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace FCT.Infrastructure.Models
 {
-    public abstract class BaseDbModel
+    public abstract class BaseDbModel : INotifyPropertyChanged
     {
         public int Id { get; set; }
 

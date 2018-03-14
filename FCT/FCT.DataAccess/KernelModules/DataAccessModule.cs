@@ -10,6 +10,7 @@ namespace FCT.DataAccess.KernelModules
         {
             Bind<IDbReader>().To<DbReader>().InSingletonScope();
             Bind<IDbWriter>().To<DbWriter>().InSingletonScope();
+            Bind<IDbInfoProvider>().To<DbInfoProvider>().InSingletonScope();
         }
     }
 }
