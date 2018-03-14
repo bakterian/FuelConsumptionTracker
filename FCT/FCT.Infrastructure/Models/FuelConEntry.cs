@@ -37,7 +37,7 @@ namespace FCT.Infrastructure.Models
             get { return _carDescription; }
             set
             {
-                if (!value.Equals(_carDescription))
+                if (value != null && !value.Equals(_carDescription))
                 {
                     _carDescription = value;
                     RaisePropertyChanged();
@@ -51,7 +51,7 @@ namespace FCT.Infrastructure.Models
             get { return _petrolStationDesc; }
             set
             {
-                if (!value.Equals(_petrolStationDesc))
+                if (value != null && !value.Equals(_petrolStationDesc))
                 {
                     _petrolStationDesc = value;
                     RaisePropertyChanged();
@@ -65,7 +65,7 @@ namespace FCT.Infrastructure.Models
             get { return _petrolType; }
             set
             {
-                if (!value.Equals(_petrolType))
+                if (value != null &&  !value.Equals(_petrolType))
                 {
                     _petrolType = value;
                     RaisePropertyChanged();
@@ -163,7 +163,7 @@ namespace FCT.Infrastructure.Models
             get { return _terrain; }
             set
             {
-                if (!value.Equals(_terrain))
+                if (value!= null && !value.Equals(_terrain))
                 {
                     _terrain = value;
                     RaisePropertyChanged();

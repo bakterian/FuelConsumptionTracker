@@ -15,13 +15,42 @@ namespace FCT.Control.ViewModels
     {
         private readonly IDbReader _dbReader;
         private readonly IDbWriter _dbWriter;
-
+        private readonly IAutoCalculationsService _autoCalcService;
+        private string _lastSelectedCart = string.Empty;
         public override string HeaderName { get; set; } = "Fuel Consumption";
 
         public bool AutoFuelConsCalc { get; set; } = true;
 
         public bool AutoFullPriceCalc { get; set; } = true;
 
+        private FuelConEntry _newEntry;
+        public FuelConEntry NewEntry
+        {
+            get { return _newEntry; }
+            set
+            {
+                if(!value.Equals(_newEntry))
+                {
+                    _newEntry = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private decimal _distanceOnBurnedFuel = 0;
+        public  decimal DistanceOnBurnedFuel
+        {
+            get { return _distanceOnBurnedFuel;  }
+            set
+            {
+                if(!value.Equals(_distanceOnBurnedFuel))
+                {
+                    _distanceOnBurnedFuel = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
         public FuelConsumptionViewModel
             (
             IDialogService dialogService,
@@ -30,7 +59,8 @@ namespace FCT.Control.ViewModels
             IDataTableMapper dataTableMapper,
             IDbReader dbReader,
             IDbWriter dbWriter,
-            IEventAggregator eventAggregator
+            IEventAggregator eventAggregator, 
+            IAutoCalculationsService autoCalcService
             )
             : base(dialogService, appClosingNotifier, dbActionsNotifier, dataTableMapper, eventAggregator)
 
@@ -39,6 +69,8 @@ namespace FCT.Control.ViewModels
             dbActionsNotifier.RegisterForNotification(this, NotificationPriority.Low);
             _dbReader = dbReader;
             _dbWriter = dbWriter;
+            _autoCalcService = autoCalcService;
+            InitNewFuelConsumptionEntry();
         }
 
         protected override IEnumerable<FuelConEntry> GetTableEntries()
@@ -122,14 +154,7 @@ namespace FCT.Control.ViewModels
         private void ReCalculateFullPrice(int index)
         {
             var fuelConEntry = (FuelConEntry)TableDataCollection[index];
-
-            var newEntry = MemeberwiseCopy(fuelConEntry);
-            newEntry.FullPrice = decimal.Round(fuelConEntry.LiterAmount * fuelConEntry.PricePerLiter, 2);
-
-            fuelConEntry.PropertyChanged -= TableDataChanged;
-            newEntry.PropertyChanged += TableDataChanged;
-
-            TableDataCollection[index] = newEntry;
+            fuelConEntry.FullPrice = _autoCalcService.GetFuelPrice(fuelConEntry.LiterAmount, fuelConEntry.PricePerLiter);
         }
 
         private void ReCalculateFuelConsumption(int index, string propertyName)
@@ -140,27 +165,16 @@ namespace FCT.Control.ViewModels
                 && (fuelConEntry.DistanceMade > 0))
             {
                 var nextEntry = (FuelConEntry)TableDataCollection[index + 1];
-                var newEntry = MemeberwiseCopy(fuelConEntry);
-                newEntry.FuelConsumption = decimal.Round(100.0M * (nextEntry.LiterAmount / fuelConEntry.DistanceMade), 2);
-
-                fuelConEntry.PropertyChanged -= TableDataChanged;
-                newEntry.PropertyChanged += TableDataChanged;
-                TableDataCollection[index] = newEntry;
+                fuelConEntry.FuelConsumption = _autoCalcService.GetFuelConspumption(nextEntry.LiterAmount, fuelConEntry.DistanceMade);
             }
             if (propertyName.Equals("LiterAmount") && (index > 0))
             {
                 var previousEntry = (FuelConEntry)TableDataCollection[index - 1];
                 if (previousEntry.DistanceMade > 0)
                 {
-                    var newEntry = MemeberwiseCopy(previousEntry);
-                    newEntry.FuelConsumption = decimal.Round(100.0M * (fuelConEntry.LiterAmount / previousEntry.DistanceMade), 2);
-
-                    previousEntry.PropertyChanged -= TableDataChanged;
-                    newEntry.PropertyChanged += TableDataChanged;
-                    TableDataCollection[index - 1] = newEntry;
+                    previousEntry.FuelConsumption = _autoCalcService.GetFuelConspumption(fuelConEntry.LiterAmount, previousEntry.DistanceMade);
                 }
             }
-
         }
 
         private FuelConEntry MemeberwiseCopy(FuelConEntry fuelConEntry)
@@ -175,7 +189,7 @@ namespace FCT.Control.ViewModels
                 FuelingDate = fuelConEntry.FuelingDate,
                 LiterAmount = fuelConEntry.LiterAmount,
                 PricePerLiter = fuelConEntry.PricePerLiter,
-                FullPrice = decimal.Round(fuelConEntry.LiterAmount * fuelConEntry.PricePerLiter, 2),
+                FullPrice = _autoCalcService.GetFuelPrice(fuelConEntry.LiterAmount, fuelConEntry.PricePerLiter),
                 DistanceMade = fuelConEntry.DistanceMade,
                 FuelConsumption = fuelConEntry.FuelConsumption,
                 Terrain = fuelConEntry.Terrain
@@ -188,11 +202,54 @@ namespace FCT.Control.ViewModels
             {
                 FilterBy = string.Empty;
                 FilterPhrase = string.Empty;
+                NewEntry.CarDescription = string.Empty;
+                _lastSelectedCart = string.Empty;
             }
             else
             {
                 FilterBy = "CarDescription";
                 FilterPhrase = message.SelectedCar;
+                NewEntry.CarDescription = message.SelectedCar;
+                _lastSelectedCart = message.SelectedCar;
+            }
+        }
+
+        public void OnSubmitNewEntry()
+        {
+            EnrichTableWithNewEntry();
+            InitNewFuelConsumptionEntry();
+        }
+
+        private void EnrichTableWithNewEntry()
+        {
+            NewEntry.PropertyChanged -= OnNewEntryPropertyChaned;
+
+            TableDataCollection.Add(MemeberwiseCopy(NewEntry));
+            var lastElement = (FuelConEntry)TableDataCollection.Last();
+            lastElement.PropertyChanged += TableDataChanged;
+
+            if (TableDataCollection.Count > 1)
+            {
+                var previousEntry  = (FuelConEntry) TableDataCollection.ElementAt(TableDataCollection.Count - 2);
+                previousEntry.DistanceMade = DistanceOnBurnedFuel;
+            }
+        }
+
+        private void InitNewFuelConsumptionEntry()
+        {
+            NewEntry = new FuelConEntry();
+            NewEntry.CarDescription = _lastSelectedCart;
+            NewEntry.FuelingDate = DateTime.Now;
+            NewEntry.PropertyChanged -= OnNewEntryPropertyChaned;
+            NewEntry.PropertyChanged += OnNewEntryPropertyChaned;
+            DistanceOnBurnedFuel = 0;
+        }
+
+        private void OnNewEntryPropertyChaned(object sender, PropertyChangedEventArgs e)
+        {
+            if((sender is FuelConEntry) && (e.PropertyName.Equals("LiterAmount") || e.PropertyName.Equals("PricePerLiter")))
+            {
+                NewEntry.FullPrice = _autoCalcService.GetFuelPrice(NewEntry.LiterAmount, NewEntry.PricePerLiter);
             }
         }
     }
