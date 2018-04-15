@@ -1,0 +1,8 @@
+## TO DO List: ##
+
+1. <Feature> Add Statistics Graph
+2. <Bug> Cursor not visible when adding new data
+3. <Bug> Globalizaton is fixed to US-EN 
+4. <Feature> Additional Styling is missing
+
+
