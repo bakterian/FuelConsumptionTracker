@@ -366,7 +366,7 @@ Create PROCEDURE [dbo].[spDeleteFuelConsumption]
 )
 AS
 BEGIN
-	DELETE FROM [dbo].[FuelConsumption]
+	DELETE FROM [dbo].[FuelConsumptions]
 	WHERE Id = @Id;
 END
 GO

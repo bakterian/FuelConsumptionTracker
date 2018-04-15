@@ -136,6 +136,8 @@ namespace FCT.Control.ViewModels
                     (addedItem as BaseDbModel).Id = TableDataCollection.Count;
                 }
 
+                (addedItem as BaseDbModel).PropertyChanged += TableDataChanged; //TODO: fix making changes to new items
+
                 TableDataCollectionActions.Add(new Tuple<T, ItemAction>((T)e.NewItems[0], (ItemAction)e.Action));
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove)
