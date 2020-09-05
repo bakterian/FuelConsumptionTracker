@@ -17,6 +17,7 @@ namespace FCT.Control.ViewModels
         private readonly IDbWriter _dbWriter;
         private readonly IAutoCalculationsService _autoCalcService;
         private string _lastSelectedCart = string.Empty;
+        private bool _recalculationOngoing = false;
         public override string HeaderName { get; set; } = "Fuel Consumption";
 
         public bool AutoFuelConsCalc { get; set; } = true;
@@ -80,19 +81,23 @@ namespace FCT.Control.ViewModels
 
         protected override void TableDataChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.TableDataChanged(sender, e);
+            if (_recalculationOngoing == false)
+            { // When recalculation is stated this callback will be re-entered.
+              // Limiting the amount of update opeations and improving processing time
+                if (sender is FuelConEntry)
+                {
+                    var entryIndex = TableDataCollection.IndexOf(sender as FuelConEntry);
+                    if (AutoFullPriceCalc && (e.PropertyName.Equals("LiterAmount") || e.PropertyName.Equals("PricePerLiter")))
+                    {
+                        ReCalculateFullPrice(entryIndex);
+                    }
+                    if (AutoFuelConsCalc && (e.PropertyName.Equals("LiterAmount") || e.PropertyName.Equals("DistanceMade")))
+                    {
+                        ReCalculateFuelConsumption(entryIndex, e.PropertyName);
+                    }
+                }
 
-            if (sender is FuelConEntry)
-            {
-                var entryIndex = TableDataCollection.IndexOf(sender as FuelConEntry);
-                if (AutoFullPriceCalc && (e.PropertyName.Equals("LiterAmount") || e.PropertyName.Equals("PricePerLiter")))
-                {
-                    ReCalculateFullPrice(entryIndex);
-                }
-                if (AutoFuelConsCalc && (e.PropertyName.Equals("LiterAmount") || e.PropertyName.Equals("DistanceMade")))
-                {
-                    ReCalculateFuelConsumption(entryIndex, e.PropertyName);
-                }
+                base.TableDataChanged(sender, e);
             }
         }
 
@@ -153,12 +158,15 @@ namespace FCT.Control.ViewModels
 
         private void ReCalculateFullPrice(int index)
         {
+            _recalculationOngoing = true;
             var fuelConEntry = (FuelConEntry)TableDataCollection[index];
             fuelConEntry.FullPrice = _autoCalcService.GetFuelPrice(fuelConEntry.LiterAmount, fuelConEntry.PricePerLiter);
+            _recalculationOngoing = false;
         }
 
         private void ReCalculateFuelConsumption(int index, string propertyName)
         {
+            _recalculationOngoing = true;
             var fuelConEntry = (FuelConEntry)TableDataCollection[index];
             if (propertyName.Equals("DistanceMade")
                 && (index < (TableDataCollection.Count() - 1))
@@ -175,6 +183,7 @@ namespace FCT.Control.ViewModels
                     previousEntry.FuelConsumption = _autoCalcService.GetFuelConspumption(fuelConEntry.LiterAmount, previousEntry.DistanceMade);
                 }
             }
+            _recalculationOngoing = false;
         }
 
         private FuelConEntry MemeberwiseCopy(FuelConEntry fuelConEntry)

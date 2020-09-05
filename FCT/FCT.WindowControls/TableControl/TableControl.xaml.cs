@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.ComponentModel;
+using System.Threading;
 
 namespace FCT.WindowControls.TableControl
 {
@@ -93,6 +94,7 @@ namespace FCT.WindowControls.TableControl
 
             if (TableItemsCollcetionView != null)
             {
+                TableItemsCollcetionView.Culture = Thread.CurrentThread.CurrentCulture;
                 TableControlVM.TableItems = TableItems;
 
                 TableControlVM.GroupDescriptions = TableItemsCollcetionView.GroupDescriptions;
@@ -109,7 +111,6 @@ namespace FCT.WindowControls.TableControl
                 RegisterDataItemsCollectionEventHandlers();
 
                 TableDataGrid.ItemsSource = TableItemsCollcetionView;
-                //DataContext = TableControlVM;
             }
         }
 
