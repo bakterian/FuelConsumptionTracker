@@ -29,7 +29,9 @@ namespace FCT.Bootstrapper
             EnsureStandardPopupAlignment();
             SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
 
-            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name); ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            CultureInfo ci = CultureInfo.CreateSpecificCulture(CultureInfo.CurrentCulture.Name);
+            ci.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+            Thread.CurrentThread.CurrentCulture = ci;
             Thread.CurrentThread.CurrentCulture = ci;
         }
 
