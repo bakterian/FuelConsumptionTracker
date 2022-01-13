@@ -18,6 +18,7 @@ namespace FCT.Control.ViewModels
         private readonly IAutoCalculationsService _autoCalcService;
         private string _lastSelectedCart = string.Empty;
         private bool _recalculationOngoing = false;
+        private bool _carIdAssignmentOngoing = false;
         public override string HeaderName { get; set; } = "Fuel Consumption";
 
         public bool AutoFuelConsCalc { get; set; } = true;
@@ -81,7 +82,7 @@ namespace FCT.Control.ViewModels
 
         protected override void TableDataChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (_recalculationOngoing == false)
+            if (_recalculationOngoing == false && _carIdAssignmentOngoing == false)
             { // When recalculation is stated this callback will be re-entered.
               // Limiting the amount of update opeations and improving processing time
                 if (sender is FuelConEntry)
@@ -125,7 +126,9 @@ namespace FCT.Control.ViewModels
 
             if (carDescAssignments.Count() > 0)
             {
+                _carIdAssignmentOngoing = true;
                 persistingPossible = AssignCarIds(carDescAssignments);
+                _carIdAssignmentOngoing = false;
             }
 
             return persistingPossible;
